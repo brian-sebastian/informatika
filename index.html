@@ -310,12 +310,110 @@ details p{font-size:.88rem;color:#41505e;animation:slide .3s}
 .gtabs button:not(.on):hover{background:#232d3a;color:#dbe4ee}
 .gcard code{background:#0f151d;border:1px solid #33404f;font-size:.8em}
 
+/* ===== LATAR TEKNOLOGI ===== */
+#bgfx{position:fixed;inset:0;z-index:-2;pointer-events:none;overflow:hidden;
+  background:
+    radial-gradient(1000px 580px at 88% -6%,rgba(56,189,248,.30),transparent 64%),
+    radial-gradient(840px 520px at 3% 14%,rgba(167,139,250,.24),transparent 62%),
+    radial-gradient(760px 470px at 52% 110%,rgba(52,211,153,.22),transparent 62%),
+    radial-gradient(620px 400px at 96% 76%,rgba(251,191,36,.14),transparent 62%),
+    linear-gradient(160deg,#e7edf4 0%,var(--paper) 45%,#e4ebf3 100%);}
+/* kisi papan sirkuit */
+#bgfx::before{content:"";position:absolute;inset:-2px;
+  background-image:
+    linear-gradient(rgba(28,52,84,.16) 1px,transparent 1px),
+    linear-gradient(90deg,rgba(28,52,84,.16) 1px,transparent 1px),
+    linear-gradient(rgba(28,52,84,.07) 1px,transparent 1px),
+    linear-gradient(90deg,rgba(28,52,84,.07) 1px,transparent 1px);
+  background-size:120px 120px,120px 120px,24px 24px,24px 24px;}
+/* butiran halus */
+#bgfx::after{content:"";position:absolute;inset:0;opacity:.05;
+  background-image:radial-gradient(circle at 1px 1px,#0d1117 1px,transparent 0);
+  background-size:5px 5px;}
+#bgfx svg{position:absolute;inset:0;width:100%;height:100%}
+
+.trace{fill:none;stroke:#1f6fd0;stroke-width:1.9;opacity:.42;stroke-linecap:round}
+.trace.t2{stroke:#7c5cd6;opacity:.36}
+.trace.t3{stroke:#12876a;opacity:.34}
+.pad{fill:none;stroke:#1f6fd0;stroke-width:2;opacity:.5}
+.padc{fill:#1f6fd0;opacity:.5}
+.chipbox{fill:rgba(31,111,208,.09);stroke:#1f6fd0;stroke-width:1.8;opacity:.5}
+.chippin{stroke:#1f6fd0;stroke-width:1.8;opacity:.45}
+.spark{fill:none;stroke:var(--signal);stroke-width:3.6;stroke-linecap:round;
+  filter:drop-shadow(0 0 9px rgba(56,189,248,1));
+  stroke-dasharray:52 1200;animation:flow 9s linear infinite}
+.spark.b{stroke:#a78bfa;filter:drop-shadow(0 0 9px rgba(167,139,250,1))}
+.spark.c{stroke:#34d399;filter:drop-shadow(0 0 9px rgba(52,211,153,1))}
+@keyframes flow{from{stroke-dashoffset:1252}to{stroke-dashoffset:0}}
+
+.node{fill:#38bdf8;opacity:.55;animation:blip 3.4s ease-in-out infinite}
+@keyframes blip{0%,100%{opacity:.2;r:3}50%{opacity:.85;r:5.5}}
+
+/* digit biner melayang */
+.bitfall{position:absolute;font-family:var(--mono);font-weight:600;color:#1f5cff;
+  opacity:0;animation:drift linear infinite;user-select:none;letter-spacing:.1em}
+@keyframes drift{
+  0%{opacity:0;transform:translateY(0)}
+  14%{opacity:.42}
+  86%{opacity:.42}
+  100%{opacity:0;transform:translateY(-190px)}}
+
+/* latar gelap untuk hero & login */
+.hero{background:var(--slate);position:relative;overflow:hidden}
+.hero .grid{position:absolute;inset:0;
+  background-image:
+    linear-gradient(rgba(56,189,248,.30) 1px,transparent 1px),
+    linear-gradient(90deg,rgba(56,189,248,.30) 1px,transparent 1px),
+    linear-gradient(rgba(56,189,248,.12) 1px,transparent 1px),
+    linear-gradient(90deg,rgba(56,189,248,.12) 1px,transparent 1px);
+  background-size:132px 132px,132px 132px,33px 33px,33px 33px;
+  mask-image:linear-gradient(180deg,#000,rgba(0,0,0,.35) 70%,transparent 96%);
+  -webkit-mask-image:linear-gradient(180deg,#000,rgba(0,0,0,.35) 70%,transparent 96%);}
+.hero::after{content:"";position:absolute;left:0;right:0;bottom:0;height:2px;
+  background:linear-gradient(90deg,transparent,var(--signal),var(--violet),var(--moss),transparent);
+  opacity:.7;z-index:3}
+.hero .wrap{position:relative;z-index:2}
+
+#gate{position:fixed;inset:0;z-index:200;display:flex;align-items:center;justify-content:center;
+  padding:20px;animation:fade .4s;overflow:hidden;
+  background:
+    radial-gradient(820px 520px at 78% 6%,rgba(56,189,248,.30),transparent 62%),
+    radial-gradient(700px 460px at 10% 92%,rgba(167,139,250,.26),transparent 62%),
+    radial-gradient(560px 380px at 96% 82%,rgba(52,211,153,.16),transparent 62%),
+    var(--slate);}
+#gate .gg{position:absolute;inset:0;
+  background-image:
+    linear-gradient(rgba(56,189,248,.22) 1px,transparent 1px),
+    linear-gradient(90deg,rgba(56,189,248,.22) 1px,transparent 1px),
+    linear-gradient(rgba(56,189,248,.09) 1px,transparent 1px),
+    linear-gradient(90deg,rgba(56,189,248,.09) 1px,transparent 1px);
+  background-size:140px 140px,140px 140px,35px 35px,35px 35px;
+  mask-image:radial-gradient(ellipse 78% 78% at 50% 50%,#000 18%,transparent 96%);
+  -webkit-mask-image:radial-gradient(ellipse 78% 78% at 50% 50%,#000 18%,transparent 96%);}
+#gate .gcard{box-shadow:0 26px 70px rgba(0,0,0,.5),0 0 0 1px rgba(56,189,248,.16),
+  0 0 60px rgba(56,189,248,.10)}
+#gate .gcard{position:relative;z-index:2}
+
+.panel{background:rgba(255,255,255,.90);backdrop-filter:blur(14px);-webkit-backdrop-filter:blur(14px);box-shadow:0 4px 26px rgba(17,34,58,.09)}
+nav.ch{background:rgba(255,255,255,.93);backdrop-filter:blur(11px);-webkit-backdrop-filter:blur(11px)}
+header.bar{background:rgba(13,17,23,.93);backdrop-filter:blur(11px);-webkit-backdrop-filter:blur(11px)}
+
+@media (prefers-reduced-motion:reduce){
+  .spark,.bitfall{animation:none!important}
+  .spark{stroke-dasharray:none;opacity:.35}
+  .node{animation:none}
+  .bitfall{opacity:.12}
+}
+
 *:focus-visible{outline:2px solid var(--amber);outline-offset:2px}
 @media(max-width:640px){.panel{padding:17px 14px}.cpu{grid-template-columns:repeat(2,1fr)}.roles{margin-left:0;width:100%}.roles button{flex:1}nav.ch{top:47px}}
 @media(prefers-reduced-motion:reduce){*{animation:none!important;transition:none!important}.rv{opacity:1;transform:none}}
 </style>
 
+<div id="bgfx" aria-hidden="true"></div>
+
 <div id="gate">
+  <div class="gg" aria-hidden="true"></div>
   <div class="gcard">
     <div class="gtabs" role="group" aria-label="Pilih peran">
       <button id="tabS" class="on">Siswa</button>
@@ -367,7 +465,7 @@ details p{font-size:.88rem;color:#41505e;animation:slide .3s}
   <button data-c="3"><span class="t">BAB 3</span>Berpikir Komputasional &amp; Algoritma<span class="fokus">FOKUS</span></button>
 </div></nav>
 
-<section class="hero"><div class="wrap">
+<section class="hero"><div class="grid" aria-hidden="true"></div><div class="wrap">
   <div class="eb" id="hEb"></div><h1 id="hT"></h1><p id="hD"></p>
   <div class="stats" id="hS"></div>
 </div></section>
@@ -1178,6 +1276,92 @@ const M = {
       ["setup() dikira ikut berulang","Tegaskan setup berjalan sekali; hanya loop yang berulang. Simulator kode memperlihatkan hal ini dengan jelas."],
       ["Siswa langsung menulis kode tanpa algoritma","Wajibkan menyerahkan dekomposisi dan algoritma lebih dulu sebelum boleh menyentuh papan ketik."]]}
 }};
+
+/* ============ LATAR TEKNOLOGI ============ */
+(function bgfx(){
+  const host=document.getElementById('bgfx');
+  if(!host)return;
+  const W=1440,H=900,NS='http://www.w3.org/2000/svg';
+  const svg=document.createElementNS(NS,'svg');
+  svg.setAttribute('viewBox',`0 0 ${W} ${H}`);
+  svg.setAttribute('preserveAspectRatio','xMidYMid slice');
+  const el=(t,a)=>{const n=document.createElementNS(NS,t);
+    for(const k in a)n.setAttribute(k,a[k]);return n};
+  const R=(a,b)=>a+Math.random()*(b-a);
+  const snap=v=>Math.round(v/20)*20;
+
+  /* jalur bergaya PCB: hanya belok 90° dan 45° */
+  function jalur(x,y,langkah){
+    let d=`M ${x} ${y}`, dir=Math.random()<.5?1:-1, titik=[[x,y]];
+    for(let i=0;i<langkah;i++){
+      const p=Math.random(), n=snap(R(60,150));
+      if(p<.40){x+=n}
+      else if(p<.66){y+=n*dir}
+      else{x+=n;y+=n*dir}          // diagonal 45°
+      if(y<40||y>H-40){dir*=-1;y=Math.max(40,Math.min(H-40,y))}
+      d+=` L ${x} ${y}`;titik.push([x,y]);
+      if(Math.random()<.3)dir*=-1;
+      if(x>W+200)break;
+    }
+    return {d,titik};
+  }
+
+  const warna=['','t2','t3'], kilat=['','b','c'];
+  for(let i=0;i<16;i++){
+    const y0=snap(R(40,H-40)), x0=snap(R(-200,W*0.35));
+    const {d,titik}=jalur(x0,y0,Math.round(R(8,15)));
+    svg.appendChild(el('path',{d,class:'trace '+warna[i%3]}));
+
+    const s=el('path',{d,class:'spark '+kilat[i%3]});
+    s.style.animationDuration=R(6,14).toFixed(1)+'s';
+    s.style.animationDelay=(-R(0,13)).toFixed(1)+'s';
+    svg.appendChild(s);
+
+    /* bantalan di ujung dan beberapa belokan */
+    titik.filter((_,k)=>k===0||k===titik.length-1||Math.random()<.28)
+         .forEach(([px,py])=>{
+      svg.appendChild(el('circle',{cx:px,cy:py,r:R(4,6.5).toFixed(1),class:'pad'}));
+      svg.appendChild(el('circle',{cx:px,cy:py,r:1.9,class:'padc'}));
+    });
+  }
+
+  /* cip / IC dengan kaki-kakinya */
+  for(let i=0;i<5;i++){
+    const w=R(80,140),h=R(52,88),x=snap(R(60,W-220)),y=snap(R(60,H-160));
+    const g=el('g',{});
+    g.appendChild(el('rect',{x,y,width:w.toFixed(0),height:h.toFixed(0),rx:6,class:'chipbox'}));
+    const n=Math.max(3,Math.round(w/26));
+    for(let k=0;k<n;k++){
+      const px=x+((k+.5)*w/n);
+      g.appendChild(el('line',{x1:px,y1:y,x2:px,y2:y-11,class:'chippin'}));
+      g.appendChild(el('line',{x1:px,y1:y+h,x2:px,y2:y+h+11,class:'chippin'}));
+    }
+    svg.appendChild(g);
+  }
+
+  /* simpul berdenyut */
+  for(let i=0;i<20;i++){
+    const c=el('circle',{cx:snap(R(30,W-30)),cy:snap(R(30,H-30)),r:3.5,class:'node'});
+    c.style.animationDelay=(-R(0,3.4)).toFixed(2)+'s';
+    c.style.animationDuration=R(2.6,4.6).toFixed(1)+'s';
+    svg.appendChild(c);
+  }
+  host.appendChild(svg);
+
+  /* digit biner melayang naik */
+  const kata=['0','1','01','10','1101','0110','10110','1010','011','1','0','1001'];
+  for(let i=0;i<34;i++){
+    const b=document.createElement('div');
+    b.className='bitfall';
+    b.textContent=kata[Math.floor(Math.random()*kata.length)];
+    b.style.left=R(1,97).toFixed(1)+'%';
+    b.style.top=R(6,100).toFixed(1)+'%';
+    b.style.animationDuration=R(14,30).toFixed(1)+'s';
+    b.style.animationDelay=(-R(0,28)).toFixed(1)+'s';
+    b.style.fontSize=R(.68,1.15).toFixed(2)+'rem';
+    host.appendChild(b);
+  }
+})();
 
 /* ============ SESI & PENYIMPANAN ============ */
 const app=document.getElementById('app');
