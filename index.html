@@ -294,6 +294,22 @@ details p{font-size:.88rem;color:#41505e;animation:slide .3s}
   border-radius:8px;padding:12px 14px;height:132px;overflow-y:auto;color:var(--moss);margin-top:11px}
 .serial div{animation:slide .25s}
 
+/* linimasa bab 1 */
+.tl{display:grid;grid-template-columns:repeat(auto-fit,minmax(112px,1fr));gap:8px;margin-top:6px}
+.tli{background:#111922;border:2px solid #2c3947;border-radius:9px;padding:11px 9px;cursor:pointer;
+  text-align:center;transition:.25s}
+.tli:hover{transform:translateY(-3px);border-color:var(--signal)}
+.tli.on{border-color:var(--signal);background:#0e2a3a;box-shadow:0 0 18px rgba(56,189,248,.28)}
+.tli b{font-family:var(--mono);font-size:.86rem;display:block;color:var(--amber)}
+.tli span{font-size:.73rem;color:#9db0c4;display:block;margin-top:3px;line-height:1.35}
+
+.gtabs{display:flex;border:1px solid #33404f;border-radius:8px;overflow:hidden;margin-bottom:22px}
+.gtabs button{flex:1;font:500 .85rem var(--body);background:transparent;color:#8ea1b5;
+  border:0;padding:11px;cursor:pointer;transition:.2s}
+.gtabs button.on{background:var(--signal);color:#06212e;font-weight:600}
+.gtabs button:not(.on):hover{background:#232d3a;color:#dbe4ee}
+.gcard code{background:#0f151d;border:1px solid #33404f;font-size:.8em}
+
 *:focus-visible{outline:2px solid var(--amber);outline-offset:2px}
 @media(max-width:640px){.panel{padding:17px 14px}.cpu{grid-template-columns:repeat(2,1fr)}.roles{margin-left:0;width:100%}.roles button{flex:1}nav.ch{top:47px}}
 @media(prefers-reduced-motion:reduce){*{animation:none!important;transition:none!important}.rv{opacity:1;transform:none}}
@@ -301,17 +317,37 @@ details p{font-size:.88rem;color:#41505e;animation:slide .3s}
 
 <div id="gate">
   <div class="gcard">
-    <h2>Masuk untuk mulai belajar</h2>
-    <p class="g">Isi nama dan NIS kamu. Kemajuan belajarmu tersimpan otomatis di perangkat ini.</p>
-    <label for="namaIn">NAMA LENGKAP</label>
-    <input id="namaIn" autocomplete="off" placeholder="contoh: Aulia Rahmawati" maxlength="40" style="letter-spacing:0;font-family:var(--body)">
-    <div style="height:14px"></div>
-    <label for="nisIn">NOMOR INDUK SISWA</label>
-    <input id="nisIn" inputmode="numeric" autocomplete="off" placeholder="contoh: 24071" maxlength="12">
-    <div class="gerr" id="gerr"></div>
-    <button class="btn" id="gBtn">Masuk</button>
-    <div class="gnote">Bab 1 terbuka sejak awal. <b style="color:#c3d3e3">Bab 2 terbuka</b> setelah kuis Bab 1 tuntas, dan <b style="color:#c3d3e3">Bab 3 terbuka</b> setelah kuis Bab 2 tuntas.
-    <br><br>Guru masuk dengan mengisi NIS <b style="color:var(--amber);font-family:var(--mono)">guru</b>.</div>
+    <div class="gtabs" role="group" aria-label="Pilih peran">
+      <button id="tabS" class="on">Siswa</button>
+      <button id="tabG">Guru</button>
+    </div>
+
+    <div id="paneS">
+      <h2>Masuk untuk mulai belajar</h2>
+      <p class="g">Isi nama dan NIS kamu. Kemajuan belajarmu tersimpan otomatis di perangkat ini.</p>
+      <label for="namaIn">NAMA LENGKAP</label>
+      <input id="namaIn" autocomplete="off" placeholder="contoh: Aulia Rahmawati" maxlength="40" style="letter-spacing:0;font-family:var(--body)">
+      <div style="height:14px"></div>
+      <label for="nisIn">NOMOR INDUK SISWA</label>
+      <input id="nisIn" inputmode="numeric" autocomplete="off" placeholder="contoh: 24071" maxlength="12">
+      <div class="gerr" id="gerr"></div>
+      <button class="btn" id="gBtn">Masuk sebagai Siswa</button>
+      <div class="gnote">Bab 1 terbuka sejak awal. <b style="color:#c3d3e3">Bab 2 terbuka</b> setelah kuis Bab 1 tuntas, dan <b style="color:#c3d3e3">Bab 3 terbuka</b> setelah kuis Bab 2 tuntas.</div>
+    </div>
+
+    <div id="paneG" style="display:none">
+      <h2>Masuk sebagai Guru</h2>
+      <p class="g">Akses rencana pembelajaran, kunci jawaban, dan rekap nilai siswa.</p>
+      <label for="gnamaIn">NAMA GURU</label>
+      <input id="gnamaIn" autocomplete="off" placeholder="contoh: Bapak Brian" maxlength="40" style="letter-spacing:0;font-family:var(--body)">
+      <div style="height:14px"></div>
+      <label for="pinIn">PIN GURU</label>
+      <input id="pinIn" type="password" inputmode="numeric" autocomplete="off" placeholder="masukkan PIN" maxlength="12">
+      <div class="gerr" id="gerr2"></div>
+      <button class="btn" id="gBtn2">Masuk sebagai Guru</button>
+      <div class="gnote">PIN bawaan: <b style="color:var(--amber);font-family:var(--mono)">guru2026</b>
+      <br><br>Untuk mengganti PIN, cari baris <code style="color:#c3d3e3">const PIN_GURU</code> di dalam berkas ini, lalu ubah isinya.</div>
+    </div>
   </div>
 </div>
 
@@ -342,26 +378,158 @@ details p{font-size:.88rem;color:#41505e;animation:slide .3s}
 /* ============ MATERI ============ */
 const M = {
 1:{eb:"Bab 1",t:"Informatika Sekarang dan Masa Depan",
- d:"Apa itu informatika, di mana ia sudah hadir dalam hidupmu, dan ke mana arahnya.",
- s:[["5","Bidang kajian"],["8","Soal latihan"],["30","Menit belajar"]],
+ d:"Apa itu informatika, di mana ia sudah hadir dalam hidupmu, dan ke mana arahnya. Lengkap dengan contoh penerapan nyata.",
+ s:[["5","Simulator"],["14","Soal latihan"],["80","Menit belajar"]],
  html:`
- <section class="panel rv"><h2 class="sec">Lima bidang kajian</h2>
- <p class="sub">Bab pengantar. Pastikan tiga hal ini sudah kamu pahami sebelum masuk Bab 2.</p>
- <div class="kv">
-  <div class="c"><b>Berpikir Komputasional</b><span>Memecah dan menyelesaikan masalah secara sistematis.</span></div>
-  <div class="c"><b>Sistem Komputer</b><span>Perangkat keras, lunak, dan interaksinya.</span></div>
-  <div class="c"><b>Jaringan &amp; Internet</b><span>Cara perangkat saling terhubung.</span></div>
-  <div class="c"><b>Analisis Data</b><span>Mengolah data hingga bermakna.</span></div>
-  <div class="c"><b>Dampak Sosial</b><span>Etika, keamanan, dan privasi.</span></div>
- </div>
- <h3>Arah masa depan</h3>
+ <section class="panel rv"><h2 class="sec">A. Apa itu informatika</h2>
+ <p class="sub">Bukan pelajaran mengetik, bukan pula pelajaran memakai aplikasi.</p>
+ <p>Informatika adalah ilmu yang mempelajari cara <b>memproses, menyimpan, dan mengomunikasikan informasi</b> menggunakan komputer. Yang dipelajari bukan tombolnya, melainkan cara berpikirnya.</p>
+ <div class="note"><b>Perbedaan yang sering tertukar:</b> belajar Microsoft Word adalah keterampilan memakai alat — alatnya bisa berganti kapan saja. Belajar bagaimana teks disimpan sebagai angka, bagaimana dokumen dicari dalam sekejap, dan bagaimana data dilindungi — itulah informatika. Yang pertama usang dalam lima tahun; yang kedua bertahan seumur hidup.</div>
+
+ <h3>Tiga pertanyaan inti informatika</h3>
  <ul class="cl">
-  <li><b>Kecerdasan Artifisial</b> — sistem yang belajar dari data, bukan aturan tetap.</li>
-  <li><b>Internet of Things</b> — benda sehari-hari yang mengirim data lewat internet.</li>
-  <li><b>Big Data</b> — data raksasa yang butuh cara olah khusus.</li>
-  <li><b>Komputasi awan</b> — daya komputasi yang disewa lewat internet.</li>
+  <li><b>Apa yang bisa dihitung?</b> Tidak semua masalah bisa diselesaikan komputer, dan sebagian butuh waktu jutaan tahun meski komputernya secanggih apa pun.</li>
+  <li><b>Bagaimana cara paling efisien?</b> Dua program bisa memberi jawaban sama, tetapi satu selesai dalam sedetik dan satunya butuh seminggu.</li>
+  <li><b>Apa dampaknya bagi manusia?</b> Teknologi yang bekerja dengan benar belum tentu baik bagi masyarakat.</li>
  </ul>
- <div class="note"><b>Poin penting:</b> teknologi berubah cepat, cara berpikir komputasional tidak. Itu sebabnya Bab 3 jadi fokus.</div>
+
+ <h3>Informatika dalam satu hari hidupmu</h3>
+ <p>Coba telusuri: sejak bangun tidur sampai tidur lagi, berapa kali kamu bersinggungan dengan informatika tanpa sadar?</p>
+ <div class="lab">
+  <div class="lab-h"><span class="chip">JELAJAHI</span><h4>Sehari bersama informatika</h4></div>
+  <p class="cap">Klik setiap waktu untuk melihat teknologi apa yang bekerja di baliknya.</p>
+  <div class="tl" id="tlBox"></div>
+  <div class="binfo" id="tlInfo">Klik salah satu waktu di atas.</div>
+ </div>
+ </section>
+
+ <section class="panel rv"><h2 class="sec">B. Lima bidang kajian informatika</h2>
+ <p class="sub">Setiap bidang punya pertanyaan khasnya sendiri.</p>
+
+ <h3>1. Berpikir Komputasional</h3>
+ <p>Cara memecah masalah rumit menjadi langkah yang jelas dan bisa dikerjakan. Ini fondasi seluruh bidang lain, dan akan kamu pelajari mendalam di Bab 3.</p>
+ <p><b>Penerapan nyata:</b> Google Maps mencari rute tercepat di antara jutaan kemungkinan jalan dalam waktu kurang dari satu detik. Yang bekerja di baliknya adalah algoritma pencarian jalur terpendek — hasil murni dari berpikir komputasional.</p>
+
+ <h3>2. Sistem Komputer</h3>
+ <p>Bagaimana perangkat keras dan lunak bekerja sebagai satu kesatuan. Bidang ini kamu pelajari di Bab 2.</p>
+ <p><b>Penerapan nyata:</b> mesin ATM adalah sistem komputer lengkap — ada input (kartu dan tombol), pemrosesan (verifikasi saldo), output (uang dan struk), serta penyimpanan (catatan transaksi). Semuanya harus bekerja tepat karena menyangkut uang orang.</p>
+
+ <h3>3. Jaringan Komputer dan Internet</h3>
+ <p>Bagaimana perangkat saling terhubung dan bertukar data secara aman.</p>
+ <p><b>Penerapan nyata:</b> saat kamu mengirim pesan, teksnya dipecah menjadi paket-paket kecil, dikirim lewat jalur berbeda-beda, lalu disusun ulang di ponsel temanmu. Semua terjadi dalam hitungan milidetik meski jaraknya ribuan kilometer.</p>
+
+ <h3>4. Analisis Data</h3>
+ <p>Mengumpulkan, membersihkan, mengolah, dan membaca makna dari data.</p>
+ <p><b>Penerapan nyata:</b> BMKG memproses jutaan data suhu, tekanan udara, dan citra satelit untuk memperkirakan cuaca. Peringatan dini banjir yang menyelamatkan nyawa lahir dari analisis data.</p>
+
+ <h3>5. Dampak Sosial Informatika</h3>
+ <p>Etika, keamanan, privasi, dan pengaruh teknologi terhadap masyarakat.</p>
+ <p><b>Penerapan nyata:</b> ketika sebuah aplikasi meminta izin mengakses kontak dan lokasi, muncul pertanyaan: apakah izin itu benar-benar dibutuhkan untuk fungsinya, atau datamu sedang dikumpulkan untuk dijual?</p>
+
+ <div class="lab">
+  <div class="lab-h"><span class="chip">LATIHAN</span><h4>Kenali bidangnya</h4></div>
+  <p class="cap">Baca setiap kasus, lalu tentukan bidang kajian mana yang paling berperan.</p>
+  <div id="bidBox"></div>
+  <div class="log" id="bidLog">Pilih jawaban untuk kasus pertama.</div>
+ </div>
+ </section>
+
+ <section class="panel rv"><h2 class="sec">C. Penerapan informatika di berbagai sektor</h2>
+ <p class="sub">Hampir tidak ada bidang pekerjaan yang tidak tersentuh informatika.</p>
+ <p>Klik setiap sektor untuk membaca penerapan nyatanya di Indonesia dan dunia.</p>
+ <div class="lab">
+  <div class="lab-h"><span class="chip">KATALOG</span><h4>Delapan sektor penerapan</h4></div>
+  <p class="cap">Perhatikan bahwa hampir semuanya melibatkan lebih dari satu bidang kajian sekaligus.</p>
+  <div class="cmp" id="sekBox"></div>
+  <div class="binfo" id="sekInfo">Klik salah satu sektor untuk melihat contohnya.</div>
+ </div>
+ </section>
+
+ <section class="panel rv"><h2 class="sec">D. Teknologi yang membentuk masa depan</h2>
+ <p class="sub">Empat arah perkembangan yang paling berpengaruh saat ini.</p>
+
+ <h3>1. Kecerdasan Artifisial (AI)</h3>
+ <p>Sistem yang <b>belajar dari data</b>, bukan sekadar menjalankan aturan tetap yang ditulis manusia. Perbedaannya mendasar: program biasa selalu memberi hasil sama untuk masukan sama, sedangkan AI hasilnya membaik seiring bertambahnya data yang ia pelajari.</p>
+ <p><b>Penerapan nyata:</b> penerjemah bahasa, pengenalan wajah untuk membuka ponsel, rekomendasi video, deteksi penyakit dari citra rontgen, dan asisten percakapan.</p>
+ <div class="note"><b>Yang sering keliru:</b> AI tidak "mengerti" seperti manusia. Ia mengenali pola statistik dari jutaan contoh. Sistem yang mengenali kucing tidak tahu apa itu kucing — ia hanya tahu susunan piksel seperti ini biasanya diberi label "kucing".</div>
+
+ <h3>2. Internet of Things (IoT)</h3>
+ <p>Benda sehari-hari yang dilengkapi sensor dan koneksi internet sehingga bisa mengirim serta menerima data.</p>
+ <p><b>Penerapan nyata:</b> jam tangan pintar yang memantau detak jantung, sistem penyiram sawah yang aktif saat tanah kering, lampu jalan yang menyala berdasarkan tingkat cahaya, dan kartu e-toll. Di Bab 2 kamu akan membuat sendiri sistem seperti ini memakai Arduino.</p>
+
+ <h3>3. Big Data</h3>
+ <p>Data berukuran sangat besar, bertambah sangat cepat, dan beragam bentuknya, sehingga tidak bisa diolah dengan cara biasa.</p>
+ <p><b>Penerapan nyata:</b> layanan transportasi daring memproses jutaan titik lokasi tiap menit untuk menentukan harga dan mencocokkan pengemudi. E-commerce menganalisis riwayat belanja jutaan orang untuk mengatur stok gudang.</p>
+
+ <h3>4. Komputasi Awan</h3>
+ <p>Menyewa daya komputasi dan penyimpanan lewat internet, bukan membeli perangkat sendiri.</p>
+ <p><b>Penerapan nyata:</b> Google Drive, tugas sekolah yang bisa dibuka dari mana saja, dan layanan streaming. Sekolah tidak perlu membeli server mahal — cukup menyewa sesuai kebutuhan.</p>
+
+ <div class="lab">
+  <div class="lab-h"><span class="chip">BANDINGKAN</span><h4>Program biasa vs kecerdasan artifisial</h4></div>
+  <p class="cap">Berikan data latih pada AI, lalu bandingkan bagaimana keduanya menanggapi.</p>
+  <div class="row">
+    <button class="btn g" id="aiFeed">Beri satu contoh data</button>
+    <button class="btn g" id="aiRst">Ulang dari nol</button>
+  </div>
+  <div style="display:grid;grid-template-columns:1fr 1fr;gap:12px;margin-top:14px">
+    <div><div style="font-family:var(--mono);font-size:.7rem;color:var(--amber);margin-bottom:6px">PROGRAM BIASA</div>
+      <div id="aiA" style="background:#0f151d;border:2px solid #2d2410;border-radius:8px;padding:12px;min-height:118px;font-size:.83rem;color:#c3d3e3"></div></div>
+    <div><div style="font-family:var(--mono);font-size:.7rem;color:var(--signal);margin-bottom:6px">KECERDASAN ARTIFISIAL</div>
+      <div id="aiB" style="background:#0f151d;border:2px solid #123047;border-radius:8px;padding:12px;min-height:118px;font-size:.83rem;color:#c3d3e3"></div></div>
+  </div>
+  <div class="log" id="aiLog">Tekan tombol untuk memberi data latih.</div>
+ </div>
+ </section>
+
+ <section class="panel rv"><h2 class="sec">E. Dampak sosial dan etika</h2>
+ <p class="sub">Teknologi tidak pernah netral. Setiap kemudahan punya harga.</p>
+ <table>
+  <tr><th>Isu</th><th>Sisi manfaat</th><th>Sisi risiko</th></tr>
+  <tr><td><b>Privasi data</b></td><td>Layanan jadi personal dan relevan</td><td>Data pribadi dikumpulkan, dijual, atau bocor</td></tr>
+  <tr><td><b>Media sosial</b></td><td>Terhubung dengan siapa pun, di mana pun</td><td>Hoaks menyebar cepat, kecanduan, perundungan daring</td></tr>
+  <tr><td><b>Otomatisasi</b></td><td>Pekerjaan berat dan berulang digantikan mesin</td><td>Sebagian jenis pekerjaan hilang</td></tr>
+  <tr><td><b>Kesenjangan digital</b></td><td>Akses ilmu terbuka lebar</td><td>Yang tidak punya perangkat atau sinyal tertinggal</td></tr>
+  <tr><td><b>Kecerdasan artifisial</b></td><td>Diagnosis medis lebih cepat dan akurat</td><td>Bias dari data, keputusan yang sulit dipertanggungjawabkan</td></tr>
+ </table>
+
+ <h3>Keamanan digital dasar</h3>
+ <ul class="cl">
+  <li><b>Kata sandi kuat</b> — panjang lebih penting daripada rumit. Gunakan yang berbeda untuk tiap akun penting.</li>
+  <li><b>Verifikasi dua langkah</b> — meski sandi bocor, akun masih terlindungi.</li>
+  <li><b>Waspada phishing</b> — pesan yang mendesak dan meminta data pribadi hampir selalu penipuan.</li>
+  <li><b>Jejak digital permanen</b> — unggahan yang sudah dihapus tetap bisa tersimpan di tempat lain.</li>
+  <li><b>Periksa sebelum menyebar</b> — cek sumber aslinya sebelum meneruskan informasi.</li>
+ </ul>
+
+ <div class="lab">
+  <div class="lab-h"><span class="chip">UJI DIRI</span><h4>Seberapa kuat kata sandimu?</h4></div>
+  <p class="cap">Ketik contoh sandi (jangan yang asli) dan lihat perkiraan waktu pembobolannya.</p>
+  <div class="row">
+    <input type="text" id="pwIn" placeholder="ketik contoh sandi" style="flex:1;min-width:170px;width:auto;letter-spacing:0;font-family:var(--body)">
+  </div>
+  <div class="gauge" style="margin-top:16px"><i id="pwBar"></i></div>
+  <div class="row" style="align-items:baseline;gap:16px;margin-top:12px">
+    <div><div style="font-family:var(--mono);font-size:.68rem;color:#8ea1b5">PERKIRAAN WAKTU DIBOBOL</div>
+      <div class="bigval" id="pwT" style="font-size:1.5rem">—</div></div>
+  </div>
+  <div class="log" id="pwLog">Coba bandingkan: "budi123" dengan "kucing-hitam-makan-rendang".</div>
+ </div>
+ </section>
+
+ <section class="panel rv"><h2 class="sec">F. Profesi di bidang informatika</h2>
+ <p class="sub">Bukan hanya programmer.</p>
+ <table>
+  <tr><th>Profesi</th><th>Pekerjaannya</th><th>Bidang kajian utama</th></tr>
+  <tr><td>Pengembang perangkat lunak</td><td>Menulis dan merawat program</td><td>Berpikir komputasional</td></tr>
+  <tr><td>Analis data</td><td>Mengubah data mentah menjadi keputusan</td><td>Analisis data</td></tr>
+  <tr><td>Ahli keamanan siber</td><td>Melindungi sistem dari serangan</td><td>Jaringan &amp; dampak sosial</td></tr>
+  <tr><td>Perancang UI/UX</td><td>Membuat aplikasi mudah dan nyaman dipakai</td><td>Dampak sosial</td></tr>
+  <tr><td>Administrator jaringan</td><td>Menjaga jaringan tetap berjalan</td><td>Jaringan &amp; internet</td></tr>
+  <tr><td>Teknisi perangkat keras</td><td>Merakit dan memperbaiki perangkat</td><td>Sistem komputer</td></tr>
+  <tr><td>Ahli robotika</td><td>Merancang mesin yang bekerja mandiri</td><td>Sistem komputer &amp; algoritma</td></tr>
+ </table>
+ <div class="note"><b>Poin penting:</b> teknologi berubah cepat, tetapi cara berpikir komputasional tidak. Bahasa pemrograman yang populer hari ini mungkin ditinggalkan sepuluh tahun lagi — namun kemampuan memecah masalah, mengenali pola, dan menyusun langkah akan tetap terpakai. Itulah sebabnya Bab 2 dan Bab 3 menjadi fokus utama pembelajaran ini.</div>
  </section>`,
  q:[
  ["Informatika paling tepat didefinisikan sebagai ilmu yang mempelajari…",["Cara menggunakan aplikasi perkantoran","Cara memproses, menyimpan, dan mengomunikasikan informasi dengan komputer","Cara merakit komputer","Sejarah penemuan komputer"],1,"Informatika menekankan pengolahan informasi dan cara berpikirnya, bukan keterampilan memakai aplikasi."],
@@ -371,15 +539,23 @@ const M = {
  ["Menyimpan tugas di Google Drive adalah pemanfaatan…",["Big Data","IoT","Komputasi awan","Enkripsi"],2,"Komputasi awan menyediakan penyimpanan lewat internet tanpa perangkat fisik sendiri."],
  ["Berpikir komputasional tetap relevan meski teknologi berubah karena…",["Semua aplikasi selalu sama","Ia melatih cara menyelesaikan masalah, bukan memakai satu alat","Komputer tak pernah diperbarui","Tidak berhubungan dengan teknologi"],1,"Cara berpikir bersifat umum dan bisa dipindahkan ke alat baru mana pun."],
  ["Dampak sosial informatika mencakup hal berikut, KECUALI…",["Privasi data pribadi","Informasi palsu","Kesenjangan akses","Kecepatan clock prosesor"],3,"Kecepatan clock adalah topik teknis Sistem Komputer, bukan dampak sosial."],
- ["Ciri utama Big Data adalah…",["Selalu berbentuk teks","Volume sangat besar dan cepat bertambah","Selalu rahasia","Hanya milik pemerintah"],1,"Big Data dicirikan volume, kecepatan, dan keragaman melampaui pengolahan biasa."]],
- g:{al:"2 JP — bab pengantar, tidak diperdalam.",
-  tj:["Menjelaskan pengertian dan ruang lingkup informatika.","Mengidentifikasi penerapan informatika sehari-hari.","Menyebutkan arah perkembangan teknologi."],
+ ["Ciri utama Big Data adalah…",["Selalu berbentuk teks","Volume sangat besar dan cepat bertambah","Selalu rahasia","Hanya milik pemerintah"],1,"Big Data dicirikan volume, kecepatan, dan keragaman melampaui pengolahan biasa."],
+ ["Sistem penyiram sawah yang menyala sendiri saat tanah kering menerapkan bidang…",["Analisis Data","Internet of Things","Komputasi awan","Dampak sosial"],1,"Sensor pada benda sehari-hari yang mengirim data dan memicu tindakan adalah ciri IoT."],
+ ["Mesin ATM disebut sistem komputer lengkap karena memiliki…",["Hanya perangkat masukan","Input, proses, output, dan penyimpanan","Hanya koneksi internet","Hanya perangkat lunak"],1,"Kartu dan tombol sebagai input, verifikasi saldo sebagai proses, uang dan struk sebagai output, catatan transaksi sebagai penyimpanan."],
+ ["Yang membedakan program biasa dengan kecerdasan artifisial adalah…",["AI lebih cepat menghitung","AI memperbaiki hasilnya seiring bertambahnya data","Program biasa tidak butuh listrik","AI tidak memerlukan data"],1,"Program biasa selalu memberi hasil sama untuk masukan sama; AI belajar dari contoh."],
+ ["Kata sandi berikut yang paling kuat adalah…",["P@ss1!","budi123","kucing-hitam-makan-rendang","admin2024"],2,"Panjang lebih berpengaruh daripada kerumitan simbol. Sandi panjang berbentuk frasa jauh lebih sulit dibobol."],
+ ["Isu kesenjangan digital muncul ketika…",["Semua orang punya perangkat","Sebagian orang tidak punya perangkat atau sinyal sehingga tertinggal","Internet terlalu cepat","Data terlalu banyak"],1,"Kesenjangan digital adalah ketimpangan akses terhadap perangkat dan jaringan."],
+ ["Profesi yang bertugas mengubah data mentah menjadi dasar pengambilan keputusan adalah…",["Analis data","Teknisi perangkat keras","Perancang UI/UX","Administrator jaringan"],0,"Analis data mengolah dan menafsirkan data agar bermakna bagi pengambil keputusan."]],
+ g:{al:"4 JP (2 pertemuan × 80 menit).",
+  tj:["Menjelaskan pengertian dan ruang lingkup informatika.","Mengidentifikasi lima bidang kajian beserta contoh penerapannya.","Menganalisis penerapan informatika di berbagai sektor.","Menjelaskan arah perkembangan teknologi dan dampak sosialnya.","Menerapkan prinsip keamanan digital dasar."],
   lk:[["Pembuka 10'","Tanyakan: 'Sejak bangun tadi, teknologi apa saja yang kalian pakai?' Kelompokkan jawaban ke lima bidang kajian."],
-      ["Inti 50'","Siswa membaca mandiri di mode Siswa, lalu berpasangan mencari satu contoh nyata tiap bidang."],
-      ["Latihan 15'","Kerjakan 8 soal. Bahas nomor dengan kesalahan terbanyak."],
-      ["Penutup 5'","Jembatani ke Bab 2: 'Kalau semua butuh komputer, apa isi komputer itu?'"]],
+      ["Pertemuan 1 — Ruang lingkup","Proyeksikan simulator linimasa 'Sehari bersama informatika'. Siswa menambahkan kegiatan mereka sendiri yang belum tercantum, lalu menebak bidang kajiannya. Lanjut ke katalog delapan sektor — bagi kelompok, tiap kelompok membedah satu sektor dan mempresentasikannya."],
+      ["Pertemuan 2 — Masa depan & etika","Jalankan simulator perbandingan program biasa vs AI di depan kelas; siswa memprediksi akurasi sebelum tombol ditekan. Lanjut simulator kekuatan kata sandi — mintalah siswa mencoba pola sandi yang biasa mereka pakai (tanpa menyebutkan yang asli). Diskusikan tabel dampak sosial, lalu kerjakan 14 soal."],
+      ["Penutup","Jembatani ke Bab 2: 'Kalau semua ini butuh komputer, apa sebenarnya isi komputer itu?'"]],
   mk:[["Informatika dikira pelajaran mengetik","Tekankan aplikasi hanyalah alat; informatika mempelajari prinsip di baliknya."],
-      ["AI dikira sadar seperti manusia","Jelaskan AI mengenali pola statistik dari data, tanpa memahami makna."]]}
+      ["AI dikira sadar seperti manusia","Jelaskan AI mengenali pola statistik dari data, tanpa memahami makna. Simulator perbandingan membantu memperlihatkan hal ini."],
+      ["Sandi rumit dikira selalu lebih kuat daripada sandi panjang","Tunjukkan lewat simulator: frasa panjang mengalahkan sandi pendek bersimbol."],
+      ["Informatika dikira hanya untuk calon programmer","Tabel profesi memperlihatkan ragam pekerjaan; tekankan juga bahwa hampir semua sektor kini membutuhkannya."]]}
 },
 
 2:{eb:"Bab 2 — Fokus",t:"Sistem Komputer",
@@ -1035,21 +1211,19 @@ function toast(msg){
 }
 
 /* ============ LOGIN ============ */
+/* ====== PIN GURU — ubah baris ini untuk mengganti PIN ====== */
+const PIN_GURU = '196';
+
 function masuk(){
   const nm=document.getElementById('namaIn'),inp=document.getElementById('nisIn'),err=document.getElementById('gerr');
   const vn=nm.value.trim().replace(/\s+/g,' '), v=inp.value.trim();
   const gagal=(el,pesan)=>{err.textContent=pesan;el.classList.remove('err');void el.offsetWidth;el.classList.add('err');el.focus();};
 
-  if(v.toLowerCase()==='guru'){
-    nis='guru';nama='Guru';role='guru';
-    document.getElementById('gate').classList.add('off');
-    document.getElementById('roleBox').style.display='flex';
-    setRole('guru');paintWho();setCh(1);return;
-  }
   if(vn.length<2)return gagal(nm,'Isi nama lengkap kamu terlebih dahulu.');
   if(!/^[A-Za-z.'\- ]+$/.test(vn))return gagal(nm,'Nama hanya boleh berisi huruf dan spasi.');
   if(v.length<2)return gagal(inp,'NIS minimal 2 karakter.');
   if(!/^[0-9A-Za-z._-]+$/.test(v))return gagal(inp,'NIS hanya boleh berisi huruf, angka, titik, atau strip.');
+  if(v.toLowerCase()==='guru')return gagal(inp,'Untuk masuk sebagai guru, gunakan tab Guru di atas.');
 
   nis=v;nama=vn;role='siswa';
   const rec=loadSiswa(nis);ans=rec.ans||{};
@@ -1062,12 +1236,29 @@ function masuk(){
     ? `Selamat datang kembali, ${nama.split(' ')[0]}. Kamu melanjutkan di Bab ${lanjut}.`
     : `Selamat belajar, ${nama.split(' ')[0]}.`);
 }
+
+function masukGuru(){
+  const nm=document.getElementById('gnamaIn'),pn=document.getElementById('pinIn'),err=document.getElementById('gerr2');
+  const vn=nm.value.trim().replace(/\s+/g,' '), pin=pn.value.trim();
+  const gagal=(el,pesan)=>{err.textContent=pesan;el.classList.remove('err');void el.offsetWidth;el.classList.add('err');el.focus();};
+
+  if(vn.length<2)return gagal(nm,'Isi nama guru terlebih dahulu.');
+  if(!pin)return gagal(pn,'Masukkan PIN guru.');
+  if(pin!==PIN_GURU)return gagal(pn,'PIN salah. Periksa kembali atau tanyakan kepada pengelola.');
+
+  nis='guru';nama=vn;role='guru';
+  document.getElementById('gate').classList.add('off');
+  document.getElementById('roleBox').style.display='flex';
+  setRole('guru');paintWho();setCh(1);
+  toast(`Selamat datang, ${vn}. Seluruh bab terbuka dalam mode guru.`);
+}
+
 function keluar(){
   saveSiswa();nis=null;nama=null;ans={};role='siswa';
   document.getElementById('gate').classList.remove('off');
-  document.getElementById('nisIn').value='';
-  document.getElementById('namaIn').value='';
+  ['nisIn','namaIn','gnamaIn','pinIn'].forEach(i=>document.getElementById(i).value='');
   document.getElementById('gerr').textContent='';
+  document.getElementById('gerr2').textContent='';
   document.getElementById('roleBox').style.display='none';
   document.getElementById('who').innerHTML='';
   setTimeout(()=>document.getElementById('namaIn').focus(),300);
@@ -1075,7 +1266,7 @@ function keluar(){
 function paintWho(){
   const w=document.getElementById('who');
   w.innerHTML = nis==='guru'
-    ? `<span>Mode guru</span><button id="out">Keluar</button>`
+    ? `<span>${nama} · <b>Guru</b></span><button id="out">Keluar</button>`
     : `<span>${nama} · NIS <b>${nis}</b></span><button id="out">Keluar</button>`;
   document.getElementById('out').onclick=keluar;
 }
@@ -1165,10 +1356,158 @@ function observe(){
 
 /* ============ LABS ============ */
 function wireLabs(){
+  if(ch===1){tlLab();bidLab();sekLab();aiLab();pwLab();}
   if(ch===2){sortLab();cpuLab();pyrLab();powerLab();binLab();convLab();
              boardLab();pinLab();compLab();ldrLab();}
   if(ch===3){fondLab();flowLab();loopLab();cmpLab();traceLab();orderLab();
              acodeLab();caseLab();bugLab();}
+}
+
+/* --- Bab1: linimasa sehari --- */
+function tlLab(){
+  const box=document.getElementById('tlBox');if(!box)return;
+  const inf=document.getElementById('tlInfo');
+  const T=[
+    ["05.30","Alarm berbunyi","Ponsel menyimpan waktu alarm sebagai data, membandingkannya dengan jam internal setiap detik, lalu memicu bunyi saat cocok. Ini percabangan sederhana yang berjalan terus-menerus — persis struktur yang akan kamu pelajari di Bab 3.",["Sistem Komputer","Berpikir Komputasional"]],
+    ["06.15","Cek cuaca","Aplikasi mengambil data dari server BMKG lewat internet. Ramalan itu sendiri lahir dari analisis jutaan data suhu, tekanan udara, dan citra satelit.",["Analisis Data","Jaringan & Internet"]],
+    ["06.45","Bayar ojek daring","Lokasimu dikirim ke server, dicocokkan dengan pengemudi terdekat memakai algoritma pencocokan, dan harganya dihitung dari jarak serta tingkat permintaan saat itu.",["Big Data","Berpikir Komputasional"]],
+    ["07.30","Absensi sidik jari","Sidik jarimu diubah menjadi pola angka, lalu dibandingkan dengan pola yang tersimpan. Yang disimpan bukan gambar jarimu, melainkan ciri matematisnya.",["Sistem Komputer","Dampak Sosial"]],
+    ["10.00","Cari bahan tugas","Mesin pencari menelusuri miliaran halaman dalam sepersekian detik karena isinya sudah diindeks sebelumnya — mirip daftar isi raksasa.",["Analisis Data","Jaringan & Internet"]],
+    ["15.00","Menonton video","Sistem rekomendasi mempelajari kebiasaan menontonmu dan menyarankan video berikutnya. Semakin sering dipakai, semakin akurat tebakannya.",["Kecerdasan Artifisial","Big Data"]],
+    ["19.00","Kirim pesan","Pesanmu dipecah jadi paket kecil, dikirim lewat jalur berbeda-beda, lalu disusun ulang di ponsel penerima. Enkripsi membuat isinya tak terbaca pihak lain.",["Jaringan & Internet","Dampak Sosial"]],
+    ["21.30","Unggah foto","Foto dikompresi agar ringan, disimpan di server jauh, dan metadatanya (waktu serta lokasi) ikut tersimpan — sesuatu yang jarang disadari pengguna.",["Dampak Sosial","Analisis Data"]]
+  ];
+  box.innerHTML=T.map((t,i)=>`<div class="tli" data-i="${i}"><b>${t[0]}</b><span>${t[1]}</span></div>`).join('');
+  box.querySelectorAll('.tli').forEach(el=>el.onclick=()=>{
+    box.querySelectorAll('.tli').forEach(x=>x.classList.remove('on'));
+    el.classList.add('on');const t=T[+el.dataset.i];
+    inf.innerHTML=`<b>${t[0]} — ${t[1]}</b><br>${t[2]}<br>${t[3].map(x=>`<span class="tag2">${x}</span>`).join('')}`;
+  });
+}
+
+/* --- Bab1: kenali bidang kajian --- */
+function bidLab(){
+  const box=document.getElementById('bidBox');if(!box)return;
+  const log=document.getElementById('bidLog');
+  const K=["Berpikir Komputasional","Sistem Komputer","Jaringan & Internet","Analisis Data","Dampak Sosial"];
+  const S=[
+    ["Sekolah memasang wifi baru dan mengatur pembagian alamat IP tiap ruangan.",2],
+    ["Guru mengolah nilai satu angkatan untuk mencari mata pelajaran yang paling sulit.",3],
+    ["Siswa menyusun langkah-langkah agar robot bisa keluar dari labirin.",0],
+    ["Panitia membahas apakah boleh memasang kamera pengawas di kantin.",4],
+    ["Teknisi mengganti RAM komputer lab yang sering lambat.",1],
+    ["Aplikasi kantin memberi peringatan stok menipis berdasarkan pola pembelian.",3]
+  ];
+  let i=0,n=0;
+  const paint=()=>{
+    if(i>=S.length){
+      box.innerHTML=`<div style="text-align:center;padding:18px">
+        <div style="font-family:var(--disp);font-size:1.6rem;color:#fff">${n} / ${S.length}</div>
+        <div style="color:#8ea1b5;font-size:.86rem;margin-top:4px">Latihan selesai.</div></div>`;
+      log.textContent='Selesai. Banyak kasus nyata sebenarnya melibatkan lebih dari satu bidang sekaligus.';return;
+    }
+    box.innerHTML=`<div style="font-family:var(--mono);font-size:.68rem;color:#8ea1b5">KASUS ${i+1} / ${S.length}</div>
+      <div style="font-size:.94rem;color:#dbe4ee;margin:7px 0 12px">${S[i][0]}</div>
+      <div style="display:flex;gap:7px;flex-wrap:wrap">${K.map((k,j)=>
+      `<button class="bd" data-j="${j}" style="font:500 .78rem var(--body);background:#1b2430;border:1px solid #33404f;color:#c3d3e3;padding:8px 12px;border-radius:7px;cursor:pointer">${k}</button>`).join('')}</div>`;
+    box.querySelectorAll('.bd').forEach(b=>b.onclick=()=>{
+      const j=+b.dataset.j,ok=j===S[i][1];if(ok)n++;
+      b.style.borderColor=ok?'var(--moss)':'var(--rust)';
+      b.style.background=ok?'#08281e':'#2a1616';
+      log.textContent=ok?`Tepat. Kasus ini termasuk bidang ${K[j]}.`:`Belum tepat. Jawaban yang benar: ${K[S[i][1]]}.`;
+      box.querySelectorAll('.bd').forEach(x=>x.onclick=null);
+      setTimeout(()=>{i++;paint()},1500);
+    });
+  };
+  paint();
+}
+
+/* --- Bab1: sektor penerapan --- */
+function sekLab(){
+  const box=document.getElementById('sekBox');if(!box)return;
+  const inf=document.getElementById('sekInfo');
+  const S=[
+    ["Kesehatan","Rekam medis elektronik membuat riwayat pasien bisa diakses antar-rumah sakit. Kecerdasan artifisial membantu membaca citra rontgen dan mendeteksi kanker pada tahap awal yang sulit dilihat mata. Telemedicine memungkinkan konsultasi dokter dari daerah terpencil.",["AI","Analisis Data"]],
+    ["Pendidikan","Pembelajaran daring, sistem penilaian otomatis, dan aplikasi seperti yang sedang kamu pakai ini. Data nilai seluruh siswa dapat dianalisis untuk menemukan materi yang paling sulit dipahami.",["Analisis Data","Jaringan"]],
+    ["Pertanian","Sensor kelembapan tanah menyalakan penyiram otomatis. Drone memotret lahan untuk mendeteksi tanaman yang sakit. Perkiraan cuaca membantu petani menentukan waktu tanam.",["IoT","Big Data"]],
+    ["Transportasi","Pemetaan rute tercepat, sistem tiket elektronik, pengaturan lampu lalu lintas berdasarkan kepadatan, dan pelacakan armada logistik secara langsung.",["Algoritma","IoT"]],
+    ["Keuangan","Mobile banking, dompet digital, dan QRIS. Sistem mendeteksi transaksi mencurigakan dengan membandingkan pola belanja normal seseorang dengan transaksi yang menyimpang.",["Keamanan","Big Data"]],
+    ["Pemerintahan","Layanan kependudukan daring, sistem pengadaan terbuka, dan data terpadu bantuan sosial agar penyalurannya tepat sasaran.",["Analisis Data","Dampak Sosial"]],
+    ["Hiburan","Layanan streaming yang merekomendasikan tontonan, gim daring dengan ribuan pemain sekaligus, dan efek visual film yang dihasilkan komputer.",["AI","Jaringan"]],
+    ["Industri","Robot perakit di pabrik, sensor yang memperkirakan kapan mesin perlu diservis sebelum rusak, dan pengaturan stok gudang secara otomatis.",["IoT","Robotika"]]
+  ];
+  box.innerHTML=S.map((s,i)=>`<div class="it" data-i="${i}"><b>${s[0]}</b></div>`).join('');
+  box.querySelectorAll('.it').forEach(el=>el.onclick=()=>{
+    box.querySelectorAll('.it').forEach(x=>x.classList.remove('on'));
+    el.classList.add('on');const s=S[+el.dataset.i];
+    inf.innerHTML=`<b>${s[0]}</b><br>${s[1]}<br>${s[2].map(t=>`<span class="tag2">${t}</span>`).join('')}`;
+  });
+}
+
+/* --- Bab1: program biasa vs AI --- */
+function aiLab(){
+  const btn=document.getElementById('aiFeed');if(!btn)return;
+  const A=document.getElementById('aiA'),B=document.getElementById('aiB'),log=document.getElementById('aiLog');
+  const D=[["kucing oranye","kucing"],["kucing hitam","kucing"],["anjing coklat","anjing"],
+           ["kucing belang","kucing"],["anjing putih","anjing"],["kucing abu","kucing"]];
+  let n=0;
+  const paint=()=>{
+    const akur=n===0?0:Math.min(96,42+n*9);
+    A.innerHTML=`<div style="font-family:var(--mono);font-size:.76rem;color:var(--amber);margin-bottom:7px">ATURAN TETAP</div>
+      <div style="font-family:var(--mono);font-size:.74rem;line-height:1.7">JIKA berbulu DAN<br>&nbsp;&nbsp;bertelinga runcing<br>MAKA "kucing"</div>
+      <div style="margin-top:9px;font-size:.8rem;color:#8ea1b5">Akurasi tetap <b style="color:var(--amber)">70%</b> — tidak berubah meski data ditambah. Untuk memperbaikinya, manusia harus menulis ulang aturannya.</div>`;
+    B.innerHTML=`<div style="font-family:var(--mono);font-size:.76rem;color:var(--signal);margin-bottom:7px">BELAJAR DARI DATA</div>
+      <div style="font-family:var(--mono);font-size:.74rem;line-height:1.7;min-height:52px">${
+        n===0?'<span style="color:#66788c">belum ada data latih</span>'
+        :D.slice(0,n).map(d=>`${d[0]} → ${d[1]}`).join('<br>')}</div>
+      <div style="margin-top:9px;font-size:.8rem;color:#8ea1b5">Akurasi <b style="color:var(--signal)">${akur}%</b> — meningkat setiap kali diberi contoh baru, tanpa aturan ditulis ulang.</div>`;
+    log.textContent = n===0
+      ? 'Belum ada data latih. Program biasa sudah bisa bekerja, AI belum bisa apa-apa.'
+      : n>=D.length ? `Setelah ${n} contoh, AI mengungguli program beraturan tetap. Inilah perbedaan mendasarnya: AI memperbaiki diri dari data, program biasa hanya bisa diperbaiki manusia.`
+      : `${n} contoh dipelajari. Akurasi AI naik menjadi ${akur}%, sedangkan program beraturan tetap diam di 70%.`;
+  };
+  btn.onclick=()=>{if(n<D.length){n++;paint()}};
+  document.getElementById('aiRst').onclick=()=>{n=0;paint()};
+  paint();
+}
+
+/* --- Bab1: kekuatan kata sandi --- */
+function pwLab(){
+  const inp=document.getElementById('pwIn');if(!inp)return;
+  const bar=document.getElementById('pwBar'),T=document.getElementById('pwT'),log=document.getElementById('pwLog');
+  const fmt=d=>{
+    if(d<1)return 'kurang dari 1 detik';
+    if(d<60)return Math.round(d)+' detik';
+    if(d<3600)return Math.round(d/60)+' menit';
+    if(d<86400)return Math.round(d/3600)+' jam';
+    if(d<2592000)return Math.round(d/86400)+' hari';
+    if(d<31536000)return Math.round(d/2592000)+' bulan';
+    const th=d/31536000;
+    if(th<1000)return Math.round(th)+' tahun';
+    if(th<1e6)return Math.round(th/1000)+' ribu tahun';
+    if(th<1e9)return Math.round(th/1e6)+' juta tahun';
+    return 'miliaran tahun';
+  };
+  const upd=()=>{
+    const v=inp.value;
+    if(!v){bar.style.width='0';T.textContent='—';log.textContent='Coba bandingkan: "budi123" dengan "kucing-hitam-makan-rendang".';return}
+    let r=0;
+    if(/[a-z]/.test(v))r+=26;
+    if(/[A-Z]/.test(v))r+=26;
+    if(/[0-9]/.test(v))r+=10;
+    if(/[^a-zA-Z0-9]/.test(v))r+=32;
+    const komb=Math.pow(r,v.length), detik=komb/1e10;
+    const skor=Math.min(100,Math.log10(komb+1)/22*100);
+    bar.style.width=skor+'%';
+    bar.style.background=skor<30?'var(--rust)':skor<60?'var(--amber)':'var(--moss)';
+    T.textContent=fmt(detik);
+    T.classList.remove('bump');void T.offsetWidth;T.classList.add('bump');
+    const lemah=/^(123|admin|password|qwerty|budi|abcd)/i.test(v);
+    log.textContent = lemah
+      ? 'Sandi ini ada di daftar kata yang paling sering dicoba peretas, jadi waktu sebenarnya jauh lebih singkat dari perkiraan di atas.'
+      : `Panjang ${v.length} karakter dari ${r} jenis karakter. Perhatikan: menambah panjang jauh lebih berpengaruh daripada menambah simbol rumit.`;
+  };
+  inp.oninput=upd;upd();
 }
 
 /* --- Bab3: eksekusi kode Arduino baris demi baris --- */
@@ -2022,9 +2361,23 @@ function cekBuka(c){
 }
 
 /* ============ EVENT ============ */
+/* tab login */
+const tabS=document.getElementById('tabS'),tabG=document.getElementById('tabG');
+tabS.onclick=()=>{tabS.classList.add('on');tabG.classList.remove('on');
+  document.getElementById('paneS').style.display='block';
+  document.getElementById('paneG').style.display='none';
+  document.getElementById('namaIn').focus();};
+tabG.onclick=()=>{tabG.classList.add('on');tabS.classList.remove('on');
+  document.getElementById('paneG').style.display='block';
+  document.getElementById('paneS').style.display='none';
+  document.getElementById('gnamaIn').focus();};
+
 document.getElementById('gBtn').onclick=masuk;
+document.getElementById('gBtn2').onclick=masukGuru;
 document.getElementById('namaIn').addEventListener('keydown',e=>{if(e.key==='Enter')document.getElementById('nisIn').focus()});
 document.getElementById('nisIn').addEventListener('keydown',e=>{if(e.key==='Enter')masuk()});
+document.getElementById('gnamaIn').addEventListener('keydown',e=>{if(e.key==='Enter')document.getElementById('pinIn').focus()});
+document.getElementById('pinIn').addEventListener('keydown',e=>{if(e.key==='Enter')masukGuru()});
 document.getElementById('rS').onclick=()=>{if(nis==='guru')setRole('siswa')};
 document.getElementById('rG').onclick=()=>{if(nis==='guru')setRole('guru')};
 document.querySelectorAll('#nav button').forEach(b=>b.onclick=()=>setCh(+b.dataset.c));
