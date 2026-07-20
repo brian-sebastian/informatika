@@ -405,10 +405,163 @@ header.bar{background:rgba(13,17,23,.93);backdrop-filter:blur(11px);-webkit-back
   .bitfall{opacity:.12}
 }
 
+/* ===== MODE PRESENTASI ===== */
+#deck{position:fixed;inset:0;z-index:300;display:none;flex-direction:column;
+  background:var(--ink);color:#fff;overflow:hidden}
+#deck.on{display:flex}
+.dk-bg{position:absolute;inset:0;pointer-events:none;transition:background .6s}
+.dk-grid{position:absolute;inset:0;pointer-events:none;
+  background-image:
+    linear-gradient(rgba(255,255,255,.14) 1px,transparent 1px),
+    linear-gradient(90deg,rgba(255,255,255,.14) 1px,transparent 1px),
+    linear-gradient(rgba(255,255,255,.06) 1px,transparent 1px),
+    linear-gradient(90deg,rgba(255,255,255,.06) 1px,transparent 1px);
+  background-size:150px 150px,150px 150px,37px 37px,37px 37px;
+  mask-image:radial-gradient(ellipse 85% 80% at 50% 40%,#000 20%,transparent 95%);
+  -webkit-mask-image:radial-gradient(ellipse 85% 80% at 50% 40%,#000 20%,transparent 95%)}
+
+.dk-top{position:relative;z-index:5;display:flex;align-items:center;gap:14px;
+  padding:14px 26px;background:rgba(0,0,0,.24);backdrop-filter:blur(9px);flex-wrap:wrap}
+.dk-top .bab{font-family:var(--mono);font-size:.7rem;letter-spacing:.14em;
+  background:rgba(255,255,255,.18);padding:5px 11px;border-radius:5px}
+.dk-top .jd{font-family:var(--disp);font-weight:600;font-size:.95rem}
+.dk-top .sp{margin-left:auto;display:flex;gap:8px;align-items:center}
+.dk-btn{font:600 .8rem var(--body);background:rgba(255,255,255,.14);color:#fff;
+  border:1px solid rgba(255,255,255,.24);padding:8px 14px;border-radius:7px;cursor:pointer;transition:.2s}
+.dk-btn:hover{background:rgba(255,255,255,.26)}
+.dk-btn:disabled{opacity:.3;cursor:default}
+.dk-num{font-family:var(--mono);font-size:.82rem;opacity:.85;min-width:52px;text-align:center}
+
+.dk-stage{position:relative;z-index:5;flex:1;display:flex;align-items:center;
+  justify-content:center;padding:clamp(20px,4vw,54px);overflow-y:auto}
+.dk-slide{max-width:1080px;width:100%;animation:dkIn .5s cubic-bezier(.2,.8,.3,1)}
+@keyframes dkIn{from{opacity:0;transform:translateY(26px) scale(.985)}}
+.dk-slide.back{animation:dkBack .5s cubic-bezier(.2,.8,.3,1)}
+@keyframes dkBack{from{opacity:0;transform:translateY(-26px) scale(.985)}}
+
+.dk-eyebrow{font-family:var(--mono);font-size:.76rem;letter-spacing:.2em;
+  text-transform:uppercase;opacity:.8;margin-bottom:12px}
+.dk-slide h1{font-family:var(--disp);font-size:clamp(2rem,5.6vw,3.6rem);line-height:1.05;
+  margin:0 0 18px;letter-spacing:-.025em}
+.dk-slide h2{font-family:var(--disp);font-size:clamp(1.5rem,3.6vw,2.4rem);line-height:1.14;
+  margin:0 0 20px;letter-spacing:-.02em}
+.dk-slide p.lead{font-size:clamp(1rem,1.8vw,1.28rem);line-height:1.62;opacity:.94;max-width:56ch;margin:0 0 8px}
+.dk-slide .rule{width:76px;height:5px;border-radius:99px;background:#fff;opacity:.85;margin:0 0 22px}
+
+.dk-list{list-style:none;padding:0;margin:22px 0 0;display:flex;flex-direction:column;gap:13px}
+.dk-list li{display:flex;gap:15px;align-items:flex-start;
+  background:rgba(255,255,255,.10);border:1px solid rgba(255,255,255,.16);
+  border-radius:11px;padding:15px 18px;font-size:clamp(.94rem,1.5vw,1.13rem);line-height:1.5;
+  animation:dkPop .45s backwards}
+.dk-list li:nth-child(1){animation-delay:.10s}
+.dk-list li:nth-child(2){animation-delay:.19s}
+.dk-list li:nth-child(3){animation-delay:.28s}
+.dk-list li:nth-child(4){animation-delay:.37s}
+.dk-list li:nth-child(5){animation-delay:.46s}
+.dk-list li:nth-child(6){animation-delay:.55s}
+@keyframes dkPop{from{opacity:0;transform:translateX(-22px)}}
+.dk-list .no{font-family:var(--disp);font-weight:700;font-size:1.15rem;
+  min-width:40px;height:40px;border-radius:9px;background:rgba(255,255,255,.22);
+  display:flex;align-items:center;justify-content:center;flex-shrink:0}
+.dk-list b{display:block;font-family:var(--disp);margin-bottom:3px}
+.dk-list span{opacity:.9;font-size:.95em}
+
+.dk-cards{display:grid;grid-template-columns:repeat(auto-fit,minmax(230px,1fr));gap:14px;margin-top:22px}
+.dk-card{background:rgba(255,255,255,.11);border:1px solid rgba(255,255,255,.18);
+  border-radius:13px;padding:20px;animation:dkPop .45s backwards}
+.dk-card:nth-child(1){animation-delay:.10s}.dk-card:nth-child(2){animation-delay:.20s}
+.dk-card:nth-child(3){animation-delay:.30s}.dk-card:nth-child(4){animation-delay:.40s}
+.dk-card:nth-child(5){animation-delay:.50s}.dk-card:nth-child(6){animation-delay:.60s}
+.dk-card .ic{font-size:1.7rem;margin-bottom:9px}
+.dk-card b{font-family:var(--disp);font-size:1.05rem;display:block;margin-bottom:6px}
+.dk-card span{font-size:.93rem;opacity:.9;line-height:1.5}
+
+.dk-quote{background:rgba(0,0,0,.26);border-left:5px solid rgba(255,255,255,.7);
+  border-radius:0 12px 12px 0;padding:20px 24px;margin-top:22px;
+  font-size:clamp(1rem,1.7vw,1.2rem);line-height:1.6}
+.dk-quote b{font-family:var(--disp)}
+
+.dk-tbl{width:100%;border-collapse:collapse;margin-top:20px;font-size:clamp(.86rem,1.4vw,1.02rem)}
+.dk-tbl th,.dk-tbl td{border:1px solid rgba(255,255,255,.2);padding:11px 14px;text-align:left}
+.dk-tbl th{background:rgba(255,255,255,.16);font-family:var(--disp)}
+.dk-tbl tr{animation:dkPop .4s backwards}
+.dk-tbl tr:nth-child(2){animation-delay:.10s}.dk-tbl tr:nth-child(3){animation-delay:.18s}
+.dk-tbl tr:nth-child(4){animation-delay:.26s}.dk-tbl tr:nth-child(5){animation-delay:.34s}
+.dk-tbl tr:nth-child(6){animation-delay:.42s}
+
+.dk-big{font-family:var(--disp);font-size:clamp(3rem,11vw,7rem);line-height:1;letter-spacing:-.04em}
+.dk-center{text-align:center}
+.dk-center .rule{margin:0 auto 22px}
+.dk-center p.lead{margin-left:auto;margin-right:auto}
+
+.dk-bar{position:relative;z-index:5;height:5px;background:rgba(255,255,255,.16)}
+.dk-bar i{display:block;height:100%;background:#fff;width:0;transition:width .45s cubic-bezier(.2,.8,.3,1)}
+.dk-hint{position:absolute;bottom:16px;left:50%;transform:translateX(-50%);z-index:6;
+  font-family:var(--mono);font-size:.7rem;opacity:.5;white-space:nowrap}
+@media(max-width:640px){.dk-top{padding:11px 15px}.dk-top .jd{display:none}.dk-hint{display:none}}
+@media(prefers-reduced-motion:reduce){.dk-slide,.dk-list li,.dk-card,.dk-tbl tr{animation:none!important}}
+
+.presBtn{background:linear-gradient(135deg,var(--signal),var(--violet));color:#06212e;
+  border:0;font-weight:600}
+.presBtn:hover{filter:brightness(1.12)}
+
+/* elemen slide dari materi */
+.dk-stats{display:flex;gap:30px;justify-content:center;margin-top:30px;flex-wrap:wrap}
+.dk-stats div{animation:dkPop .45s backwards}
+.dk-stats div:nth-child(2){animation-delay:.12s}
+.dk-stats div:nth-child(3){animation-delay:.24s}
+.dk-stats b{font-family:var(--disp);font-size:clamp(1.8rem,4vw,2.8rem);display:block;line-height:1}
+.dk-stats span{font-size:.82rem;opacity:.75;letter-spacing:.06em;text-transform:uppercase}
+
+.dk-slide .dk-list li div{flex:1}
+.dk-slide .dk-list li b{display:inline;font-family:var(--disp)}
+.dk-slide code{font-family:var(--mono);background:rgba(255,255,255,.20);
+  padding:2px 7px;border-radius:4px;font-size:.88em}
+.dk-slide .dk-quote code,.dk-slide .dk-tbl code{background:rgba(255,255,255,.24)}
+.dk-slide em{font-style:normal;opacity:.85}
+
+.dk-kode{font-family:var(--mono);font-size:clamp(.74rem,1.2vw,.95rem);line-height:1.85;
+  background:rgba(0,0,0,.42);border:1px solid rgba(255,255,255,.18);border-radius:11px;
+  padding:16px 20px;margin-top:20px;overflow-x:auto;animation:dkPop .45s backwards .1s}
+.dk-kode .kw{color:#d8b4fe}.dk-kode .fn{color:#93c5fd}.dk-kode .num{color:#fdba74}
+.dk-kode .cm{color:rgba(255,255,255,.5);font-style:italic}.dk-kode .st{color:#bef264}
+.dk-kode .ln{color:rgba(255,255,255,.28);display:inline-block;width:22px}
+
+.dk-lab{background:rgba(255,255,255,.13);border:1px dashed rgba(255,255,255,.42);
+  border-radius:13px;padding:20px 22px;margin-top:20px;animation:dkPop .45s backwards .1s}
+.dk-lab .chip2{font-family:var(--mono);font-size:.66rem;letter-spacing:.1em;
+  background:rgba(255,255,255,.28);padding:4px 10px;border-radius:5px;display:inline-block}
+.dk-lab b{font-family:var(--disp);font-size:clamp(1.05rem,2vw,1.35rem);display:block;margin:11px 0 5px}
+.dk-lab span{display:block;font-size:clamp(.88rem,1.4vw,1.02rem);opacity:.9;line-height:1.55}
+.dk-lab em{display:block;margin-top:11px;font-size:.85rem;opacity:.72;
+  border-top:1px solid rgba(255,255,255,.2);padding-top:10px}
+
+.dk-slide p.lead+p.lead{margin-top:14px}
+.dk-slide sup{font-size:.7em}
+
 *:focus-visible{outline:2px solid var(--amber);outline-offset:2px}
 @media(max-width:640px){.panel{padding:17px 14px}.cpu{grid-template-columns:repeat(2,1fr)}.roles{margin-left:0;width:100%}.roles button{flex:1}nav.ch{top:47px}}
 @media(prefers-reduced-motion:reduce){*{animation:none!important;transition:none!important}.rv{opacity:1;transform:none}}
 </style>
+
+<div id="deck" role="dialog" aria-label="Mode presentasi">
+  <div class="dk-bg" id="dkBg"></div>
+  <div class="dk-grid"></div>
+  <div class="dk-top">
+    <span class="bab" id="dkBab">BAB 1</span>
+    <span class="jd" id="dkJd"></span>
+    <div class="sp">
+      <button class="dk-btn" id="dkPrev">‹ Sebelumnya</button>
+      <span class="dk-num" id="dkNum">1 / 1</span>
+      <button class="dk-btn" id="dkNext">Berikutnya ›</button>
+      <button class="dk-btn" id="dkFull">Layar penuh</button>
+      <button class="dk-btn" id="dkExit">Tutup ✕</button>
+    </div>
+  </div>
+  <div class="dk-stage"><div class="dk-slide" id="dkSlide"></div></div>
+  <div class="dk-bar"><i id="dkBar"></i></div>
+  <div class="dk-hint">← → atau spasi untuk berpindah · F layar penuh · Esc keluar</div>
+</div>
 
 <div id="bgfx" aria-hidden="true"></div>
 
@@ -836,7 +989,7 @@ const M = {
  <section class="panel rv"><h2 class="sec">F. Arduino — sistem komputer yang bisa kamu pegang</h2>
  <p class="sub">Semua yang kamu pelajari di atas ada di dalam papan sebesar kartu nama ini.</p>
  <p>Arduino adalah papan mikrokontroler: komputer utuh berukuran mini yang dirancang untuk mengendalikan benda fisik. Ia punya prosesor, memori, dan jalur masukan-keluaran — persis seperti komputer besar, tetapi disederhanakan agar bisa dipelajari dan dirakit sendiri.</p>
- <div class="note"><b>Mengapa Arduino cocok untuk belajar?</b> Pada komputer biasa, semua proses tersembunyi di balik sistem operasi. Di Arduino, kamu berhadapan langsung dengan pin, tegangan, dan sensor. Konsep input–proses–output menjadi kelihatan dan bisa disentuh.</p>
+ <div class="note"><b>Mengapa Arduino cocok untuk belajar?</b> Pada komputer biasa, semua proses tersembunyi di balik sistem operasi. Di Arduino, kamu berhadapan langsung dengan pin, tegangan, dan sensor. Konsep input–proses–output menjadi kelihatan dan bisa disentuh.</div>
 
  <h3>1. Anatomi papan Arduino Uno</h3>
  <p>Klik setiap bagian pada papan berikut untuk membaca fungsinya secara rinci.</p>
@@ -1361,6 +1514,202 @@ const M = {
     b.style.fontSize=R(.68,1.15).toFixed(2)+'rem';
     host.appendChild(b);
   }
+})();
+
+/* ============ MODE PRESENTASI ============ */
+const TEMA=[
+  'linear-gradient(135deg,#1e3a8a 0%,#3b1d6e 55%,#0f2a5c 100%)',   // biru-ungu
+  'linear-gradient(135deg,#0b4f45 0%,#0d3b5c 55%,#052e3f 100%)',   // hijau-teal
+  'linear-gradient(135deg,#4a1d3f 0%,#7c2d4a 50%,#3d1229 100%)',   // marun
+  'linear-gradient(135deg,#7c3a09 0%,#8a4a12 50%,#4a2408 100%)',   // jingga
+  'linear-gradient(135deg,#1c3f5e 0%,#2d5a7c 55%,#12304a 100%)'    // biru laut
+];
+
+/* Mengubah materi bab menjadi slide secara otomatis.
+   Sumbernya HTML materi yang sama persis dengan yang dibaca siswa,
+   sehingga isi slide selalu ikut terbarui bila materinya diubah. */
+function buatSlide(c){
+  const d=M[c], wadah=document.createElement('div');
+  wadah.innerHTML=d.html;
+  const out=[];
+
+  /* slide pembuka bab */
+  out.push({t:'judul',eb:d.eb,h:d.t,p:d.d,stat:d.s});
+
+  wadah.querySelectorAll('section').forEach(sec=>{
+    const jd=sec.querySelector('h2.sec');
+    if(!jd)return;
+    const judul=jd.textContent.trim();
+    const sub=sec.querySelector('p.sub')?.textContent.trim()||'';
+
+    /* slide pembatas untuk tiap bagian */
+    out.push({t:'bagian',eb:'BAGIAN',h:judul,p:sub});
+
+    /* telusuri isi bagian secara berurutan */
+    let kepala=judul, buf=[];
+    const buang=()=>{
+      if(!buf.length)return;
+      out.push({t:'isi',eb:judul,h:kepala,blok:buf});
+      buf=[];
+    };
+
+    [...sec.children].forEach(el=>{
+      const tag=el.tagName;
+      if(tag==='H2'||el.classList.contains('sub'))return;
+
+      if(tag==='H3'){buang();kepala=el.textContent.trim();return}
+
+      if(tag==='P'){
+        buf.push({k:'p',v:el.innerHTML});
+      }
+      else if(tag==='UL'){
+        buf.push({k:'ul',v:[...el.querySelectorAll('li')].map(li=>li.innerHTML)});
+      }
+      else if(tag==='TABLE'){
+        const baris=[...el.querySelectorAll('tr')];
+        buf.push({k:'tabel',
+          th:[...baris[0].children].map(x=>x.innerHTML),
+          tr:baris.slice(1).map(r=>[...r.children].map(x=>x.innerHTML))});
+      }
+      else if(el.classList.contains('note')){
+        buf.push({k:'note',v:el.innerHTML});
+      }
+      else if(el.classList.contains('kv')){
+        buf.push({k:'kartu',v:[...el.querySelectorAll('.c')].map(x=>
+          [x.querySelector('b')?.textContent||'', x.querySelector('span')?.innerHTML||''])});
+      }
+      else if(el.classList.contains('acode')){
+        buf.push({k:'kode',v:el.innerHTML});
+      }
+      else if(el.classList.contains('lab')){
+        buf.push({k:'lab',
+          judul:el.querySelector('h4')?.textContent||'Simulator',
+          cap:el.querySelector('.cap')?.textContent||'',
+          chip:el.querySelector('.chip')?.textContent||'INTERAKTIF'});
+      }
+      /* pecah slide bila isinya sudah padat */
+      const berat=buf.reduce((n,x)=>n+(x.k==='tabel'?x.tr.length+1:x.k==='ul'?x.v.length:x.k==='kartu'?x.v.length:1),0);
+      const huruf=buf.reduce((n,x)=>n+(x.k==='p'||x.k==='note'?x.v.replace(/<[^>]+>/g,'').length:
+                    x.k==='ul'?x.v.join('').replace(/<[^>]+>/g,'').length:
+                    x.k==='kartu'?x.v.flat().join('').replace(/<[^>]+>/g,'').length:0),0);
+      if(berat>=6||huruf>=620)buang();
+    });
+    buang();
+  });
+
+  /* slide penutup */
+  out.push({t:'tutup',eb:d.eb,h:'Latihan Soal',
+    p:`${d.q.length} soal pilihan ganda menanti di halaman materi.`,jml:d.q.length});
+  return out;
+}
+
+const SLIDE={};
+[1,2,3].forEach(c=>{try{SLIDE[c]=buatSlide(c)}catch(e){SLIDE[c]=[{t:'judul',eb:'Bab '+c,h:M[c].t,p:M[c].d}]}});
+
+let dkI=0, dkCh=1;
+
+function bukaDeck(c){
+  dkCh=c;dkI=0;
+  document.getElementById('deck').classList.add('on');
+  document.body.style.overflow='hidden';
+  gambarSlide();
+}
+function tutupDeck(){
+  document.getElementById('deck').classList.remove('on');
+  document.body.style.overflow='';
+  if(document.fullscreenElement)document.exitFullscreen().catch(()=>{});
+}
+function geser(n,mundur){
+  const S=SLIDE[dkCh];
+  const baru=Math.max(0,Math.min(S.length-1,dkI+n));
+  if(baru===dkI)return;
+  dkI=baru;gambarSlide(mundur);
+}
+
+function gambarSlide(mundur){
+  const S=SLIDE[dkCh],s=S[dkI];
+  const box=document.getElementById('dkSlide');
+  document.getElementById('dkBg').style.background=TEMA[dkI%TEMA.length];
+  document.getElementById('dkBab').textContent='BAB '+dkCh;
+  document.getElementById('dkJd').textContent=M[dkCh].t;
+  document.getElementById('dkNum').textContent=`${dkI+1} / ${S.length}`;
+  document.getElementById('dkBar').style.width=((dkI+1)/S.length*100)+'%';
+  document.getElementById('dkPrev').disabled=dkI===0;
+  document.getElementById('dkNext').disabled=dkI===S.length-1;
+
+  let h='';
+  const kepala=()=>`<div class="dk-eyebrow">${s.eb}</div>
+    <h2>${s.h}</h2><div class="rule"></div>`;
+
+  if(s.t==='judul'){
+    h=`<div class="dk-center"><div class="dk-eyebrow">${s.eb}</div>
+      <h1>${s.h}</h1><div class="rule"></div>
+      <p class="lead">${s.p}</p>
+      ${s.stat?`<div class="dk-stats">${s.stat.map(x=>
+        `<div><b>${x[0]}</b><span>${x[1]}</span></div>`).join('')}</div>`:''}</div>`;
+  }
+  else if(s.t==='bagian'){
+    const sp=s.p&&s.p.length>190?s.p.slice(0,186).replace(/\s+\S*$/,'')+'…':s.p;
+    h=`<div class="dk-center"><div class="dk-eyebrow">${s.eb}</div>
+      <h1>${s.h}</h1><div class="rule"></div>
+      ${sp?`<p class="lead">${sp}</p>`:''}</div>`;
+  }
+  else if(s.t==='tutup'){
+    h=`<div class="dk-center"><div class="dk-eyebrow">${s.eb}</div>
+      <div class="dk-big">${s.jml}</div>
+      <h2 style="margin-top:10px">${s.h}</h2><div class="rule"></div>
+      <p class="lead">${s.p}</p></div>`;
+  }
+  else if(s.t==='isi'){
+    h=kepala()+s.blok.map(b=>{
+      if(b.k==='p')     return `<p class="lead">${b.v}</p>`;
+      if(b.k==='note')  return `<div class="dk-quote">${b.v}</div>`;
+      if(b.k==='kode')  return `<div class="dk-kode">${b.v}</div>`;
+      if(b.k==='ul')    return `<ul class="dk-list">${b.v.map((x,i)=>
+        `<li><span class="no">${i+1}</span><div>${x}</div></li>`).join('')}</ul>`;
+      if(b.k==='kartu') return `<div class="dk-cards">${b.v.map(x=>
+        `<div class="dk-card"><b>${x[0]}</b><span>${x[1]}</span></div>`).join('')}</div>`;
+      if(b.k==='tabel') return `<table class="dk-tbl"><tr>${b.th.map(x=>`<th>${x}</th>`).join('')}</tr>
+        ${b.tr.map(r=>`<tr>${r.map(x=>`<td>${x}</td>`).join('')}</tr>`).join('')}</table>`;
+      if(b.k==='lab')   return `<div class="dk-lab"><span class="chip2">${b.chip}</span>
+        <b>${b.judul}</b><span>${b.cap}</span>
+        <em>Buka halaman materi untuk menjalankan simulator ini bersama siswa.</em></div>`;
+      return '';
+    }).join('');
+  }
+
+  box.className='dk-slide'+(mundur?' back':'');
+  box.innerHTML=h;
+}
+
+document.getElementById('dkNext').onclick=()=>geser(1);
+document.getElementById('dkPrev').onclick=()=>geser(-1,1);
+document.getElementById('dkExit').onclick=tutupDeck;
+document.getElementById('dkFull').onclick=()=>{
+  const d=document.getElementById('deck');
+  if(document.fullscreenElement)document.exitFullscreen().catch(()=>{});
+  else d.requestFullscreen?.().catch(()=>{});
+};
+document.addEventListener('keydown',e=>{
+  if(!document.getElementById('deck').classList.contains('on'))return;
+  if(e.key==='ArrowRight'||e.key===' '||e.key==='PageDown'){e.preventDefault();geser(1)}
+  else if(e.key==='ArrowLeft'||e.key==='PageUp'){e.preventDefault();geser(-1,1)}
+  else if(e.key==='Escape')tutupDeck();
+  else if(e.key==='f'||e.key==='F')document.getElementById('dkFull').click();
+  else if(e.key==='Home'){dkI=0;gambarSlide(1)}
+  else if(e.key==='End'){dkI=SLIDE[dkCh].length-1;gambarSlide()}
+});
+/* geser jari di layar sentuh */
+(function(){
+  const st=document.querySelector('.dk-stage');if(!st)return;
+  let x0=null;
+  st.addEventListener('touchstart',e=>x0=e.touches[0].clientX,{passive:true});
+  st.addEventListener('touchend',e=>{
+    if(x0===null)return;
+    const d=e.changedTouches[0].clientX-x0;
+    if(Math.abs(d)>52)d<0?geser(1):geser(-1,1);
+    x0=null;
+  },{passive:true});
 })();
 
 /* ============ SESI & PENYIMPANAN ============ */
@@ -2505,7 +2854,20 @@ function hapusData(){
 
 function guruHTML(d){
   const g=d.g;
-  return rekapHTML()+`
+  return `
+  <section class="panel rv" style="background:linear-gradient(135deg,rgba(56,189,248,.10),rgba(167,139,250,.10));border-color:rgba(56,189,248,.35)">
+    <div style="display:flex;align-items:center;gap:18px;flex-wrap:wrap">
+      <div style="flex:1;min-width:230px">
+        <h2 class="sec">Mode Presentasi</h2>
+        <p class="sub" style="margin:0">Tayangkan materi ${d.t} sebagai slide layar penuh untuk diproyeksikan di kelas — ${SLIDE[ch].length} slide, lengkap dengan warna dan animasi.</p>
+      </div>
+      <button class="btn2 presBtn" onclick="bukaDeck(${ch})" style="font-size:.95rem;padding:14px 26px">▶ Mulai presentasi</button>
+    </div>
+    <div style="font-size:.82rem;color:#5d6b7a;margin-top:12px;border-top:1px solid var(--line2);padding-top:11px">
+      Navigasi: tombol <b>← →</b> atau <b>spasi</b> untuk berpindah slide · <b>F</b> layar penuh · <b>Esc</b> keluar · di layar sentuh cukup geser jari.
+    </div>
+  </section>
+  `+rekapHTML()+`
   <section class="panel rv"><h2 class="sec">Rencana Pembelajaran — ${d.t}</h2>
   <p class="sub">Alokasi waktu: ${g.al}</p>
   <h3>Tujuan pembelajaran</h3><ul class="cl">${g.tj.map(t=>`<li>${t}</li>`).join('')}</ul>
