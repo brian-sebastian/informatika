@@ -204,6 +204,11 @@ details p{font-size:.88rem;color:#41505e;animation:slide .3s}
 .gcard input.err{border-color:var(--rust);animation:shake .38s}
 .gcard .btn{width:100%;margin-top:16px;padding:13px;font-size:.92rem}
 .gerr{color:var(--rust);font-size:.82rem;margin-top:9px;min-height:20px}
+.gerr:not(:empty){background:var(--rbx-red);color:#fff;font-weight:600;
+  padding:10px 13px;border-radius:9px;font-size:.85rem;margin-top:12px;
+  box-shadow:0 3px 0 rgba(0,0,0,.26);animation:erpop .4s;
+  display:flex;align-items:center;gap:8px}
+.gerr:not(:empty)::before{content:"⚠️";flex-shrink:0}
 .gnote{font-size:.78rem;color:#6f8397;margin-top:18px;border-top:1px solid var(--line);padding-top:14px;line-height:1.6}
 .who{display:flex;align-items:center;gap:8px;font-size:.8rem;color:#9fb2c6}
 .who b{font-family:var(--mono);color:var(--signal);font-weight:500}
@@ -395,7 +400,7 @@ details p{font-size:.88rem;color:#41505e;animation:slide .3s}
     var(--rbx-blue),var(--rbx-purple))}
 #gate .gcard{position:relative;z-index:2}
 
-.panel{background:#fff;box-shadow:0 4px 20px rgba(17,34,58,.07);contain:content}
+.panel{background:#fff;box-shadow:0 4px 20px rgba(17,34,58,.07)}
 nav.ch{background:#fff}
 header.bar{background:var(--ink)}
 
@@ -624,8 +629,16 @@ header.bar{background:var(--ink)}
   background:#0f151d;border:2px solid #33404f;color:#fff;padding:13px;border-radius:11px;
   width:210px;max-width:100%;text-transform:uppercase}
 .kunci input:focus{border-color:var(--rbx-blue);outline:none}
-.kunci input.err{border-color:var(--rbx-red);animation:shake .38s}
+.kunci input.err{border-color:var(--rbx-red);background:#2a1416;animation:shake .38s}
 .kunci .er{color:#ff7b72;font-size:.84rem;min-height:20px;margin-top:9px}
+.kunci .er.tampil{background:var(--rbx-red);color:#fff;font-weight:600;
+  padding:11px 14px;border-radius:10px;margin-top:13px;font-size:.88rem;
+  box-shadow:0 4px 0 rgba(0,0,0,.28);animation:erpop .4s;
+  display:flex;align-items:center;gap:9px;justify-content:center;text-align:left}
+.kunci .er.tampil::before{content:"⚠️";font-size:1.15rem;flex-shrink:0}
+@keyframes erpop{0%{opacity:0;transform:translateY(-8px) scale(.94)}
+  60%{transform:translateY(0) scale(1.03)}100%{transform:scale(1)}}
+.kunci .sisa{font-family:var(--mono);font-size:.74rem;color:#ffb4ae;margin-top:8px}
 
 /* kartu kode untuk guru */
 .kodebox{background:linear-gradient(135deg,var(--rbx-purple),var(--rbx-blue));
@@ -643,7 +656,7 @@ header.bar{background:var(--ink)}
   #bgfx::before{background-size:92px 92px,92px 92px,28px 28px,28px 28px}
   #bgfx::after{display:none}
   .blok{opacity:.34}
-  .panel{contain:content;box-shadow:0 2px 10px rgba(17,34,58,.06)}
+  .panel{box-shadow:0 2px 10px rgba(17,34,58,.06)}
   .rv{transition-duration:.3s}
   /* efek sentuh tanpa transform agar tidak memicu gambar ulang */
   .kv .c:hover,.bpart:hover,.cmp .it:hover,.tli:hover,.bit:hover{transform:none}
@@ -745,6 +758,20 @@ body.hemat .fly{animation-duration:.5s}
   .fb-kiri span{font-size:.78rem}
   .fokusbar .btn2{width:100%;margin-top:4px}
 }
+
+/* tombol dengarkan */
+.suara-btn{display:inline-flex;align-items:center;gap:7px;
+  background:linear-gradient(135deg,var(--rbx-purple),var(--rbx-blue));color:#fff;
+  border:0;font:600 .78rem var(--body);padding:7px 14px;border-radius:9px;
+  cursor:pointer;margin:0 0 12px;box-shadow:0 3px 0 rgba(0,0,0,.2);
+  transition:transform .1s,box-shadow .1s,filter .15s}
+.suara-btn:hover{filter:brightness(1.1);transform:translateY(-1px);box-shadow:0 4px 0 rgba(0,0,0,.22)}
+.suara-btn:active{transform:translateY(2px);box-shadow:0 1px 0 rgba(0,0,0,.2)}
+.suara-btn .ic{font-size:.95rem}
+.suara-btn.main{background:linear-gradient(135deg,var(--rbx-red),#ff8a00)}
+.suara-btn.main .ic{animation:gelombang 1s ease-in-out infinite}
+@keyframes gelombang{0%,100%{transform:scale(1)}50%{transform:scale(1.22)}}
+body.hemat .suara-btn.main .ic{animation:none}
 
 *:focus-visible{outline:3px solid var(--rbx-yellow);outline-offset:2px}
 @media(max-width:640px){.panel{padding:17px 14px}.cpu{grid-template-columns:repeat(2,1fr)}.roles{margin-left:0;width:100%}.roles button{flex:1}nav.ch{top:47px}}
@@ -1948,6 +1975,88 @@ document.addEventListener('keydown',e=>{
   },{passive:true});
 })();
 
+/* ============ PEMBACA SUARA MATERI ============ */
+const Suara = (()=>{
+  const ada = typeof speechSynthesis!=='undefined' && typeof SpeechSynthesisUtterance!=='undefined';
+  let aktif=null, tombolAktif=null;
+
+  function suaraIndonesia(){
+    if(!ada)return null;
+    const daftar=speechSynthesis.getVoices()||[];
+    return daftar.find(v=>v.lang==='id-ID')
+        || daftar.find(v=>(v.lang||'').toLowerCase().startsWith('id'))
+        || daftar.find(v=>/indonesia/i.test(v.name))
+        || null;
+  }
+
+  /* ubah HTML materi jadi kalimat yang enak dibaca */
+  function bersihkan(el){
+    const salinan=el.cloneNode(true);
+    salinan.querySelectorAll('.lab,table,pre,.acode,button,svg,.bits,.cpu,.board,.cmp,.pyr,.flow,.track,.marks').forEach(x=>x.remove());
+    let t=salinan.textContent||'';
+    return t.replace(/\s+/g,' ')
+      .replace(/([a-z0-9])([A-Z])/g,'$1. $2')   // beri jeda antar-bagian
+      .replace(/\s*·\s*/g,', ')
+      .trim();
+  }
+
+  function stop(){
+    if(!ada)return;
+    speechSynthesis.cancel();
+    if(tombolAktif){tombolAktif.classList.remove('main');tombolAktif.querySelector('.lbl').textContent='Dengarkan'}
+    aktif=null;tombolAktif=null;
+  }
+
+  function putar(teks,btn){
+    if(!ada)return;
+    if(tombolAktif===btn && speechSynthesis.speaking){stop();return}
+    stop();
+    if(!teks)return;
+    /* pecah menjadi potongan agar tidak terputus di teks panjang */
+    const potongan=teks.match(/[^.!?]+[.!?]*/g)||[teks];
+    const gabung=[];let buf='';
+    potongan.forEach(p=>{
+      if((buf+p).length>200){gabung.push(buf.trim());buf=p}else buf+=p;
+    });
+    if(buf.trim())gabung.push(buf.trim());
+
+    const vo=suaraIndonesia();
+    tombolAktif=btn;
+    btn.classList.add('main');btn.querySelector('.lbl').textContent='Hentikan';
+
+    gabung.forEach((bagian,i)=>{
+      const u=new SpeechSynthesisUtterance(bagian);
+      u.lang='id-ID';u.rate=.94;u.pitch=1;
+      if(vo)u.voice=vo;
+      if(i===gabung.length-1)u.onend=()=>stop();
+      u.onerror=()=>stop();
+      speechSynthesis.speak(u);
+    });
+    aktif=true;
+  }
+
+  function pasang(){
+    if(!ada)return;
+    document.querySelectorAll('#app section.panel').forEach(sec=>{
+      const jd=sec.querySelector('h2.sec');
+      if(!jd||sec.querySelector('.suara-btn'))return;
+      if(sec.querySelector('#quiz')||sec.classList.contains('fokusbar'))return;
+      const teks=bersihkan(sec);
+      if(teks.length<80)return;
+      const b=document.createElement('button');
+      b.className='suara-btn';
+      b.innerHTML='<span class="ic">🔊</span><span class="lbl">Dengarkan</span>';
+      b.title='Dengarkan penjelasan bagian ini';
+      b.onclick=()=>putar(teks,b);
+      jd.insertAdjacentElement('afterend',b);
+    });
+  }
+
+  if(ada&&speechSynthesis.getVoices().length===0)speechSynthesis.onvoiceschanged=()=>{};
+  window.addEventListener('beforeunload',()=>{if(ada)speechSynthesis.cancel()});
+  return {pasang,stop,ada};
+})();
+
 /* ============ SESI & PENYIMPANAN ============ */
 const app=document.getElementById('app');
 const wait=ms=>new Promise(r=>setTimeout(r,ms));
@@ -1957,6 +2066,50 @@ let role='siswa',ch=1,nis=null,nama=null,kelas=null,ans={};
 /* syarat buka bab: seluruh soal bab sebelumnya sudah dijawab */
 const PREREQ={1:null,2:1,3:2};
 
+/* --- batas sesi 40 menit --- */
+const BATAS_SESI = 40*60*1000;          // 40 menit
+const PERINGATAN = 5*60*1000;           // ingatkan 5 menit sebelum habis
+let jamSesi=null, sudahDiingatkan=false;
+
+function mulaiHitung(){
+  hentikanHitung();
+  sudahDiingatkan=false;
+  jamSesi=setInterval(()=>{
+    const v=bacaSesi();
+    if(!v||!v.mulai){hentikanHitung();return}
+    const sisa=BATAS_SESI-(Date.now()-v.mulai);
+    paintSisa(sisa);
+    if(sisa<=PERINGATAN && !sudahDiingatkan){
+      sudahDiingatkan=true;
+      toast(`⏳ Sesi tinggal ${Math.ceil(sisa/60000)} menit lagi. Kerjakan segera — jawabanmu tersimpan otomatis.`);
+    }
+    if(sisa<=0){hentikanHitung();keluarOtomatis()}
+  },1000);
+}
+function hentikanHitung(){if(jamSesi){clearInterval(jamSesi);jamSesi=null}}
+
+function paintSisa(ms){
+  const e=document.getElementById('sisaSesi');
+  if(!e)return;
+  if(ms<0)ms=0;
+  const m=Math.floor(ms/60000), d2=Math.floor((ms%60000)/1000);
+  e.textContent=`${m}:${String(d2).padStart(2,'0')}`;
+  e.classList.toggle('kritis', ms<=PERINGATAN);
+}
+
+function keluarOtomatis(){
+  saveSiswa();
+  const siapa=nama?nama.split(' ')[0]:'';
+  hapusSesi();nis=null;nama=null;kelas=null;ans={};role='siswa';modeIntip=false;bacaMateri=false;
+  document.getElementById('gate').classList.remove('off');
+  ['nisIn','namaIn','gnamaIn','pinIn'].forEach(i=>{const x=document.getElementById(i);if(x)x.value=''});
+  document.getElementById('roleBox').style.display='none';
+  document.getElementById('who').innerHTML='';
+  const er=document.getElementById('gerr');
+  if(er)er.innerHTML=`Sesi 40 menit telah berakhir${siapa?', '+siapa:''}. Seluruh jawabanmu sudah tersimpan — masuk lagi untuk melanjutkan.`;
+  document.getElementById('tabS').click();
+}
+
 function loadAll(){try{return JSON.parse(localStorage.getItem(KEY))||{}}catch(e){return{}}}
 function saveAll(o){try{localStorage.setItem(KEY,JSON.stringify(o))}catch(e){}}
 function loadSiswa(id){const a=loadAll();return a[id]||{ans:{},nama:'',kelas:''}}
@@ -1965,8 +2118,12 @@ function saveSiswa(){if(!nis||nis==='guru')return;const a=loadAll();
 
 /* --- sesi bertahan meski halaman dimuat ulang --- */
 const SESI='ruang_informatika_sesi';
-function simpanSesi(){
-  try{localStorage.setItem(SESI,JSON.stringify({nis:nis,nama:nama,kelas:kelas,role:role,ch:ch}))}catch(e){}
+function simpanSesi(mulaiBaru){
+  try{
+    const lama=bacaSesi();
+    const mulai = mulaiBaru ? Date.now() : (lama&&lama.mulai ? lama.mulai : Date.now());
+    localStorage.setItem(SESI,JSON.stringify({nis:nis,nama:nama,kelas:kelas,role:role,ch:ch,mulai:mulai}));
+  }catch(e){}
 }
 function hapusSesi(){try{localStorage.removeItem(SESI)}catch(e){}}
 function bacaSesi(){
@@ -1976,6 +2133,12 @@ function bacaSesi(){
 function pulihkanSesi(){
   const v=bacaSesi();
   if(!v)return false;
+  if(v.mulai && Date.now()-v.mulai >= BATAS_SESI){
+    hapusSesi();
+    const er=document.getElementById('gerr');
+    if(er)er.innerHTML='Sesi 40 menit sebelumnya sudah berakhir. Masuk lagi untuk melanjutkan — jawabanmu tersimpan.';
+    return false;
+  }
   nis=v.nis;nama=v.nama;role=v.role==='guru'?'guru':'siswa';
   const rec0 = role==='guru' ? {} : loadSiswa(nis);
   kelas = v.kelas || rec0.kelas || null;
@@ -1986,6 +2149,7 @@ function pulihkanSesi(){
   if(role==='guru')setRole('guru');
   const c=[1,2,3].includes(+v.ch)?+v.ch:1;
   setCh(terbuka(c)?c:1);
+  mulaiHitung();
   return true;
 }
 
@@ -2026,7 +2190,7 @@ function masuk(){
   document.getElementById('roleBox').style.display='none';
   paintWho();saveSiswa();
   const lanjut=tuntas(2)?3:(tuntas(1)?2:1);
-  setCh(lanjut);simpanSesi();
+  setCh(lanjut);simpanSesi(true);mulaiHitung();
   toast(lanjut>1
     ? `Selamat datang kembali, ${nama.split(' ')[0]}. Kamu melanjutkan di Bab ${lanjut}.`
     : `Selamat belajar, ${nama.split(' ')[0]}.`);
@@ -2044,12 +2208,12 @@ function masukGuru(){
   nis='guru';nama=vn;role='guru';
   document.getElementById('gate').classList.add('off');
   document.getElementById('roleBox').style.display='flex';
-  setRole('guru');paintWho();setCh(1);simpanSesi();
+  setRole('guru');paintWho();setCh(1);simpanSesi(true);mulaiHitung();
   toast(`Selamat datang, ${vn}. Seluruh bab terbuka dalam mode guru.`);
 }
 
 function keluar(){
-  saveSiswa();hapusSesi();nis=null;nama=null;kelas=null;ans={};role='siswa';
+  saveSiswa();hapusSesi();hentikanHitung();nis=null;nama=null;kelas=null;ans={};role='siswa';
   document.getElementById('gate').classList.remove('off');
   ['nisIn','namaIn','gnamaIn','pinIn'].forEach(i=>document.getElementById(i).value='');
   document.getElementById('gerr').textContent='';
@@ -2060,10 +2224,14 @@ function keluar(){
 }
 function paintWho(){
   const w=document.getElementById('who');
-  w.innerHTML = nis==='guru'
-    ? `<span>${nama} · <b>Guru</b></span><button id="out">Keluar</button>`
-    : `<span>${nama} · NIS <b>${nis}</b></span><button id="out">Keluar</button>`;
+  w.innerHTML = (nis==='guru'
+    ? `<span>${nama} · <b>Guru</b></span>`
+    : `<span>${nama} · NIS <b>${nis}</b></span>`)
+    + `<span class="sesi" title="Sisa waktu sesi">⏱ <b id="sisaSesi">40:00</b></span>`
+    + `<button id="out">Keluar</button>`;
   document.getElementById('out').onclick=keluar;
+  const v=bacaSesi();
+  if(v&&v.mulai)paintSisa(BATAS_SESI-(Date.now()-v.mulai));
 }
 
 /* ============ NAVIGASI ============ */
@@ -2087,7 +2255,7 @@ function setCh(c){
     toast(`Bab ${c} masih terkunci. Selesaikan dulu ${total(p)-jml(p)} soal Bab ${p} yang tersisa.`);
     // tetap tampilkan halaman terkunci agar siswa paham syaratnya
   }
-  ch=c;bacaMateri=false;paintNav();render();
+  ch=c;bacaMateri=false;if(window.Suara)Suara.stop();paintNav();render();
   if(nis)simpanSesi();
 }
 
@@ -2113,7 +2281,7 @@ function render(){
         <div style="font-size:.86rem;color:#5d6b7a;margin-top:3px">Inilah yang dilihat siswa. Seluruh simulator dapat dijalankan untuk diperagakan di depan kelas.</div></div>
         <button class="btn2 g" onclick="kembaliGuru()">← Kembali ke panel guru</button>
       </div></section>`+d.html+quizHTML(d);
-    wireQuiz(d);wireLabs();observe();window.scrollTo(0,0);return;
+    wireQuiz(d);wireLabs();Suara.pasang();observe();window.scrollTo(0,0);return;
   }
 
   if(!terbuka(ch)){app.innerHTML=lockedHTML(ch);observe();animReq(ch);window.scrollTo(0,0);return;}
@@ -2126,7 +2294,7 @@ function render(){
   }
 
   app.innerHTML = (bacaMateri ? materiBarHTML() : progHTML()) + d.html + quizHTML(d);
-  wireQuiz(d);wireLabs();animProg();paintXP();
+  wireQuiz(d);wireLabs();animProg();paintXP();Suara.pasang();
   observe();window.scrollTo(0,0);
 }
 
@@ -2137,7 +2305,7 @@ function tutupMateri(){bacaMateri=false;render()}
 
 function fokusBarHTML(d){
   const n=jml(ch),t=total(ch);
-  return `<section class="panel rv fokusbar">
+  return `<section class="panel fokusbar">
     <div class="fb-in">
       <div class="fb-kiri">
         <span class="fb-ic">🎯</span>
@@ -2152,7 +2320,7 @@ function fokusBarHTML(d){
 }
 
 function materiBarHTML(){
-  return `<section class="panel rv fokusbar" style="background:linear-gradient(135deg,rgba(0,162,255,.12),rgba(139,92,246,.12));border-color:rgba(0,162,255,.4)">
+  return `<section class="panel fokusbar" style="background:linear-gradient(135deg,rgba(0,162,255,.12),rgba(139,92,246,.12));border-color:rgba(0,162,255,.4)">
     <div class="fb-in">
       <div class="fb-kiri">
         <span class="fb-ic">📖</span>
@@ -2169,7 +2337,7 @@ function materiBarHTML(){
 /* halaman bab terkunci */
 function lockedHTML(c){
   const p=PREREQ[c],sisa=total(p)-jml(p);
-  return `<section class="panel rv" style="padding:0;border:0;background:none">
+  return `<section class="panel" style="padding:0;border:0;background:none">
     <div class="gatePanel">
       <div class="lk">🔒</div>
       <h2>Bab ${c} belum terbuka</h2>
@@ -2186,7 +2354,7 @@ function animReq(c){
 
 /* kartu progres siswa */
 function progHTML(){
-  return `<section class="panel rv"><h2 class="sec">Kemajuan belajar ${nama?nama.split(' ')[0]:''}</h2>
+  return `<section class="panel"><h2 class="sec">Kemajuan belajar ${nama?nama.split(' ')[0]:''}</h2>
    <p class="sub">${nama} · NIS ${nis}${kelas?' · Kelas '+kelas:''} · tersimpan otomatis di perangkat ini.</p>
    <div class="prog">${[1,2,3].map(c=>{
      const done=tuntas(c),n=jml(c),t=total(c);
@@ -2204,11 +2372,32 @@ function animProg(){
 /* reveal */
 let io;
 function observe(){
-  const els=document.querySelectorAll('.rv');
-  if(typeof IntersectionObserver==='undefined'){els.forEach(e=>e.classList.add('in'));return}
+  const els=[...document.querySelectorAll('.rv')];
+  if(!els.length)return;
+
+  /* Apa pun yang sudah berada di layar saat ini langsung ditampilkan.
+     Hanya bagian jauh di bawah yang memakai efek muncul saat digulir. */
+  const tinggi=window.innerHeight||800;
+  const jauh=[];
+  els.forEach(el=>{
+    let atas=1e9;
+    try{atas=el.getBoundingClientRect().top}catch(e){}
+    if(atas<tinggi*1.25)el.classList.add('in'); else jauh.push(el);
+  });
+
+  if(!jauh.length)return;
+  if(typeof IntersectionObserver==='undefined'){jauh.forEach(e=>e.classList.add('in'));return}
   if(io)io.disconnect();
-  io=new IntersectionObserver(es=>es.forEach(e=>{if(e.isIntersecting){e.target.classList.add('in');io.unobserve(e.target)}}),{threshold:.08});
-  els.forEach(el=>io.observe(el));
+  io=new IntersectionObserver(es=>es.forEach(e=>{
+    if(e.isIntersecting){e.target.classList.add('in');io.unobserve(e.target)}
+  }),{threshold:0,rootMargin:'0px 0px -4% 0px'});
+  jauh.forEach(el=>io.observe(el));
+
+  /* JARING PENGAMAN: apa pun yang terjadi, isi wajib terlihat */
+  clearTimeout(observe._t);
+  observe._t=setTimeout(()=>{
+    document.querySelectorAll('.rv:not(.in)').forEach(e=>e.classList.add('in'));
+  },900);
 }
 
 /* ============ LABS ============ */
@@ -3108,7 +3297,7 @@ function paintXP(){
 /* ====== KUIS ====== */
 function quizHTML(d){
   /* 1) kelas wajib diisi lebih dulu */
-  if(role!=='guru' && !kelas)return `<section class="panel rv" style="padding:0;border:0;background:none">
+  if(role!=='guru' && !kelas)return `<section class="panel" style="padding:0;border:0;background:none">
     <div class="kunci">
       <div class="gb">🎓</div>
       <h3>Isi kelasmu dulu</h3>
@@ -3124,7 +3313,7 @@ function quizHTML(d){
     </div></section>`;
 
   /* 2) kuis masih terkunci menunggu kode guru */
-  if(!kuisTerbuka(ch))return `<section class="panel rv" style="padding:0;border:0;background:none">
+  if(!kuisTerbuka(ch))return `<section class="panel" style="padding:0;border:0;background:none">
     <div class="kunci">
       <div class="gb">🔐</div>
       <h3>Latihan soal masih terkunci</h3>
@@ -3138,7 +3327,7 @@ function quizHTML(d){
       </div>
     </div></section>`;
 
-  return `<section class="panel rv">
+  return `<section class="panel">
    <div class="qhead"><div><h2 class="sec">Latihan Soal</h2>
    <p class="sub" style="margin:0">${d.q.length} soal. Hasilmu terlihat langsung saat menjawab.</p></div>
    <span class="badge">KELAS ${kelas||'—'}</span></div>
@@ -3175,12 +3364,19 @@ function quizHTML(d){
 function wireKelas(){
   const b=document.getElementById('kelasBtn');if(!b)return;
   const inp=document.getElementById('kelasIn'),er=document.getElementById('kelasEr');
+  const gagalKls=pesan=>{
+    er.className='er tampil';er.innerHTML=`<span>${pesan}</span>`;
+    inp.classList.remove('err');void inp.offsetWidth;inp.classList.add('err');inp.focus();
+    if(navigator.vibrate)navigator.vibrate([60,50,60]);
+  };
+  inp.addEventListener('input',()=>{
+    if(er.classList.contains('tampil')){er.className='er';er.textContent='';inp.classList.remove('err')}
+  });
   const simpan=v=>{
     const t=(v||'').trim().toUpperCase().replace(/\s+/g,' ');
-    if(t.length<1){er.textContent='Pilih salah satu kelas atau ketik kelasmu.';
-      inp.classList.remove('err');void inp.offsetWidth;inp.classList.add('err');return}
-    if(!/^[0-9A-Z.\- ]{1,12}$/.test(t)){er.textContent='Kelas hanya boleh berisi huruf, angka, spasi, titik, atau strip.';
-      inp.classList.remove('err');void inp.offsetWidth;inp.classList.add('err');return}
+    if(t.length<1)return gagalKls('Kelas masih kosong. Pilih salah satu tombol di atas atau ketik kelasmu.');
+    if(!/^[0-9A-Z.\- ]{1,12}$/.test(t))return gagalKls('Kelas hanya boleh berisi huruf, angka, spasi, titik, atau strip.');
+    er.className='er';er.textContent='';
     kelas=t;saveSiswa();simpanSesi();
     toast(`Kelas ${t} tersimpan. Sekarang masukkan kode dari guru.`);
     render();
@@ -3193,14 +3389,32 @@ function wireKelas(){
 function wireKode(d){
   const b=document.getElementById('kodeBtn');if(!b)return;
   const inp=document.getElementById('kodeIn'),er=document.getElementById('kodeEr');
+  let gagal=0;
+  const tampilkan=(pesan)=>{
+    er.className='er tampil';
+    er.innerHTML=`<span>${pesan}</span>`;
+    inp.classList.remove('err');void inp.offsetWidth;inp.classList.add('err');
+    inp.select();
+    if(navigator.vibrate)navigator.vibrate([60,50,60]);
+  };
   const coba=()=>{
     const v=inp.value.trim().toUpperCase();
-    if(v===KODE_KUIS[ch]){bukaKuis(ch);toast('🔓 Latihan Bab '+ch+' terbuka. Selamat mengerjakan!');render()}
-    else{er.textContent='Kode belum tepat. Periksa kembali tulisan di papan.';
-      inp.classList.remove('err');void inp.offsetWidth;inp.classList.add('err');inp.select()}
+    if(!v)return tampilkan('Kode masih kosong. Ketik kode yang ditulis guru di papan.');
+    if(v===KODE_KUIS[ch]){
+      er.className='er';er.textContent='';
+      bukaKuis(ch);toast('🔓 Latihan Bab '+ch+' terbuka. Selamat mengerjakan!');render();return;
+    }
+    gagal++;
+    let pesan=`Kode <b>${v}</b> tidak dikenali. Periksa lagi tulisan di papan.`;
+    if(gagal>=3)pesan+=`<br><span style="font-weight:400;opacity:.9">Sudah ${gagal} kali salah — coba tanyakan kembali kepada guru.</span>`;
+    tampilkan(pesan);
   };
   b.onclick=coba;
   inp.addEventListener('keydown',e=>{if(e.key==='Enter')coba()});
+  /* pesan hilang saat siswa mulai mengetik ulang */
+  inp.addEventListener('input',()=>{
+    if(er.classList.contains('tampil')){er.className='er';er.textContent='';inp.classList.remove('err')}
+  });
   setTimeout(()=>inp.focus(),200);
 }
 
