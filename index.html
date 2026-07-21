@@ -539,7 +539,179 @@ header.bar{background:rgba(13,17,23,.93);backdrop-filter:blur(11px);-webkit-back
 .dk-slide p.lead+p.lead{margin-top:14px}
 .dk-slide sup{font-size:.7em}
 
-*:focus-visible{outline:2px solid var(--amber);outline-offset:2px}
+/* ===== TEMA GAME ===== */
+:root{
+  --rbx-blue:#00a2ff;--rbx-green:#00b06f;--rbx-red:#ff3b30;
+  --rbx-yellow:#ffc900;--rbx-purple:#8b5cf6;--rbx-pink:#ff2d92;
+}
+.gcard,.panel{border-radius:16px}
+.btn,.btn2{border-radius:10px;font-weight:700;letter-spacing:.01em;
+  box-shadow:0 4px 0 rgba(0,0,0,.18);transition:transform .1s,box-shadow .1s,filter .15s}
+.btn:active,.btn2:active{transform:translateY(3px);box-shadow:0 1px 0 rgba(0,0,0,.18)}
+.btn{background:var(--rbx-blue);color:#fff}
+.btn:hover{background:#0090e6;transform:translateY(-1px);box-shadow:0 5px 0 rgba(0,0,0,.2)}
+.btn.g{background:#2a3541;color:#cfe0f0;box-shadow:0 4px 0 rgba(0,0,0,.3)}
+.btn.g:hover{background:#36434f}
+.btn2{background:var(--rbx-blue);color:#fff}
+.btn2:hover{background:#0090e6}
+.btn2.g{background:#fff;color:var(--ink);border:2px solid var(--line2);box-shadow:0 4px 0 rgba(17,34,58,.12)}
+
+/* XP & level di bar atas */
+.xpwrap{display:flex;align-items:center;gap:9px;font-family:var(--mono);font-size:.72rem}
+.lvl-badge{background:linear-gradient(135deg,var(--rbx-yellow),#ff9500);color:#3d2600;
+  font-weight:700;padding:4px 10px;border-radius:8px;box-shadow:0 2px 0 rgba(0,0,0,.3);
+  font-family:var(--disp);font-size:.78rem;white-space:nowrap}
+.xpbar{width:88px;height:9px;background:rgba(255,255,255,.16);border-radius:99px;overflow:hidden}
+.xpbar i{display:block;height:100%;background:linear-gradient(90deg,var(--rbx-green),#5ce1a0);
+  width:0;transition:width .7s cubic-bezier(.2,.9,.3,1)}
+
+/* panel hasil realtime */
+.live{display:flex;gap:20px;align-items:center;flex-wrap:wrap;
+  background:linear-gradient(135deg,#0d1b2a,#16283d);border-radius:16px;
+  padding:18px 20px;margin:14px 0 20px;color:#fff;
+  box-shadow:0 6px 0 rgba(0,0,0,.22)}
+.lv-ring{position:relative;width:104px;height:104px;flex-shrink:0}
+.lv-ring svg{width:100%;height:100%;transform:rotate(-90deg)}
+.lv-ring circle{fill:none;stroke-width:9;stroke-linecap:round}
+.lv-ring .bg{stroke:rgba(255,255,255,.14)}
+.lv-ring .fg{stroke:var(--rbx-green);stroke-dasharray:264;stroke-dashoffset:264;
+  transition:stroke-dashoffset .7s cubic-bezier(.2,.9,.3,1),stroke .35s}
+.lv-mid{position:absolute;inset:0;display:flex;flex-direction:column;
+  align-items:center;justify-content:center;pointer-events:none}
+.lv-mid b{font-family:var(--disp);font-size:1.9rem;line-height:1}
+.lv-mid span{font-family:var(--mono);font-size:.6rem;opacity:.7;letter-spacing:.1em}
+.lv-info{flex:1;min-width:190px}
+.lv-row{display:flex;gap:10px;flex-wrap:wrap}
+.lv-st{background:rgba(255,255,255,.10);border-radius:10px;padding:8px 14px;flex:1;min-width:74px;text-align:center}
+.lv-st b{font-family:var(--disp);font-size:1.4rem;display:block;line-height:1.1}
+.lv-st span{font-family:var(--mono);font-size:.62rem;opacity:.72;letter-spacing:.08em;text-transform:uppercase}
+.lv-st.ok b{color:var(--rbx-green)}.lv-st.no b{color:#ff7b72}
+.lv-msg{font-size:.85rem;opacity:.9;line-height:1.45}
+.lv-streak{display:inline-block;background:linear-gradient(135deg,#ff9500,var(--rbx-pink));
+  color:#fff;font-family:var(--disp);font-size:.76rem;padding:3px 10px;border-radius:8px;
+  margin-left:7px;animation:pop2 .4s}
+@keyframes pop2{0%{transform:scale(.4);opacity:0}70%{transform:scale(1.18)}}
+
+/* umpan balik soal bergaya game */
+.opt{border-width:2px;border-radius:11px;font-weight:500}
+.opt.ok{border-color:var(--rbx-green);background:#e8fbf2}
+.opt.bad{border-color:var(--rbx-red);background:#ffeceb}
+.q.ans{border-width:2px}
+.badge{border-radius:8px}
+.fly{position:fixed;z-index:180;font-family:var(--disp);font-weight:700;font-size:1.35rem;
+  pointer-events:none;animation:flyup 1.05s ease-out forwards;text-shadow:0 2px 6px rgba(0,0,0,.28)}
+@keyframes flyup{0%{opacity:0;transform:translateY(6px) scale(.7)}
+  22%{opacity:1;transform:translateY(-10px) scale(1.12)}
+  100%{opacity:0;transform:translateY(-72px) scale(1)}}
+
+/* lencana */
+.lencana{display:grid;grid-template-columns:repeat(auto-fit,minmax(128px,1fr));gap:11px;margin-top:14px}
+.lc{background:#fff;border:2px solid var(--line2);border-radius:13px;padding:13px 10px;
+  text-align:center;opacity:.4;filter:grayscale(1);transition:.35s}
+.lc.on{opacity:1;filter:none;border-color:var(--rbx-yellow);
+  box-shadow:0 4px 0 rgba(255,201,0,.32);animation:pop2 .5s}
+.lc .em{font-size:1.7rem;display:block;margin-bottom:5px}
+.lc b{font-family:var(--disp);font-size:.8rem;display:block}
+.lc span{font-size:.68rem;color:#5d6b7a;display:block;margin-top:2px;line-height:1.35}
+
+/* gerbang kunci kuis */
+.kunci{background:linear-gradient(135deg,#1b2735,#243447);border-radius:16px;
+  padding:30px 24px;text-align:center;color:#fff;box-shadow:0 6px 0 rgba(0,0,0,.22)}
+.kunci .gb{font-size:2.8rem;display:inline-block;animation:sway 2.6s ease-in-out infinite}
+.kunci h3{font-family:var(--disp);font-size:1.3rem;margin:8px 0 6px;color:#fff}
+.kunci p{color:#9fb2c6;font-size:.9rem;max-width:44ch;margin:0 auto 16px}
+.kunci input{font-family:var(--mono);font-size:1.5rem;text-align:center;letter-spacing:.28em;
+  background:#0f151d;border:2px solid #33404f;color:#fff;padding:13px;border-radius:11px;
+  width:210px;max-width:100%;text-transform:uppercase}
+.kunci input:focus{border-color:var(--rbx-blue);outline:none}
+.kunci input.err{border-color:var(--rbx-red);animation:shake .38s}
+.kunci .er{color:#ff7b72;font-size:.84rem;min-height:20px;margin-top:9px}
+
+/* kartu kode untuk guru */
+.kodebox{background:linear-gradient(135deg,var(--rbx-purple),var(--rbx-blue));
+  border-radius:16px;padding:22px;color:#fff;text-align:center;box-shadow:0 6px 0 rgba(0,0,0,.2)}
+.kodebox .kd{font-family:var(--mono);font-size:clamp(2.2rem,7vw,3.4rem);font-weight:600;
+  letter-spacing:.22em;line-height:1;margin:10px 0}
+.kodebox small{opacity:.85;font-size:.83rem;display:block}
+
+/* ===== OPTIMASI PONSEL ===== */
+@media (max-width:760px){
+  body{font-size:15px}
+  .wrap{padding:0 14px}
+  .panel{padding:16px 13px;border-radius:13px;margin-bottom:14px}
+  /* latar diringankan agar gulir mulus */
+  #bgfx svg{display:none}
+  #bgfx .bitfall:nth-child(n+9){display:none}
+  #bgfx::before{background-size:90px 90px,90px 90px,30px 30px,30px 30px}
+  .panel,nav.ch,header.bar{backdrop-filter:none;-webkit-backdrop-filter:none}
+  .panel{background:#fff}
+  nav.ch{background:#fff}
+  header.bar{background:var(--ink)}
+
+  /* sasaran sentuh diperbesar */
+  .opt{padding:14px 14px;font-size:.95rem;margin:9px 0}
+  .btn,.btn2{padding:13px 18px;font-size:.9rem;min-height:46px}
+  .ch button{padding:12px 13px;font-size:.82rem}
+  .bpart,.cmp .it,.tli,.lvl{padding:13px 10px}
+  .bit{width:44px;height:54px}
+
+  /* panel hasil realtime disusun ulang */
+  .live{padding:15px;gap:14px;justify-content:center;text-align:center}
+  .lv-ring{width:92px;height:92px}
+  .lv-mid b{font-size:1.65rem}
+  .lv-info{min-width:100%}
+  .lv-st{padding:7px 9px;min-width:60px}
+  .lv-st b{font-size:1.2rem}
+
+  .hero{padding:30px 0 26px}
+  .stats{gap:16px}
+  .stats b{font-size:1.15rem}
+  h2.sec{font-size:1.15rem}
+  h3{font-size:.95rem}
+  table{font-size:.82rem;display:block;overflow-x:auto;white-space:nowrap}
+  .dk-tbl{white-space:normal}
+  pre,.acode{font-size:.74rem}
+  .kv,.prog,.lencana{grid-template-columns:1fr 1fr}
+  .cpu{grid-template-columns:1fr 1fr}
+  .board{grid-template-columns:1fr 1fr}
+  .xpwrap{font-size:.66rem}
+  .xpbar{width:56px}
+  .who span{max-width:130px;overflow:hidden;text-overflow:ellipsis;white-space:nowrap}
+  .gcard{padding:24px 19px}
+  .kunci{padding:24px 16px}
+  .kunci input{font-size:1.3rem;width:180px}
+  .kodebox .kd{letter-spacing:.14em}
+}
+@media (max-width:400px){
+  .kv,.prog,.lencana,.cpu,.board{grid-template-columns:1fr}
+  .lv-row{flex-direction:row}
+  .stats{gap:12px}
+}
+/* hemat daya: matikan animasi latar bila perangkat lambat */
+@media (max-width:760px) and (prefers-reduced-motion:no-preference){
+  .bitfall{animation-duration:30s!important}
+}
+
+/* pilih kelas */
+.kelas-pilih{display:grid;grid-template-columns:repeat(3,1fr);gap:9px;
+  max-width:290px;margin:6px auto 0}
+.kls{font-family:var(--disp);font-weight:700;font-size:1.05rem;
+  background:#0f151d;border:2px solid #33404f;color:#cfe0f0;
+  padding:13px 6px;border-radius:11px;cursor:pointer;
+  box-shadow:0 3px 0 rgba(0,0,0,.3);transition:transform .1s,box-shadow .1s,border-color .2s,background .2s}
+.kls:hover{border-color:var(--rbx-blue);background:#12283a;transform:translateY(-2px);
+  box-shadow:0 5px 0 rgba(0,0,0,.32)}
+.kls:active{transform:translateY(2px);box-shadow:0 1px 0 rgba(0,0,0,.3)}
+.kunci input#kelasIn{font-size:1.2rem;letter-spacing:.16em;width:180px}
+@media(max-width:400px){.kelas-pilih{max-width:100%}.kls{font-size:.95rem;padding:12px 4px}}
+
+.klsTag{font-family:var(--mono);font-size:.72rem;font-weight:600;
+  background:linear-gradient(135deg,var(--rbx-blue),var(--rbx-purple));color:#fff;
+  padding:3px 9px;border-radius:6px;display:inline-block;letter-spacing:.06em}
+.btn2.fk{padding:8px 14px;font-size:.8rem;box-shadow:0 3px 0 rgba(17,34,58,.12)}
+.btn2.fk.on{background:var(--rbx-blue);color:#fff;border-color:var(--rbx-blue)}
+
+*:focus-visible{outline:3px solid var(--rbx-yellow);outline-offset:2px}
 @media(max-width:640px){.panel{padding:17px 14px}.cpu{grid-template-columns:repeat(2,1fr)}.roles{margin-left:0;width:100%}.roles button{flex:1}nav.ch{top:47px}}
 @media(prefers-reduced-motion:reduce){*{animation:none!important;transition:none!important}.rv{opacity:1;transform:none}}
 </style>
@@ -783,20 +955,36 @@ const M = {
  <div class="note"><b>Poin penting:</b> teknologi berubah cepat, tetapi cara berpikir komputasional tidak. Bahasa pemrograman yang populer hari ini mungkin ditinggalkan sepuluh tahun lagi — namun kemampuan memecah masalah, mengenali pola, dan menyusun langkah akan tetap terpakai. Itulah sebabnya Bab 2 dan Bab 3 menjadi fokus utama pembelajaran ini.</div>
  </section>`,
  q:[
- ["Informatika paling tepat didefinisikan sebagai ilmu yang mempelajari…",["Cara menggunakan aplikasi perkantoran","Cara memproses, menyimpan, dan mengomunikasikan informasi dengan komputer","Cara merakit komputer","Sejarah penemuan komputer"],1,"Informatika menekankan pengolahan informasi dan cara berpikirnya, bukan keterampilan memakai aplikasi."],
- ["Kulkas yang mengirim notifikasi saat stok telur habis adalah contoh…",["Big Data","Internet of Things","Komputasi awan","Peretasan"],1,"IoT adalah benda sehari-hari bersensor yang terhubung internet dan mengirim data."],
- ["Berikut BUKAN bidang kajian informatika…",["Sistem Komputer","Analisis Data","Akuntansi Keuangan","Jaringan dan Internet"],2,"Akuntansi bukan bidang kajian informatika meski banyak memakai perangkat lunak."],
- ["Rekomendasi video yang makin akurat setelah sering ditonton menunjukkan…",["Sistem yang belajar dari data","Sistem beraturan tetap","Sistem manual","Sistem tanpa jaringan"],0,"Ciri AI berbasis pembelajaran mesin: perilaku berubah seiring bertambahnya data."],
- ["Menyimpan tugas di Google Drive adalah pemanfaatan…",["Big Data","IoT","Komputasi awan","Enkripsi"],2,"Komputasi awan menyediakan penyimpanan lewat internet tanpa perangkat fisik sendiri."],
- ["Berpikir komputasional tetap relevan meski teknologi berubah karena…",["Semua aplikasi selalu sama","Ia melatih cara menyelesaikan masalah, bukan memakai satu alat","Komputer tak pernah diperbarui","Tidak berhubungan dengan teknologi"],1,"Cara berpikir bersifat umum dan bisa dipindahkan ke alat baru mana pun."],
- ["Dampak sosial informatika mencakup hal berikut, KECUALI…",["Privasi data pribadi","Informasi palsu","Kesenjangan akses","Kecepatan clock prosesor"],3,"Kecepatan clock adalah topik teknis Sistem Komputer, bukan dampak sosial."],
- ["Ciri utama Big Data adalah…",["Selalu berbentuk teks","Volume sangat besar dan cepat bertambah","Selalu rahasia","Hanya milik pemerintah"],1,"Big Data dicirikan volume, kecepatan, dan keragaman melampaui pengolahan biasa."],
- ["Sistem penyiram sawah yang menyala sendiri saat tanah kering menerapkan bidang…",["Analisis Data","Internet of Things","Komputasi awan","Dampak sosial"],1,"Sensor pada benda sehari-hari yang mengirim data dan memicu tindakan adalah ciri IoT."],
- ["Mesin ATM disebut sistem komputer lengkap karena memiliki…",["Hanya perangkat masukan","Input, proses, output, dan penyimpanan","Hanya koneksi internet","Hanya perangkat lunak"],1,"Kartu dan tombol sebagai input, verifikasi saldo sebagai proses, uang dan struk sebagai output, catatan transaksi sebagai penyimpanan."],
- ["Yang membedakan program biasa dengan kecerdasan artifisial adalah…",["AI lebih cepat menghitung","AI memperbaiki hasilnya seiring bertambahnya data","Program biasa tidak butuh listrik","AI tidak memerlukan data"],1,"Program biasa selalu memberi hasil sama untuk masukan sama; AI belajar dari contoh."],
- ["Kata sandi berikut yang paling kuat adalah…",["P@ss1!","budi123","kucing-hitam-makan-rendang","admin2024"],2,"Panjang lebih berpengaruh daripada kerumitan simbol. Sandi panjang berbentuk frasa jauh lebih sulit dibobol."],
- ["Isu kesenjangan digital muncul ketika…",["Semua orang punya perangkat","Sebagian orang tidak punya perangkat atau sinyal sehingga tertinggal","Internet terlalu cepat","Data terlalu banyak"],1,"Kesenjangan digital adalah ketimpangan akses terhadap perangkat dan jaringan."],
- ["Profesi yang bertugas mengubah data mentah menjadi dasar pengambilan keputusan adalah…",["Analis data","Teknisi perangkat keras","Perancang UI/UX","Administrator jaringan"],0,"Analis data mengolah dan menafsirkan data agar bermakna bagi pengambil keputusan."]],
+ ["Seorang siswa berkata: \"Saya jago Informatika karena hafal semua menu di Microsoft Word.\" Kekeliruan mendasar pernyataan ini adalah…",["Word bukan buatan perusahaan teknologi","Ia menyamakan keterampilan memakai alat dengan penguasaan ilmunya","Word tidak termasuk perangkat lunak","Menghafal menu adalah hal yang mustahil"],1,"Informatika mempelajari prinsip pengolahan informasi. Menguasai satu aplikasi adalah keterampilan alat yang bisa usang, bukan penguasaan ilmunya."],
+ ["Sebuah masalah membutuhkan waktu jutaan tahun untuk diselesaikan bahkan oleh superkomputer tercepat. Pertanyaan inti informatika yang paling relevan di sini adalah…",["Apa dampaknya bagi manusia","Bagaimana cara paling efisien","Berapa harga komputernya","Siapa yang menemukannya"],1,"Pertanyaan efisiensi membahas berapa lama sebuah masalah dapat diselesaikan, bukan sekadar apakah bisa diselesaikan."],
+ ["Dua program menghasilkan jawaban yang sama persis, tetapi satu selesai dalam 1 detik dan satunya butuh 7 hari. Perbedaan ini paling tepat disebut perbedaan…",["Kebenaran","Efisiensi algoritma","Bahasa pemrograman","Perangkat keras"],1,"Keduanya sama-sama benar, yang membedakan adalah efisiensi langkah penyelesaiannya."],
+ ["Sekolah memasang sensor suhu di setiap ruang kelas yang mengirim data ke server, lalu data itu dianalisis untuk mengatur pendingin ruangan. Bidang kajian yang terlibat berturut-turut adalah…",["IoT → Jaringan → Analisis Data","Analisis Data → IoT → Jaringan","Jaringan → Dampak Sosial → IoT","Sistem Komputer saja"],0,"Sensor pada benda adalah IoT, pengiriman ke server memakai Jaringan, pengolahan untuk keputusan adalah Analisis Data."],
+ ["Aplikasi kalkulator selalu menghasilkan 4 untuk masukan 2+2, hari ini maupun tahun depan. Sifat ini menunjukkan bahwa kalkulator adalah…",["Sistem berbasis aturan tetap","Sistem kecerdasan artifisial","Sistem yang belajar dari data","Sistem terdistribusi"],0,"Program beraturan tetap selalu memberi keluaran sama untuk masukan sama, berbeda dengan AI yang perilakunya berubah seiring data."],
+ ["Sebuah sistem pengenal wajah salah mengenali orang berkulit gelap jauh lebih sering. Penyebab paling mungkin adalah…",["Prosesornya terlalu lambat","Data latihnya kurang beragam sehingga menghasilkan bias","Kameranya rusak","Jaringannya lambat"],1,"AI belajar dari data. Bila data latih tidak mewakili semua kelompok, hasilnya menjadi bias — ini isu dampak sosial yang penting."],
+ ["Pernyataan yang PALING TEPAT tentang cara kerja AI pengenal gambar kucing adalah…",["Ia memahami konsep kucing seperti manusia","Ia mengenali pola statistik piksel yang biasanya diberi label kucing","Ia menyimpan foto semua kucing di dunia","Ia bertanya ke internet setiap kali"],1,"AI tidak memahami makna; ia menemukan pola statistik dari jutaan contoh berlabel."],
+ ["Seorang petani memakai data cuaca 20 tahun terakhir untuk menentukan waktu tanam terbaik. Ini adalah contoh penerapan…",["Analisis Data di sektor pertanian","Sistem Komputer di sektor pertanian","Dampak Sosial","Jaringan Komputer"],0,"Mengolah data historis menjadi dasar keputusan adalah inti Analisis Data."],
+ ["Perbedaan mendasar Big Data dengan data biasa TERLETAK pada…",["Bentuknya yang selalu berupa angka","Volume, kecepatan pertambahan, dan keragamannya yang melampaui pengolahan biasa","Kerahasiaannya","Kepemilikannya oleh pemerintah"],1,"Big Data dicirikan tiga hal: volume besar, bertambah cepat, dan beragam bentuknya."],
+ ["Sekolah beralih dari server sendiri ke layanan awan. Keuntungan yang PALING relevan adalah…",["Data pasti tidak akan pernah bocor","Biaya menyesuaikan kebutuhan tanpa membeli perangkat mahal","Internet tidak lagi diperlukan","Kecepatannya selalu lebih tinggi"],1,"Komputasi awan memungkinkan menyewa sesuai kebutuhan. Keamanan dan kecepatan justru bergantung penyedia dan koneksi."],
+ ["Layanan streaming makin akurat menebak selera penontonnya. Dua bidang yang paling berperan adalah…",["Sistem Komputer dan Jaringan","Kecerdasan Artifisial dan Big Data","Dampak Sosial dan Sistem Komputer","Berpikir Komputasional dan Jaringan"],1,"Rekomendasi lahir dari AI yang belajar atas Big Data riwayat jutaan penonton."],
+ ["Sebuah aplikasi senter meminta izin mengakses kontak dan lokasi. Kecurigaan yang paling beralasan adalah…",["Aplikasi butuh izin itu agar senter menyala","Izin itu tidak berkaitan dengan fungsinya, kemungkinan data dikumpulkan untuk tujuan lain","Aplikasi ingin menghemat baterai","Izin itu wajib untuk semua aplikasi"],1,"Prinsip minimal privilege: aplikasi seharusnya hanya meminta izin yang benar-benar diperlukan fungsinya."],
+ ["Dari empat sandi berikut, yang PALING sulit dibobol serangan coba-coba adalah…",["P@ssw0rd!","Xy7#q","meja-hijau-terbang-tinggi-2019","Adm1n2024"],2,"Panjang jauh lebih berpengaruh daripada kerumitan simbol. Frasa panjang memberi jumlah kombinasi yang jauh lebih besar."],
+ ["Alasan panjang sandi lebih berpengaruh daripada kerumitan karakter adalah…",["Karena komputer tidak bisa membaca simbol","Karena jumlah kombinasi tumbuh secara pangkat terhadap panjang","Karena simbol mudah ditebak manusia","Karena huruf lebih cepat diketik"],1,"Jumlah kombinasi = jenis karakter pangkat panjang. Menambah panjang menaikkan eksponennya, dampaknya jauh lebih besar."],
+ ["Seorang siswa menerima pesan: \"Akun kamu akan diblokir dalam 1 jam! Klik tautan ini dan masukkan sandi.\" Ciri phishing yang paling menonjol adalah…",["Pesannya berbahasa Indonesia","Adanya desakan waktu disertai permintaan data pribadi","Pesan dikirim lewat aplikasi pesan","Pesannya pendek"],1,"Phishing khas memakai tekanan waktu agar korban panik dan tidak sempat berpikir, lalu meminta data sensitif."],
+ ["Foto yang sudah dihapus dari media sosial tetap berisiko tersebar. Konsep yang menjelaskan hal ini adalah…",["Enkripsi","Jejak digital","Kompresi","Firewall"],1,"Jejak digital bersifat permanen — salinan dapat tersimpan di server, tangkapan layar, atau arsip pihak lain."],
+ ["Verifikasi dua langkah tetap melindungi akun meski sandi bocor karena…",["Sandi otomatis berubah sendiri","Penyerang masih membutuhkan faktor kedua yang hanya dimiliki pemilik akun","Akun langsung terkunci permanen","Sandi menjadi lebih panjang"],1,"Faktor kedua (kode sekali pakai atau perangkat fisik) tidak dimiliki penyerang meski ia tahu sandinya."],
+ ["Otomatisasi pabrik menggantikan pekerjaan berulang. Pandangan yang PALING seimbang tentang dampaknya adalah…",["Otomatisasi selalu merugikan pekerja","Otomatisasi menghilangkan sebagian pekerjaan sekaligus menciptakan jenis pekerjaan baru","Otomatisasi tidak berdampak apa pun","Otomatisasi hanya menguntungkan pemilik pabrik"],1,"Dampaknya berdua sisi: pekerjaan tertentu hilang, tetapi muncul kebutuhan pekerjaan baru seperti perawatan dan pemrograman mesin."],
+ ["Desa terpencil tanpa sinyal internet tertinggal dalam pembelajaran daring. Isu ini disebut…",["Kesenjangan digital","Jejak digital","Enkripsi","Big Data"],0,"Kesenjangan digital adalah ketimpangan akses terhadap perangkat dan jaringan yang memperlebar ketimpangan lain."],
+ ["Rumah sakit memakai AI untuk membaca citra rontgen. Batasan etis yang paling perlu diperhatikan adalah…",["AI membaca lebih cepat daripada dokter","Pertanggungjawaban bila AI salah mendiagnosis","AI memerlukan listrik","Citra rontgen berukuran besar"],1,"Akuntabilitas adalah isu inti: bila sistem salah, siapa yang bertanggung jawab — pengembang, rumah sakit, atau dokter?"],
+ ["Profesi yang paling tepat menangani perancangan solusi sebelum program ditulis adalah…",["Teknisi perangkat keras","Analis sistem","Administrator jaringan","Operator data"],1,"Analis sistem merancang solusi dan alur kerja, lalu programmer yang mewujudkannya menjadi kode."],
+ ["Perancang UI/UX paling erat berkaitan dengan bidang kajian…",["Sistem Komputer","Dampak Sosial","Jaringan","Analisis Data"],1,"UI/UX menyangkut bagaimana teknologi memengaruhi dan melayani manusia — inti kajian dampak sosial."],
+ ["Alasan berpikir komputasional tetap relevan meski bahasa pemrograman berganti adalah…",["Bahasa pemrograman tidak pernah berubah","Kemampuan memecah dan menyusun langkah bersifat umum dan dapat dipindahkan ke alat apa pun","Komputer selalu memakai bahasa yang sama","Berpikir komputasional hanya untuk komputer"],1,"Cara berpikir bersifat transferable — bisa diterapkan pada alat baru mana pun, sedangkan sintaksis bahasa bersifat sementara."],
+ ["Sistem tiket elektronik di kereta melibatkan bidang berikut, KECUALI…",["Sistem Komputer","Jaringan dan Internet","Analisis Data","Fotosintesis digital"],3,"Tiga yang pertama benar-benar terlibat; pilihan terakhir bukan bidang kajian apa pun."],
+ ["Pernyataan yang SALAH tentang komputasi awan adalah…",["Memungkinkan akses berkas dari berbagai perangkat","Menghilangkan kebutuhan akan koneksi internet","Mengurangi biaya pembelian perangkat keras","Kapasitasnya dapat disesuaikan kebutuhan"],1,"Komputasi awan justru sangat bergantung pada koneksi internet, karena layanannya berada di server jauh."],
+ ["Sebuah sistem rekomendasi hanya menampilkan konten yang sepaham dengan pengguna sehingga ia jarang menemui pandangan berbeda. Fenomena ini disebut…",["Gelembung penyaring","Enkripsi ujung ke ujung","Kompresi data","Kesenjangan digital"],0,"Gelembung penyaring terjadi saat algoritma terus menyajikan konten serupa sehingga wawasan pengguna menyempit."],
+ ["Pemerintah menyatukan data bantuan sosial agar penyalurannya tepat sasaran. Manfaat sekaligus risikonya adalah…",["Manfaat: tepat sasaran; Risiko: kebocoran data pribadi warga","Manfaat: hemat listrik; Risiko: server panas","Manfaat: cepat; Risiko: tidak ada","Manfaat: murah; Risiko: kertas habis"],0,"Data terpadu meningkatkan ketepatan sasaran, tetapi memusatkan data pribadi sehingga risiko kebocorannya membesar."],
+ ["Ketika kamu mengirim pesan, isinya dipecah menjadi paket kecil yang menempuh jalur berbeda lalu disusun ulang. Tujuan utama pemecahan ini adalah…",["Agar pesan menjadi rahasia","Agar pengiriman efisien dan tahan bila satu jalur terganggu","Agar ukuran pesan mengecil","Agar pesan tiba lebih lambat"],1,"Pemecahan paket membuat jaringan dapat memanfaatkan banyak jalur dan tetap bekerja meski sebagian jalur bermasalah."],
+ ["Dari pernyataan berikut, yang PALING tepat menggambarkan hubungan Bab 1, 2, dan 3 adalah…",["Ketiganya tidak berhubungan","Bab 1 memberi peta, Bab 2 menjelaskan mesinnya, Bab 3 melatih cara berpikirnya","Bab 3 harus dipelajari sebelum Bab 1","Bab 2 hanya mengulang Bab 1"],1,"Bab 1 adalah peta ruang lingkup, Bab 2 membahas perangkatnya, Bab 3 melatih cara berpikir yang menggerakkan keduanya."],
+ ["Seorang siswa menyimpulkan: \"Karena AI bisa menulis kode, belajar algoritma tidak perlu lagi.\" Kelemahan penalaran ini adalah…",["AI tidak bisa menulis kode sama sekali","Tanpa paham algoritma, seseorang tak dapat menilai apakah keluaran AI benar atau efisien","Menulis kode adalah pekerjaan mudah","AI hanya bekerja tanpa listrik"],1,"Kemampuan menilai kebenaran dan efisiensi hasil justru menuntut pemahaman algoritma yang kuat."]],
  g:{al:"4 JP (2 pertemuan × 80 menit).",
   tj:["Menjelaskan pengertian dan ruang lingkup informatika.","Mengidentifikasi lima bidang kajian beserta contoh penerapannya.","Menganalisis penerapan informatika di berbagai sektor.","Menjelaskan arah perkembangan teknologi dan dampak sosialnya.","Menerapkan prinsip keamanan digital dasar."],
   lk:[["Pembuka 10'","Tanyakan: 'Sejak bangun tadi, teknologi apa saja yang kalian pakai?' Kelompokkan jawaban ke lima bidang kajian."],
@@ -1096,24 +1284,36 @@ const M = {
  </section>
 `,
  q:[
- ["Komponen sistem komputer berupa manusia pengguna disebut…",["Hardware","Software","Brainware","Firmware"],2,"Brainware adalah unsur manusia. Tanpa manusia, sistem tidak punya tujuan."],
- ["Bagian CPU yang melakukan hitung dan perbandingan logika adalah…",["Control Unit","ALU","Register","Cache"],1,"ALU mengerjakan penjumlahan, pengurangan, dan perbandingan seperti 'lebih besar dari'."],
- ["Dokumen belum tersimpan hilang saat listrik padam karena berada di…",["SSD yang non-volatil","RAM yang volatil","Hard disk eksternal","Cache prosesor"],1,"RAM bersifat volatil — isinya hanya bertahan selama ada aliran listrik."],
- ["Urutan memori dari tercepat ke terlambat…",["RAM → Register → Cache → SSD","SSD → RAM → Cache → Register","Register → Cache → RAM → SSD","Cache → Register → SSD → RAM"],2,"Makin dekat ke CPU makin cepat, tapi kapasitasnya makin kecil."],
- ["Desimal 13 dalam biner adalah…",["1011","1101","1110","1001"],1,"13 = 8+4+1 = 1101. Periksa: 1×8 + 1×4 + 0×2 + 1×1 = 13."],
- ["Biner 10110 bernilai desimal…",["20","22","26","18"],1,"16 + 0 + 4 + 2 + 0 = 22."],
- ["Berikut perangkat input, KECUALI…",["Mikrofon","Pemindai","Proyektor","Keyboard"],2,"Proyektor menampilkan hasil sehingga termasuk perangkat output."],
- ["Fungsi utama sistem operasi adalah…",["Mengetik dokumen","Mengatur sumber daya perangkat keras dan menjadi perantara aplikasi","Menyunting foto","Menghubungkan internet saja"],1,"Sistem operasi mengelola CPU, memori, berkas, dan perangkat."],
- ["Satu byte terdiri atas…",["4 bit","8 bit","16 bit","1024 bit"],1,"1 byte = 8 bit, cukup untuk satu karakter huruf."],
- ["Menambah RAM paling terasa manfaatnya saat pengguna…",["Menyimpan banyak film","Membuka banyak aplikasi sekaligus","Menaikkan resolusi layar","Mempercepat internet"],1,"RAM menampung program yang sedang berjalan."],
- ["Perangkat lunak penghubung sistem operasi dengan printer disebut…",["Driver","Compiler","Browser","Firewall"],0,"Driver adalah penerjemah agar sistem operasi dapat mengendalikan perangkat keras tertentu."],
- ["Data disimpan di SSD bukan RAM karena…",["SSD lebih cepat","SSD non-volatil sehingga data bertahan setelah komputer mati","RAM tak bisa menyimpan angka","SSD lebih murah"],1,"Sifat non-volatil membuat SSD cocok untuk penyimpanan jangka panjang."],
- ["Bagian Arduino Uno yang berperan sebagai CPU adalah…",["Port USB","ATmega328P","Regulator tegangan","Kristal osilator"],1,"ATmega328P adalah mikrokontrolernya, berisi Control Unit, ALU, dan register — sama seperti CPU pada komputer."],
- ["Program Arduino tetap ada meski papan dicabut dari daya karena tersimpan di…",["SRAM","Flash","Register","Cache"],1,"Flash bersifat non-volatil, sedangkan SRAM yang menyimpan variabel bersifat volatil."],
- ["Pin analog Arduino membaca tegangan dan mengubahnya menjadi angka dengan rentang…",["0 sampai 255","0 sampai 1023","0 sampai 100","HIGH atau LOW saja"],1,"ADC 10-bit menghasilkan 2 pangkat 10 = 1024 tingkat, yaitu angka 0 sampai 1023."],
- ["LED wajib dipasangi resistor 220 ohm karena…",["Agar cahayanya berwarna","Untuk membatasi arus agar LED tidak terbakar","Agar bisa dibaca sensor","Supaya hemat pin"],1,"Tanpa pembatas arus, arus berlebih akan merusak LED dalam hitungan detik."],
- ["Berikut termasuk sensor (perangkat input) pada Arduino, KECUALI…",["LDR","DHT11","HC-SR04","Motor servo"],3,"Motor servo adalah aktuator yang menghasilkan gerakan, sehingga tergolong output."],
- ["Fungsi pin GND pada Arduino adalah…",["Memberi tegangan 5 volt","Menjadi jalur kembali arus listrik","Menyimpan program","Mengatur kecepatan clock"],1,"Tanpa sambungan ke GND, rangkaian tidak tertutup sehingga arus tidak mengalir."]],
+ ["Sebuah komputer dinyalakan tanpa sistem operasi terpasang. Yang paling tepat terjadi adalah…",["Komputer tetap menjalankan semua aplikasi","Perangkat keras menyala tetapi tidak ada yang mengatur sumber daya sehingga aplikasi tak dapat berjalan","Komputer meledak","Aplikasi berjalan lebih cepat"],1,"Tanpa sistem operasi tidak ada pengatur memori, prosesor, dan berkas, sehingga aplikasi tidak punya lapisan untuk berjalan."],
+ ["Layar sentuh menarik untuk dibahas karena ia…",["Hanya perangkat keluaran","Berperan sebagai perangkat masukan sekaligus keluaran","Bukan perangkat keras","Tidak memerlukan driver"],1,"Layar sentuh menampilkan hasil (output) dan menerima sentuhan (input) pada perangkat yang sama."],
+ ["Urutan yang BENAR pada siklus instruksi CPU adalah…",["Execute → Fetch → Decode","Fetch → Decode → Execute → Write back","Decode → Write back → Fetch","Write back → Execute → Decode"],1,"Instruksi diambil, diterjemahkan, dikerjakan, lalu hasilnya dituliskan kembali."],
+ ["Bagian CPU yang TIDAK melakukan perhitungan apa pun melainkan hanya mengarahkan adalah…",["ALU","Control Unit","Register","Cache"],1,"CU membaca dan menerjemahkan instruksi lalu mengatur lalu lintas data; yang menghitung adalah ALU."],
+ ["Prosesor 3 GHz berarti ia menjalankan sekitar…",["3 juta siklus per detik","3 miliar siklus per detik","3 ribu siklus per detik","3 siklus per detik"],1,"Giga berarti miliar, sehingga 3 GHz setara tiga miliar siklus tiap detik."],
+ ["Register lebih cepat daripada RAM terutama karena…",["Kapasitasnya jauh lebih besar","Letaknya di dalam CPU sehingga jarak tempuh datanya sangat pendek","Harganya lebih murah","Sifatnya non-volatil"],1,"Semakin dekat ke ALU, semakin singkat waktu tempuh sinyal, sehingga aksesnya lebih cepat."],
+ ["Komputer dengan prosesor sangat cepat tetapi RAM hanya 2 GB tetap terasa lambat saat membuka banyak aplikasi. Istilah untuk gejala ini adalah…",["Bottleneck","Overclocking","Enkripsi","Kompresi"],0,"Bottleneck terjadi ketika satu komponen yang lambat menahan kinerja keseluruhan meski komponen lain cepat."],
+ ["Saat RAM penuh, sistem operasi memindahkan sebagian isinya ke SSD. Proses ini disebut… dan akibatnya…",["Caching; komputer makin cepat","Swapping; komputer melambat karena SSD jauh lebih lambat dari RAM","Booting; komputer mati","Encoding; data terenkripsi"],1,"Swapping menyelamatkan sistem dari kehabisan memori, tetapi berbayar dengan penurunan kecepatan."],
+ ["Seorang siswa mengetik tugas selama 2 jam tanpa menyimpan, lalu listrik padam. Penjelasan yang PALING tepat adalah…",["Tugas tersimpan otomatis di SSD","Tugas berada di RAM yang volatil sehingga isinya lenyap saat daya terputus","Tugas berpindah ke cache prosesor","Tugas tersimpan di register"],1,"RAM bersifat volatil; isinya hanya bertahan selama ada aliran listrik."],
+ ["Urutan memori dari kapasitas TERKECIL ke TERBESAR adalah…",["SSD → RAM → Cache → Register","Register → Cache → RAM → SSD","RAM → Register → SSD → Cache","Cache → SSD → Register → RAM"],1,"Semakin cepat sebuah memori, semakin kecil kapasitasnya karena semakin mahal per satuan."],
+ ["Bilangan desimal 200 dalam biner 8 bit adalah…",["11001000","10011000","11000100","11101000"],0,"200 = 128 + 64 + 8, sehingga bit bernilai 128, 64, dan 8 menyala: 11001000."],
+ ["Biner 10110101 bernilai desimal…",["181","173","165","189"],0,"128 + 32 + 16 + 4 + 1 = 181."],
+ ["Nilai desimal terbesar yang dapat disimpan dalam 8 bit adalah…",["128","255","256","512"],1,"Delapan bit menghasilkan 256 kombinasi, yaitu 0 sampai 255."],
+ ["Menambah satu bit pada sebuah bilangan biner akan membuat jumlah nilai yang dapat diwakili…",["Bertambah satu","Menjadi dua kali lipat","Menjadi setengahnya","Tidak berubah"],1,"Setiap penambahan satu bit menggandakan jumlah kombinasi, karena basisnya dua."],
+ ["Komputer memakai dua keadaan listrik dan bukan sepuluh terutama karena…",["Manusia hanya punya dua tangan","Dua keadaan jauh lebih tahan terhadap gangguan listrik sehingga lebih andal","Angka 0 dan 1 lebih mudah ditulis","Listrik tidak bisa lebih dari dua tingkat"],1,"Membedakan sepuluh tingkat tegangan sangat rawan salah baca bila ada gangguan; dua keadaan jauh lebih tegas."],
+ ["Satu kilobyte bernilai 1.024 byte dan bukan 1.000 karena…",["Kesalahan sejarah","Komputer berhitung dengan kelipatan dua, dan 2 pangkat 10 sama dengan 1.024","Agar mudah diingat","Aturan internasional"],1,"1.024 adalah pangkat dua terdekat dengan seribu, sesuai cara komputer berhitung."],
+ ["Driver diperlukan karena…",["Sistem operasi tidak mengenal setiap merek perangkat keras secara bawaan","Perangkat keras tidak butuh listrik","Aplikasi tidak bisa dibuka","Memori terlalu kecil"],0,"Driver menerjemahkan perintah umum sistem operasi menjadi perintah spesifik bagi perangkat tertentu."],
+ ["Pada Arduino Uno, program yang sudah diunggah tetap ada meski papan dicabut dari daya karena tersimpan di…",["SRAM","Flash","Register","Cache"],1,"Flash bersifat non-volatil, sedangkan SRAM yang menampung variabel bersifat volatil."],
+ ["SRAM Arduino Uno hanya 2 KB sedangkan laptop biasa 8 GB. Perbandingannya kira-kira…",["Laptop 4 ribu kali lebih besar","Laptop sekitar 4 juta kali lebih besar","Sama saja","Arduino lebih besar"],1,"8 GB kira-kira 8 juta KB, dibagi 2 KB menghasilkan sekitar 4 juta kali lipat."],
+ ["Pin analog A0 pada Arduino membaca tegangan 2,5 volt dari maksimum 5 volt. Nilai yang dihasilkan analogRead kira-kira…",["128","512","255","1023"],1,"ADC 10-bit memetakan 0–5 volt ke 0–1023, sehingga setengahnya sekitar 512."],
+ ["Perbedaan mendasar pin PWM dengan pin analog adalah…",["PWM membaca, analog menulis","PWM mengeluarkan sinyal tiruan tegangan menengah, pin analog membaca tegangan","Keduanya sama persis","PWM hanya untuk motor"],1,"PWM adalah keluaran yang menyala-mati sangat cepat; pin A0–A5 hanya bisa membaca, tidak mengeluarkan."],
+ ["Seorang siswa memasang LED langsung ke pin 13 dan GND tanpa resistor. Akibat yang paling mungkin adalah…",["LED menyala lebih terang dan awet","Arus berlebih membuat LED cepat rusak","Arduino menjadi lebih cepat","Tidak terjadi apa-apa"],1,"Tanpa pembatas arus, arus yang mengalir melampaui batas aman LED sehingga merusaknya."],
+ ["Fungsi resistor 220 ohm pada rangkaian LED adalah…",["Menambah tegangan","Membatasi arus yang mengalir melewati LED","Menyimpan data","Mempercepat prosesor"],1,"Resistor menurunkan arus ke tingkat aman sesuai spesifikasi LED."],
+ ["Setiap rangkaian Arduino wajib terhubung ke GND karena…",["GND memberi tegangan tambahan","Tanpa jalur kembali, rangkaian tidak tertutup sehingga arus tidak mengalir","GND menyimpan program","GND mempercepat sinyal"],1,"Arus memerlukan lintasan tertutup; GND adalah jalur kembalinya."],
+ ["Berikut yang termasuk AKTUATOR, bukan sensor, adalah…",["LDR","DHT11","Motor servo","HC-SR04"],2,"Servo menghasilkan gerakan sehingga tergolong keluaran; tiga lainnya membaca besaran fisik."],
+ ["Sensor HC-SR04 mengukur jarak dengan cara…",["Memancarkan cahaya dan mengukur pantulannya","Memancarkan gelombang suara lalu menghitung waktu pantulnya","Mengukur suhu udara","Membaca medan magnet"],1,"Sensor ultrasonik menghitung selisih waktu antara pemancaran dan penerimaan gelombang suara."],
+ ["Relay dipakai ketika Arduino perlu…",["Membaca suhu ruangan","Mengendalikan perangkat bertegangan tinggi seperti lampu 220 volt","Menyimpan data","Menampilkan teks"],1,"Relay adalah sakelar elektronik yang memungkinkan sinyal 5 volt mengendalikan beban tegangan tinggi."],
+ ["LCD versi I2C lebih disukai daripada versi paralel karena…",["Layarnya lebih besar","Hanya membutuhkan dua kabel data sehingga menghemat pin","Tidak memerlukan listrik","Warnanya lebih banyak"],1,"I2C memakai jalur SDA dan SCL saja, sedangkan versi paralel memerlukan enam pin atau lebih."],
+ ["Bila kristal osilator 16 MHz pada Arduino dilepas, akibatnya adalah…",["Papan menjadi lebih cepat","Mikrokontroler kehilangan detak penyerempak sehingga tidak dapat menjalankan instruksi secara teratur","Memori bertambah","LED menyala terus"],1,"Kristal berfungsi sebagai clock yang menyerempakkan seluruh kerja mikrokontroler."],
+ ["Pemetaan yang BENAR antara bagian Arduino dan komponen komputer adalah…",["Flash setara RAM, SRAM setara SSD","Flash setara SSD, SRAM setara RAM","Keduanya setara register","ATmega328P setara monitor"],1,"Flash non-volatil menyimpan program layaknya SSD; SRAM volatil menampung variabel layaknya RAM."]],
  g:{al:"10 JP (5 pertemuan × 80 menit).",
   tj:["Mengidentifikasi hardware, software, brainware dan perannya.","Menjelaskan siklus input–proses–output–penyimpanan.","Membedakan memori volatil dan non-volatil.","Melakukan konversi desimal ↔ biner.","Menyebutkan bagian papan Arduino dan memetakannya ke komponen sistem komputer.","Membedakan sensor dan aktuator serta jenis pin Arduino."],
   lk:[["Pertemuan 1 — Komponen","Bongkar PC bekas atau tampilkan foto besar. Siswa melabeli komponen. Diskusi: 'Apa yang hilang tanpa brainware?'"],
@@ -1395,24 +1595,36 @@ const M = {
  </section>
 `,
  q:[
- ["Membagi tugas majalah menjadi tulisan, foto, dan tata letak adalah…",["Abstraksi","Dekomposisi","Pengenalan pola","Perulangan"],1,"Dekomposisi memecah pekerjaan besar menjadi bagian yang mudah ditangani."],
- ["Aplikasi absensi hanya menyimpan nama dan NIS tanpa hobi. Ini adalah…",["Abstraksi","Dekomposisi","Algoritma","Debugging"],0,"Abstraksi membuang detail yang tidak relevan dengan tujuan sistem."],
- ["Simbol belah ketupat digunakan untuk…",["Menandai selesai","Memasukkan data","Menyatakan keputusan","Melakukan perhitungan"],2,"Belah ketupat selalu punya minimal dua jalur keluar: Ya dan Tidak."],
- ["UNTUK i DARI 1 SAMPAI 4, TAMPILKAN i×2. Keluarannya…",["1 2 3 4","2 4 6 8","2 4 6 8 10","1 4 9 16"],1,"i bernilai 1,2,3,4 lalu dikalikan 2 menjadi 2, 4, 6, 8."],
- ["Telusuri: x ← 10; x ← x − 3; x ← x × 2. Nilai akhir x…",["14","17","20","7"],0,"10 − 3 = 7, lalu 7 × 2 = 14."],
- ["Struktur untuk menampilkan pesan berbeda bagi nilai di atas dan bawah 75…",["Sekuensial","Percabangan","Perulangan","Dekomposisi"],1,"Percabangan memilih jalur berbeda berdasarkan pemenuhan kondisi."],
- ["Berikut BUKAN ciri algoritma yang baik…",["Langkah tidak ambigu","Punya titik berhenti pasti","Boleh ditafsirkan berbeda tiap orang","Menerima masukan dan menghasilkan keluaran"],2,"Ambiguitas membuat algoritma gagal — tiap langkah harus punya satu tafsir."],
- ["Telusuri: a ← 3; b ← 5; a ← a + b; b ← a − b. Nilai akhir…",["a=8, b=3","a=3, b=5","a=8, b=5","a=5, b=3"],0,"a menjadi 8, lalu b = 8 − 5 = 3. Nilai a yang dipakai adalah nilai barunya."],
- ["Menyadari setiap resep punya struktur sama disebut…",["Abstraksi","Pengenalan pola","Dekomposisi","Tracing"],1,"Pengenalan pola menemukan kesamaan struktur di antara beberapa kasus."],
- ["Perulangan lebih dipilih daripada menulis perintah berulang karena…",["Hasilnya berbeda","Kode ringkas dan mudah diubah","Komputer tak bisa perintah berulang","Selalu lebih akurat"],1,"Mengubah satu baris perulangan lebih aman daripada menyunting puluhan baris identik."],
- ["Algoritma yang tak pernah berhenti melanggar ciri…",["Keterbatasan (finiteness)","Masukan","Keluaran","Kejelasan"],0,"Algoritma wajib berhenti setelah sejumlah langkah terbatas."],
- ["Urutan tahap paling logis dalam pemecahan masalah komputasional…",["Algoritma → dekomposisi → abstraksi → pola","Dekomposisi → pengenalan pola → abstraksi → algoritma","Abstraksi → algoritma → dekomposisi → pola","Pola → algoritma → abstraksi → dekomposisi"],1,"Pahami dan sederhanakan masalah dulu, baru susun langkah penyelesaiannya."],
- ["Fungsi setup() pada program Arduino dijalankan…",["Terus-menerus selamanya","Satu kali saat papan menyala atau di-reset","Hanya saat tombol ditekan","Setiap satu detik"],1,"setup() berjalan sekali untuk menyiapkan pin dan komunikasi; loop() yang berjalan berulang."],
- ["Perintah untuk menetapkan pin 13 sebagai keluaran adalah…",["digitalWrite(13, OUTPUT);","pinMode(13, OUTPUT);","analogWrite(13, OUTPUT);","Serial.begin(13);"],1,"pinMode() menentukan peran pin, sedangkan digitalWrite() baru mengirim nilainya."],
- ["Kesalahan pada kode <code>digitalWrite(13, HIGH)</code> adalah…",["Huruf besar salah","Titik koma hilang di akhir","Pin 13 tidak boleh dipakai","HIGH harus ditulis angka"],1,"Setiap perintah dalam C++ wajib diakhiri titik koma."],
- ["Struktur <code>for (int i = 1; i &lt;= 5; i++)</code> memiliki tiga bagian berurutan, yaitu…",["Syarat, awal, perubahan","Awal, syarat, perubahan","Perubahan, awal, syarat","Awal, perubahan, syarat"],1,"Urutannya: nilai awal, syarat berhenti, lalu perubahan tiap putaran."],
- ["Pada studi kasus lampu taman, tindakan mengabaikan warna cahaya dan hanya memakai satu angka terang merupakan penerapan…",["Dekomposisi","Abstraksi","Perulangan","Debugging"],1,"Abstraksi memilih hanya informasi yang relevan dengan tujuan sistem."],
- ["Tipe data yang paling tepat untuk menyimpan suhu 28,6 derajat adalah…",["int","bool","float","byte"],2,"float dipakai untuk bilangan berkoma; int hanya menyimpan bilangan bulat."]],
+ ["Panitia membagi acara sekolah menjadi seksi acara, konsumsi, dan dokumentasi. Lalu mereka sadar setiap seksi memerlukan anggaran, jadwal, dan penanggung jawab. Dua fondasi yang berturut-turut dipakai adalah…",["Abstraksi lalu algoritma","Dekomposisi lalu pengenalan pola","Algoritma lalu dekomposisi","Pengenalan pola lalu abstraksi"],1,"Membagi menjadi seksi adalah dekomposisi; menyadari ketiganya butuh hal yang sama adalah pengenalan pola."],
+ ["Peta jalur bus tidak menggambarkan bentuk jalan sebenarnya, hanya urutan halte. Ini contoh murni dari…",["Dekomposisi","Abstraksi","Perulangan","Tracing"],1,"Abstraksi membuang detail yang tidak relevan bagi tujuan — penumpang hanya perlu urutan halte."],
+ ["Pernyataan yang PALING TEPAT tentang abstraksi adalah…",["Abstraksi menghapus data secara permanen","Abstraksi memilih informasi relevan dan mengabaikan sisanya tanpa menghapusnya","Abstraksi selalu mempercepat program","Abstraksi sama dengan dekomposisi"],1,"Data tetap ada; abstraksi hanya memutuskan mana yang dipakai untuk tujuan tertentu."],
+ ["Algoritma yang berbunyi \"tambahkan garam secukupnya\" melanggar ciri…",["Berhingga","Tidak ambigu","Punya keluaran","Punya masukan"],1,"\"Secukupnya\" dapat ditafsirkan berbeda oleh setiap orang, sehingga langkahnya ambigu."],
+ ["Program yang terus berputar tanpa pernah berhenti melanggar ciri…",["Keterbatasan (finiteness)","Kejelasan","Masukan","Efektivitas"],0,"Algoritma wajib berhenti setelah sejumlah langkah terbatas."],
+ ["Telusuri: x ← 12 ; x ← x − 5 ; x ← x × 3 ; x ← x + 1. Nilai akhir x adalah…",["22","36","21","28"],0,"12 − 5 = 7; 7 × 3 = 21; 21 + 1 = 22."],
+ ["Telusuri: a ← 4 ; b ← 9 ; a ← a + b ; b ← a − b ; a ← a − b. Nilai akhir a dan b adalah…",["a=9, b=4","a=4, b=9","a=13, b=4","a=9, b=13"],0,"a=13; b=13−9=4; a=13−4=9. Ini pola penukaran nilai tanpa variabel bantu."],
+ ["Kesalahan tersering pada soal penukaran nilai adalah…",["Lupa mengalikan","Memakai nilai lama variabel yang sudah berubah","Salah membaca soal","Menulis terlalu cepat"],1,"Variabel di sisi kanan selalu memakai nilai terbarunya, bukan nilai awal."],
+ ["Perhatikan: UNTUK i DARI 2 SAMPAI 10 langkah 2, TAMPILKAN i. Keluarannya adalah…",["2 4 6 8 10","2 3 4 5 6 7 8 9 10","2 4 6 8","1 2 3 4 5"],0,"Dimulai dari 2 dan bertambah 2 tiap putaran hingga tidak melebihi 10."],
+ ["for (int i = 0; i < 5; i++) akan mengulang sebanyak…",["4 kali","5 kali","6 kali","Tak terhingga"],1,"i bernilai 0,1,2,3,4 — lima putaran, lalu berhenti saat i mencapai 5."],
+ ["Perbedaan i++ dan ++i saat berdiri sendiri sebagai satu perintah adalah…",["Sangat berbeda hasilnya","Tidak berbeda, keduanya menambah i sebesar satu","i++ mengurangi i","++i menambah dua"],1,"Sebagai perintah tunggal keduanya sama; perbedaannya baru terasa bila nilainya dipakai dalam ekspresi lain."],
+ ["Operator yang benar untuk memeriksa kesamaan dua nilai dalam C++ adalah…",["=","==","!=",">="],1,"Tanda tunggal = adalah pemberian nilai; == adalah perbandingan."],
+ ["Kesalahan pada if (nilai = 75) adalah…",["Kurang tanda kurung","Memakai pemberian nilai, seharusnya perbandingan ==","Nilai 75 terlalu kecil","Tidak ada else"],1,"Satu tanda sama dengan memberi nilai 75 ke variabel, bukan membandingkannya."],
+ ["Perhatikan kode: if (n > 10) if (n < 20) TAMPILKAN \"A\"; else TAMPILKAN \"B\";. Untuk n = 25, keluarannya adalah…",["A","B","Tidak ada keluaran","Galat"],1,"n > 10 benar, lalu n < 20 salah sehingga else dijalankan dan mencetak B."],
+ ["Fungsi setup() pada Arduino dijalankan…",["Berulang selamanya","Satu kali saat papan menyala atau di-reset","Setiap satu detik","Hanya bila tombol ditekan"],1,"setup() menyiapkan pin dan komunikasi sekali saja; loop() yang berulang tanpa henti."],
+ ["Bila perintah pinMode dipindahkan dari setup() ke loop(), yang terjadi adalah…",["Program tidak dapat dikompilasi","Program tetap berjalan tetapi mengulang penetapan mode secara sia-sia setiap putaran","LED menjadi lebih terang","Arduino rusak"],1,"Secara teknis sah, tetapi boros karena mode pin cukup ditetapkan sekali di awal."],
+ ["Kaitan yang PALING tepat antara struktur Bab 3 dengan kerangka Arduino adalah…",["setup() adalah perulangan, loop() adalah percabangan","setup() bersifat sekuensial, loop() adalah perulangan tak terbatas","Keduanya adalah percabangan","Tidak ada kaitannya"],1,"setup() berjalan berurutan sekali, sedangkan loop() adalah bentuk nyata perulangan tanpa akhir."],
+ ["Tipe data yang PALING tepat untuk menyimpan status lampu menyala atau mati adalah…",["float","bool","String","long"],1,"bool hanya butuh satu byte untuk menyimpan dua kemungkinan, paling hemat untuk SRAM 2 KB."],
+ ["Menyimpan angka 0 atau 1 memakai tipe int pada Arduino termasuk pemborosan karena…",["int tidak bisa menyimpan 0","int memakai 2 byte padahal bool cukup 1 byte, sedangkan SRAM hanya 2 KB","int lebih lambat dihitung","int hanya untuk desimal"],1,"Dengan memori sangat terbatas, pemilihan tipe data berpengaruh nyata."],
+ ["Tipe yang tepat untuk menampung hasil pembacaan suhu 28,6 derajat adalah…",["int","byte","float","bool"],2,"float menyimpan bilangan berkoma; int akan memotong bagian desimalnya."],
+ ["Kesalahan pada baris: DigitalWrite(13, HIGH); adalah…",["Titik koma hilang","Huruf besar salah, seharusnya digitalWrite","Pin 13 tidak valid","HIGH harus berupa angka"],1,"C++ membedakan huruf besar dan kecil, sehingga penulisan harus tepat."],
+ ["Kode int cahaya = analogRead(9); bermasalah karena…",["analogRead hanya bekerja pada pin A0 sampai A5, pin 9 adalah pin digital","Variabel tidak boleh bernama cahaya","analogRead butuh dua argumen","Tipe harus float"],0,"Pembacaan analog hanya tersedia pada pin berlabel A."],
+ ["Penyebab galat kompilasi paling sering pada pemula adalah…",["Nama variabel terlalu panjang","Titik koma yang hilang di akhir perintah","Komentar terlalu banyak","Program terlalu pendek"],1,"Setiap perintah C++ wajib diakhiri titik koma; ketiadaannya langsung menghentikan kompilasi."],
+ ["Pada studi kasus lampu taman, keputusan mengabaikan warna cahaya dan hanya memakai satu angka terang merupakan penerapan…",["Dekomposisi","Abstraksi","Perulangan","Debugging"],1,"Hanya informasi yang relevan bagi tujuan yang dipertahankan."],
+ ["Rumus jarak = durasi × 0,034 ÷ 2 pada sensor ultrasonik dibagi dua karena…",["Sensor memakai dua kabel","Gelombang menempuh jalur pergi dan pulang sehingga jaraknya terhitung dua kali","Kecepatan suara berubah-ubah","Agar hasilnya lebih kecil"],1,"Waktu yang terukur mencakup perjalanan bolak-balik, sehingga harus dibagi dua."],
+ ["Angka 0,034 pada rumus tersebut berasal dari…",["Kecepatan suara 340 meter per detik yang diubah ke sentimeter per mikrodetik","Jumlah pin sensor","Tegangan kerja sensor","Angka acak"],0,"340 m/detik setara 0,034 cm per mikrodetik, sesuai satuan keluaran pulseIn."],
+ ["Pada penyiram tanaman otomatis, delay(3600000) berarti menunggu selama…",["1 menit","1 jam","1 hari","1 detik"],1,"3.600.000 milidetik sama dengan 3.600 detik, yaitu satu jam."],
+ ["Kelemahan memakai delay() yang panjang pada program Arduino adalah…",["Program menjadi lebih akurat","Selama menunggu, Arduino tidak dapat mengerjakan apa pun termasuk membaca sensor lain","Memori menjadi penuh","LED ikut mati"],1,"delay() menghentikan seluruh eksekusi, sehingga masukan lain terabaikan selama jeda."],
+ ["Perulangan lebih dipilih daripada menulis perintah berulang terutama karena…",["Hasilnya berbeda","Perubahan cukup dilakukan di satu tempat sehingga lebih kecil peluang salah","Komputer tidak bisa perintah berulang","Perulangan selalu lebih cepat"],1,"Menyunting satu baris jauh lebih aman daripada menyunting puluhan baris identik."],
+ ["Urutan tahap yang PALING logis dalam menyelesaikan masalah secara komputasional adalah…",["Algoritma → dekomposisi → abstraksi → pola","Dekomposisi → pengenalan pola → abstraksi → algoritma","Abstraksi → algoritma → dekomposisi → pola","Pola → algoritma → abstraksi → dekomposisi"],1,"Pahami dan sederhanakan masalah terlebih dahulu, baru susun langkah penyelesaiannya."]],
  g:{al:"12 JP (6 pertemuan × 80 menit).",
   tj:["Menerapkan dekomposisi, pola, abstraksi, dan algoritma pada masalah nyata.","Menyusun algoritma dalam pseudokode dan flowchart.","Menerapkan sekuensial, percabangan, dan perulangan.","Menelusuri algoritma untuk menentukan keluaran.","Menuliskan program Arduino sederhana dalam C++ dengan struktur setup dan loop.","Menganalisis studi kasus dari masalah hingga menjadi kode."],
   lk:[["Pertemuan 1 — Empat fondasi","Kegiatan tanpa komputer: siswa menulis langkah membuat mi instan sedetail mungkin, guru 'mengeksekusi' secara harfiah. Kesalahan yang muncul membuka diskusi ambiguitas."],
@@ -1716,16 +1928,42 @@ document.addEventListener('keydown',e=>{
 const app=document.getElementById('app');
 const wait=ms=>new Promise(r=>setTimeout(r,ms));
 const KEY='ruang_informatika_v1';
-let role='siswa',ch=1,nis=null,nama=null,ans={};
+let role='siswa',ch=1,nis=null,nama=null,kelas=null,ans={};
 
 /* syarat buka bab: seluruh soal bab sebelumnya sudah dijawab */
 const PREREQ={1:null,2:1,3:2};
 
 function loadAll(){try{return JSON.parse(localStorage.getItem(KEY))||{}}catch(e){return{}}}
 function saveAll(o){try{localStorage.setItem(KEY,JSON.stringify(o))}catch(e){}}
-function loadSiswa(id){const a=loadAll();return a[id]||{ans:{},nama:''}}
+function loadSiswa(id){const a=loadAll();return a[id]||{ans:{},nama:'',kelas:''}}
 function saveSiswa(){if(!nis||nis==='guru')return;const a=loadAll();
-  a[nis]={nama:nama,ans:ans,last:Date.now()};saveAll(a);}
+  a[nis]={nama:nama,kelas:kelas,ans:ans,last:Date.now()};saveAll(a);}
+
+/* --- sesi bertahan meski halaman dimuat ulang --- */
+const SESI='ruang_informatika_sesi';
+function simpanSesi(){
+  try{localStorage.setItem(SESI,JSON.stringify({nis:nis,nama:nama,kelas:kelas,role:role,ch:ch}))}catch(e){}
+}
+function hapusSesi(){try{localStorage.removeItem(SESI)}catch(e){}}
+function bacaSesi(){
+  try{const v=JSON.parse(localStorage.getItem(SESI));
+    return (v&&v.nis&&v.nama)?v:null}catch(e){return null}
+}
+function pulihkanSesi(){
+  const v=bacaSesi();
+  if(!v)return false;
+  nis=v.nis;nama=v.nama;role=v.role==='guru'?'guru':'siswa';
+  const rec0 = role==='guru' ? {} : loadSiswa(nis);
+  kelas = v.kelas || rec0.kelas || null;
+  ans = role==='guru' ? {} : (rec0.ans||{});
+  document.getElementById('gate').classList.add('off');
+  document.getElementById('roleBox').style.display = role==='guru'?'flex':'none';
+  paintWho();
+  if(role==='guru')setRole('guru');
+  const c=[1,2,3].includes(+v.ch)?+v.ch:1;
+  setCh(terbuka(c)?c:1);
+  return true;
+}
 
 function jml(c){return Object.keys(ans[c]||{}).length}
 function total(c){return M[c].q.length}
@@ -1759,12 +1997,12 @@ function masuk(){
   if(v.toLowerCase()==='guru')return gagal(inp,'Untuk masuk sebagai guru, gunakan tab Guru di atas.');
 
   nis=v;nama=vn;role='siswa';
-  const rec=loadSiswa(nis);ans=rec.ans||{};
+  const rec=loadSiswa(nis);ans=rec.ans||{};kelas=rec.kelas||null;
   document.getElementById('gate').classList.add('off');
   document.getElementById('roleBox').style.display='none';
   paintWho();saveSiswa();
   const lanjut=tuntas(2)?3:(tuntas(1)?2:1);
-  setCh(lanjut);
+  setCh(lanjut);simpanSesi();
   toast(lanjut>1
     ? `Selamat datang kembali, ${nama.split(' ')[0]}. Kamu melanjutkan di Bab ${lanjut}.`
     : `Selamat belajar, ${nama.split(' ')[0]}.`);
@@ -1782,12 +2020,12 @@ function masukGuru(){
   nis='guru';nama=vn;role='guru';
   document.getElementById('gate').classList.add('off');
   document.getElementById('roleBox').style.display='flex';
-  setRole('guru');paintWho();setCh(1);
+  setRole('guru');paintWho();setCh(1);simpanSesi();
   toast(`Selamat datang, ${vn}. Seluruh bab terbuka dalam mode guru.`);
 }
 
 function keluar(){
-  saveSiswa();nis=null;nama=null;ans={};role='siswa';
+  saveSiswa();hapusSesi();nis=null;nama=null;kelas=null;ans={};role='siswa';
   document.getElementById('gate').classList.remove('off');
   ['nisIn','namaIn','gnamaIn','pinIn'].forEach(i=>document.getElementById(i).value='');
   document.getElementById('gerr').textContent='';
@@ -1826,19 +2064,38 @@ function setCh(c){
     // tetap tampilkan halaman terkunci agar siswa paham syaratnya
   }
   ch=c;paintNav();render();
+  if(nis)simpanSesi();
 }
+
+/* guru melihat halaman persis seperti layar siswa */
+let modeIntip=false;
+function lihatSiswa(){
+  modeIntip=true;render();
+  toast('Menampilkan halaman siswa. Materi dan simulator bisa diperagakan langsung.');
+}
+function kembaliGuru(){modeIntip=false;render()}
 
 function render(){
   const d=M[ch];
   hEb.textContent=d.eb;hT.textContent=d.t;hD.textContent=d.d;
   hS.innerHTML=d.s.map(x=>`<div><b>${x[0]}</b><span>${x[1]}</span></div>`).join('');
 
-  if(role==='guru'){app.innerHTML=guruHTML(d);observe();window.scrollTo(0,0);return;}
+  if(role==='guru'&&!modeIntip){app.innerHTML=guruHTML(d);observe();window.scrollTo(0,0);return;}
+
+  if(role==='guru'&&modeIntip){
+    app.innerHTML=`<section class="panel rv" style="background:linear-gradient(135deg,rgba(255,201,0,.16),rgba(255,149,0,.12));border-color:rgba(255,201,0,.55)">
+      <div style="display:flex;align-items:center;gap:14px;flex-wrap:wrap">
+        <div style="flex:1;min-width:200px"><b style="font-family:var(--disp);font-size:1.02rem">👁 Tampilan siswa</b>
+        <div style="font-size:.86rem;color:#5d6b7a;margin-top:3px">Inilah yang dilihat siswa. Seluruh simulator dapat dijalankan untuk diperagakan di depan kelas.</div></div>
+        <button class="btn2 g" onclick="kembaliGuru()">← Kembali ke panel guru</button>
+      </div></section>`+d.html+quizHTML(d);
+    wireQuiz(d);wireLabs();observe();window.scrollTo(0,0);return;
+  }
 
   if(!terbuka(ch)){app.innerHTML=lockedHTML(ch);observe();animReq(ch);window.scrollTo(0,0);return;}
 
   app.innerHTML = progHTML() + d.html + quizHTML(d);
-  wireQuiz(d);wireLabs();animProg();
+  wireQuiz(d);wireLabs();animProg();paintXP();
   observe();window.scrollTo(0,0);
 }
 
@@ -1863,7 +2120,7 @@ function animReq(c){
 /* kartu progres siswa */
 function progHTML(){
   return `<section class="panel rv"><h2 class="sec">Kemajuan belajar ${nama?nama.split(' ')[0]:''}</h2>
-   <p class="sub">${nama} · NIS ${nis} · tersimpan otomatis di perangkat ini.</p>
+   <p class="sub">${nama} · NIS ${nis}${kelas?' · Kelas '+kelas:''} · tersimpan otomatis di perangkat ini.</p>
    <div class="prog">${[1,2,3].map(c=>{
      const done=tuntas(c),n=jml(c),t=total(c);
      const st = !terbuka(c) ? `🔒 Terkunci` : done ? `Tuntas · nilai ${Math.round(benar(c)/t*100)}` : `${n} dari ${t} soal terjawab`;
@@ -2751,12 +3008,91 @@ function traceLab(){
 }
 
 /* ============ QUIZ ============ */
+/* ====== KODE BUKA KUIS (guru menuliskannya di papan) ====== */
+const KODE_KUIS={1:'MULAI1',2:'SISTEM2',3:'ALGO3'};
+const BUKA='ruang_informatika_kuis_terbuka';
+function kuisTerbuka(c){
+  if(role==='guru')return true;
+  try{return (JSON.parse(localStorage.getItem(BUKA))||[]).includes(c)}catch(e){return false}
+}
+function bukaKuis(c){
+  let a=[];try{a=JSON.parse(localStorage.getItem(BUKA))||[]}catch(e){}
+  if(!a.includes(c)){a.push(c);localStorage.setItem(BUKA,JSON.stringify(a))}
+}
+
+/* ====== XP & LEVEL ====== */
+function totalBenar(){let n=0;[1,2,3].forEach(c=>n+=benar(c));return n}
+function xpKini(){return totalBenar()*10}
+function levelKini(){return Math.floor(xpKini()/100)+1}
+function xpProgres(){return xpKini()%100}
+
+function paintXP(){
+  const w=document.getElementById('who');if(!w||nis==='guru')return;
+  let box=document.getElementById('xpBox');
+  if(!box){
+    box=document.createElement('span');box.id='xpBox';box.className='xpwrap';
+    w.insertBefore(box,w.firstChild);
+  }
+  box.innerHTML=`<span class="lvl-badge">LV ${levelKini()}</span>
+    <span class="xpbar"><i style="width:${xpProgres()}%"></i></span>
+    <span style="opacity:.7">${xpKini()} XP</span>`;
+}
+
+/* ====== KUIS ====== */
 function quizHTML(d){
+  /* 1) kelas wajib diisi lebih dulu */
+  if(role!=='guru' && !kelas)return `<section class="panel rv" style="padding:0;border:0;background:none">
+    <div class="kunci">
+      <div class="gb">🎓</div>
+      <h3>Isi kelasmu dulu</h3>
+      <p>Sebelum mengerjakan latihan soal, tuliskan kelasmu agar hasilnya tercatat dengan benar di daftar nilai guru.</p>
+      <div class="kelas-pilih" id="kelasCepat">
+        ${['7A','7B','7C','8A','8B','8C','9A','9B','9C'].map(k=>
+          `<button class="kls" data-k="${k}">${k}</button>`).join('')}
+      </div>
+      <div style="font-family:var(--mono);font-size:.68rem;color:#7d8fa3;margin:14px 0 8px">ATAU KETIK SENDIRI</div>
+      <input id="kelasIn" maxlength="12" placeholder="contoh: 8D" autocomplete="off">
+      <div class="er" id="kelasEr"></div>
+      <button class="btn" id="kelasBtn" style="margin-top:6px">Simpan kelas</button>
+    </div></section>`;
+
+  /* 2) kuis masih terkunci menunggu kode guru */
+  if(!kuisTerbuka(ch))return `<section class="panel rv" style="padding:0;border:0;background:none">
+    <div class="kunci">
+      <div class="gb">🔐</div>
+      <h3>Latihan soal masih terkunci</h3>
+      <p>Guru akan menuliskan kode pembuka di papan tulis. Masukkan kode itu untuk memulai ${d.q.length} soal Bab ${ch}.</p>
+      <input id="kodeIn" maxlength="10" placeholder="KODE" autocomplete="off">
+      <div class="er" id="kodeEr"></div>
+      <button class="btn" id="kodeBtn" style="margin-top:6px">Buka latihan</button>
+      <div style="font-size:.78rem;color:#7d8fa3;margin-top:16px;border-top:1px solid #33404f;padding-top:12px">
+        Kelas kamu: <b style="color:#cfe0f0">${kelas}</b> ·
+        <button id="gantiKelas" style="background:none;border:0;color:var(--rbx-blue);cursor:pointer;text-decoration:underline;font-size:.78rem;padding:0">ganti</button>
+      </div>
+    </div></section>`;
+
   return `<section class="panel rv">
    <div class="qhead"><div><h2 class="sec">Latihan Soal</h2>
-   <p class="sub" style="margin:0">${d.q.length} soal. Penjelasan muncul setiap kali kamu menjawab.</p></div>
-   <span class="badge">${d.eb.replace(' — Fokus','')}</span></div>
-   <div class="bar-p"><i id="bp"></i></div>
+   <p class="sub" style="margin:0">${d.q.length} soal. Hasilmu terlihat langsung saat menjawab.</p></div>
+   <span class="badge">KELAS ${kelas||'—'}</span></div>
+
+   <div class="live">
+     <div class="lv-ring">
+       <svg viewBox="0 0 100 100"><circle class="bg" cx="50" cy="50" r="42"/>
+         <circle class="fg" id="lvArc" cx="50" cy="50" r="42"/></svg>
+       <div class="lv-mid"><b id="lvNilai">0</b><span>NILAI</span></div>
+     </div>
+     <div class="lv-info">
+       <div class="lv-row">
+         <div class="lv-st ok"><b id="lvBenar">0</b><span>benar</span></div>
+         <div class="lv-st no"><b id="lvSalah">0</b><span>salah</span></div>
+         <div class="lv-st"><b id="lvSisa">${d.q.length}</b><span>sisa</span></div>
+       </div>
+       <div class="bar-p" style="margin:12px 0 9px"><i id="bp"></i></div>
+       <div class="lv-msg" id="lvMsg">Jawab soal pertama — nilaimu langsung muncul di sini.</div>
+     </div>
+   </div>
+
    <div id="quiz">${d.q.map((s,i)=>`
     <div class="q" data-i="${i}">
       <div class="qn">SOAL ${String(i+1).padStart(2,'0')} / ${String(d.q.length).padStart(2,'0')}</div>
@@ -2764,34 +3100,124 @@ function quizHTML(d){
       ${s[1].map((o,j)=>`<label class="opt" data-j="${j}"><input type="radio" name="q${ch}_${i}">${o}</label>`).join('')}
       <div class="fb"></div></div>`).join('')}</div>
    <div class="row" style="margin-top:14px">
-     <button class="btn2" id="bScore">Lihat hasil</button>
+     <button class="btn2" id="bScore">Lihat rekap</button>
      <button class="btn2 g" id="bReset">Ulangi latihan</button></div>
    <div class="score" id="sc"></div></section>`;
 }
+
+function wireKelas(){
+  const b=document.getElementById('kelasBtn');if(!b)return;
+  const inp=document.getElementById('kelasIn'),er=document.getElementById('kelasEr');
+  const simpan=v=>{
+    const t=(v||'').trim().toUpperCase().replace(/\s+/g,'');
+    if(t.length<1){er.textContent='Pilih salah satu kelas atau ketik kelasmu.';
+      inp.classList.remove('err');void inp.offsetWidth;inp.classList.add('err');return}
+    if(!/^[0-9A-Z.\-]{1,12}$/.test(t)){er.textContent='Kelas hanya boleh berisi huruf, angka, titik, atau strip.';
+      inp.classList.remove('err');void inp.offsetWidth;inp.classList.add('err');return}
+    kelas=t;saveSiswa();simpanSesi();
+    toast(`Kelas ${t} tersimpan. Sekarang masukkan kode dari guru.`);
+    render();
+  };
+  document.querySelectorAll('#kelasCepat .kls').forEach(x=>x.onclick=()=>simpan(x.dataset.k));
+  b.onclick=()=>simpan(inp.value);
+  inp.addEventListener('keydown',e=>{if(e.key==='Enter')simpan(inp.value)});
+}
+
+function wireKode(d){
+  const b=document.getElementById('kodeBtn');if(!b)return;
+  const inp=document.getElementById('kodeIn'),er=document.getElementById('kodeEr');
+  const coba=()=>{
+    const v=inp.value.trim().toUpperCase();
+    if(v===KODE_KUIS[ch]){bukaKuis(ch);toast('🔓 Latihan Bab '+ch+' terbuka. Selamat mengerjakan!');render()}
+    else{er.textContent='Kode belum tepat. Periksa kembali tulisan di papan.';
+      inp.classList.remove('err');void inp.offsetWidth;inp.classList.add('err');inp.select()}
+  };
+  b.onclick=coba;
+  inp.addEventListener('keydown',e=>{if(e.key==='Enter')coba()});
+  setTimeout(()=>inp.focus(),200);
+}
+
+function angkaTerbang(el,teks,warna){
+  const r=el.getBoundingClientRect();
+  const s=document.createElement('div');
+  s.className='fly';s.textContent=teks;s.style.color=warna;
+  s.style.left=(r.right-64)+'px';s.style.top=(r.top+4)+'px';
+  document.body.appendChild(s);setTimeout(()=>s.remove(),1100);
+}
+
 function wireQuiz(d){
+  if(role!=='guru' && !kelas){wireKelas();return}
+  if(!kuisTerbuka(ch)){
+    wireKode(d);
+    const g=document.getElementById('gantiKelas');
+    if(g)g.onclick=()=>{kelas=null;saveSiswa();simpanSesi();render()};
+    return;
+  }
   const tot=d.q.length;ans[ch]=ans[ch]||{};
-  const bp=document.getElementById('bp');
-  const upd=()=>bp.style.width=(Object.keys(ans[ch]).length/tot*100)+'%';
-  const cur=ch; // kunci bab saat listener dipasang
+  const cur=ch;
+  let beruntun=0;
+
+  const segar=()=>{
+    const o=ans[cur]||{};
+    const dijawab=Object.keys(o).length;
+    let ben=0;for(const k in o)if(o[k]===d.q[k][2])ben++;
+    const sal=dijawab-ben;
+    const nilai=dijawab?Math.round(ben/dijawab*100):0;
+
+    const set=(id,v)=>{const e=document.getElementById(id);if(e)e.textContent=v};
+    set('lvBenar',ben);set('lvSalah',sal);set('lvSisa',tot-dijawab);set('lvNilai',nilai);
+
+    const arc=document.getElementById('lvArc');
+    if(arc){
+      arc.style.strokeDashoffset=264-(264*nilai/100);
+      arc.style.stroke=nilai>=80?'var(--rbx-green)':nilai>=60?'var(--rbx-yellow)':'var(--rbx-red)';
+    }
+    const bp=document.getElementById('bp');
+    if(bp)bp.style.width=(dijawab/tot*100)+'%';
+
+    const msg=document.getElementById('lvMsg');
+    if(msg){
+      let t;
+      if(!dijawab)t='Jawab soal pertama — nilaimu langsung muncul di sini.';
+      else if(dijawab>=tot)t=`Selesai! Semua ${tot} soal terjawab dengan nilai akhir <b>${nilai}</b>.`;
+      else if(nilai>=85)t=`Luar biasa. Pertahankan sampai soal ke-${tot}.`;
+      else if(nilai>=70)t=`Bagus. Tersisa ${tot-dijawab} soal lagi.`;
+      else t=`Baca ulang penjelasan tiap soal — masih ada ${tot-dijawab} kesempatan memperbaiki.`;
+      if(beruntun>=3)t+=`<span class="lv-streak">🔥 ${beruntun} beruntun</span>`;
+      msg.innerHTML=t;
+    }
+    paintXP();
+  };
+
   document.querySelectorAll('#quiz .q').forEach(qe=>{
     const i=+qe.dataset.i,s=d.q[i];
-    qe.querySelectorAll('.opt').forEach(l=>l.onclick=()=>{
-      if(ans[ch][i]!==undefined)return;
-      const j=+l.dataset.j;ans[ch][i]=j;qe.classList.add('ans');
-      saveSiswa();
+    const kunci=(j,animasi)=>{
+      qe.classList.add('ans');
+      const ok=j===s[2];
       qe.querySelectorAll('.opt').forEach(x=>{
         x.classList.add('lock');const xj=+x.dataset.j;
         if(xj===s[2])x.classList.add('ok');else if(xj===j)x.classList.add('bad');
-        x.querySelector('input').disabled=true;
+        const inp=x.querySelector('input');if(inp)inp.disabled=true;
       });
-      const f=qe.querySelector('.fb'),ok=j===s[2];
+      const f=qe.querySelector('.fb');
       f.className='fb on '+(ok?'y':'n');
       f.innerHTML=`<b>${ok?'Benar.':'Belum tepat.'}</b> ${s[3]}`+(ok?'':` Jawaban benar: <b>${s[1][s[2]]}</b>.`);
-      upd();cekBuka(cur);
+      return ok;
+    };
+    qe.querySelectorAll('.opt').forEach(l=>l.onclick=()=>{
+      if(ans[ch][i]!==undefined)return;
+      const j=+l.dataset.j;ans[ch][i]=j;
+      saveSiswa();
+      const ok=kunci(j,true);
+      beruntun = ok ? beruntun+1 : 0;
+      if(ok)angkaTerbang(l,'+10 XP','#00b06f');
+      segar();cekBuka(cur);
     });
-    if(ans[ch][i]!==undefined)qe.querySelector(`.opt[data-j="${ans[ch][i]}"]`).click();
+    /* pulihkan jawaban yang sudah tersimpan tanpa memicu animasi */
+    if(ans[ch][i]!==undefined)kunci(ans[ch][i],false);
   });
-  upd();
+  segar();
+
   document.getElementById('bScore').onclick=()=>{
     const done=Object.keys(ans[ch]).length;
     let ben=0;for(const k in ans[ch])if(ans[ch][k]===d.q[k][2])ben++;
@@ -2799,19 +3225,22 @@ function wireQuiz(d){
     const msg=done<tot?`Masih ada ${tot-done} soal yang belum dijawab.`:
       p>=85?'Penguasaan sangat baik. Lanjut ke bab berikutnya.':
       p>=70?'Sudah baik. Tinjau ulang soal yang salah.':'Baca ulang materi dan coba simulatornya, lalu ulangi latihan.';
+    const LC=[['🎯','Pemula','Jawab 1 soal',ben>=1],['⭐','Rajin','10 soal benar',ben>=10],
+      ['🔥','Tekun','20 soal benar',ben>=20],['👑','Tuntas',`${tot} soal terjawab`,done>=tot],
+      ['💎','Sempurna','Nilai 100',p>=100],['🚀','Ahli','Nilai 85 ke atas',p>=85]];
     const sc=document.getElementById('sc');sc.className='score on';
-    sc.innerHTML=`<div class="lbl">Hasil ${d.t}</div>
-      <div class="big" id="cnt">0 <span style="font-size:1.05rem;color:#6c7a88">/ ${tot}</span></div>
-      <div style="margin-top:6px;font-size:.9rem">Nilai <b>${p}</b> · dijawab ${done} dari ${tot}</div>
-      <div style="margin-top:9px;font-size:.9rem;color:#41505e">${msg}</div>`;
-    let c=0;const el=document.getElementById('cnt');
-    const t=setInterval(()=>{c++;el.innerHTML=`${c} <span style="font-size:1.05rem;color:#6c7a88">/ ${tot}</span>`;
-      if(c>=ben)clearInterval(t)},55);
-    if(ben===0)el.innerHTML=`0 <span style="font-size:1.05rem;color:#6c7a88">/ ${tot}</span>`;
+    sc.innerHTML=`<div class="lbl">Rekap ${d.t}</div>
+      <div class="big">${ben} <span style="font-size:1.05rem;color:#6c7a88">/ ${tot}</span></div>
+      <div style="margin-top:6px;font-size:.9rem">Nilai <b>${p}</b> · dijawab ${done} dari ${tot} · total ${xpKini()} XP · Level ${levelKini()}</div>
+      <div style="margin-top:9px;font-size:.9rem;color:#41505e">${msg}</div>
+      <div style="font-family:var(--mono);font-size:.68rem;color:#6c7a88;margin-top:16px;letter-spacing:.08em">LENCANA</div>
+      <div class="lencana">${LC.map(x=>`<div class="lc ${x[3]?'on':''}">
+        <span class="em">${x[0]}</span><b>${x[1]}</b><span>${x[2]}</span></div>`).join('')}</div>`;
     sc.scrollIntoView({behavior:'smooth',block:'nearest'});
   };
-  document.getElementById('bReset').onclick=()=>{ans[ch]={};render()};
+  document.getElementById('bReset').onclick=()=>{ans[ch]={};saveSiswa();render()};
 }
+
 
 /* ============ GURU ============ */
 function rekapHTML(){
@@ -2823,23 +3252,37 @@ function rekapHTML(){
   const row=id=>{
     const a=all[id].ans||{};
     const nm=all[id].nama||'—';
+    const kl=all[id].kelas||'—';
     const sel=c=>{const o=a[c]||{};const n=Object.keys(o).length,t=M[c].q.length;
       if(!n)return '<td style="color:#98a5b2">—</td>';
       let b=0;for(const k in o)if(o[k]===M[c].q[k][2])b++;
       const p=Math.round(b/t*100);
       return `<td><b style="font-family:var(--mono)">${n>=t?p:'·'}</b> <span style="color:#7c8a98;font-size:.8rem">${n}/${t}</span></td>`};
-    return `<tr><td>${nm}</td><td class="k">${id}</td>${sel(1)}${sel(2)}${sel(3)}</tr>`;
+    return `<tr data-kelas="${kl}"><td>${nm}</td><td class="k">${id}</td>
+      <td><span class="klsTag">${kl}</span></td>${sel(1)}${sel(2)}${sel(3)}</tr>`;
   };
+  const daftarKelas=[...new Set(ids.map(i=>all[i].kelas||'—'))].sort();
   return `<section class="panel rv"><h2 class="sec">Rekap Hasil Siswa</h2>
     <p class="sub">${ids.length} siswa tercatat di perangkat ini. Angka besar adalah nilai; angka kecil adalah jumlah soal terjawab.</p>
-    <table><tr><th>Nama</th><th>NIS</th><th>Bab 1</th><th>Bab 2</th><th>Bab 3</th></tr>
+    <div class="row" style="margin-bottom:10px">
+      <button class="btn2 g fk on" data-k="all" onclick="filterKelas('all',this)">Semua kelas</button>
+      ${daftarKelas.map(k=>`<button class="btn2 g fk" data-k="${k}" onclick="filterKelas('${k}',this)">${k}</button>`).join('')}
+    </div>
+    <table id="tbRekap"><tr><th>Nama</th><th>NIS</th><th>Kelas</th><th>Bab 1</th><th>Bab 2</th><th>Bab 3</th></tr>
     ${ids.map(row).join('')}</table>
     <div class="row"><button class="btn2 g" onclick="unduhCSV()">Unduh CSV</button>
     <button class="btn2 g" onclick="hapusData()">Hapus semua data</button></div></section>`;
 }
+function filterKelas(k,btn){
+  document.querySelectorAll('.fk').forEach(b=>b.classList.remove('on'));
+  if(btn)btn.classList.add('on');
+  document.querySelectorAll('#tbRekap tr[data-kelas]').forEach(tr=>{
+    tr.style.display = (k==='all'||tr.dataset.kelas===k) ? '' : 'none';
+  });
+}
 function unduhCSV(){
-  const all=loadAll();let csv='Nama,NIS,Bab1_Nilai,Bab1_Terjawab,Bab2_Nilai,Bab2_Terjawab,Bab3_Nilai,Bab3_Terjawab\n';
-  for(const id in all){const a=all[id].ans||{};const cols=['"'+(all[id].nama||'')+'"',id];
+  const all=loadAll();let csv='Nama,NIS,Kelas,Bab1_Nilai,Bab1_Terjawab,Bab2_Nilai,Bab2_Terjawab,Bab3_Nilai,Bab3_Terjawab\n';
+  for(const id in all){const a=all[id].ans||{};const cols=['"'+(all[id].nama||'')+'"',id,'"'+(all[id].kelas||'')+'"'];
     [1,2,3].forEach(c=>{const o=a[c]||{},t=M[c].q.length,n=Object.keys(o).length;
       let b=0;for(const k in o)if(o[k]===M[c].q[k][2])b++;
       cols.push(n>=t?Math.round(b/t*100):'',n);});
@@ -2855,17 +3298,35 @@ function hapusData(){
 function guruHTML(d){
   const g=d.g;
   return `
-  <section class="panel rv" style="background:linear-gradient(135deg,rgba(56,189,248,.10),rgba(167,139,250,.10));border-color:rgba(56,189,248,.35)">
+  <section class="panel rv" style="background:linear-gradient(135deg,rgba(0,162,255,.10),rgba(139,92,246,.10));border-color:rgba(0,162,255,.35)">
     <div style="display:flex;align-items:center;gap:18px;flex-wrap:wrap">
       <div style="flex:1;min-width:230px">
-        <h2 class="sec">Mode Presentasi</h2>
-        <p class="sub" style="margin:0">Tayangkan materi ${d.t} sebagai slide layar penuh untuk diproyeksikan di kelas — ${SLIDE[ch].length} slide, lengkap dengan warna dan animasi.</p>
+        <h2 class="sec">Mengajar di kelas</h2>
+        <p class="sub" style="margin:0">Dua cara menampilkan ${d.t}: sebagai slide layar penuh, atau melihat halaman persis seperti layar siswa.</p>
       </div>
-      <button class="btn2 presBtn" onclick="bukaDeck(${ch})" style="font-size:.95rem;padding:14px 26px">▶ Mulai presentasi</button>
+    </div>
+    <div class="row" style="margin-top:14px">
+      <button class="btn2" onclick="bukaDeck(${ch})" style="font-size:.95rem;padding:14px 24px">▶ Mode presentasi (${SLIDE[ch].length} slide)</button>
+      <button class="btn2 g" onclick="lihatSiswa()" style="font-size:.95rem;padding:14px 24px">👁 Lihat halaman siswa</button>
     </div>
     <div style="font-size:.82rem;color:#5d6b7a;margin-top:12px;border-top:1px solid var(--line2);padding-top:11px">
-      Navigasi: tombol <b>← →</b> atau <b>spasi</b> untuk berpindah slide · <b>F</b> layar penuh · <b>Esc</b> keluar · di layar sentuh cukup geser jari.
+      Slide: <b>← →</b> berpindah · <b>F</b> layar penuh · <b>Esc</b> keluar. Halaman siswa menampilkan materi dan simulator yang sama, cocok untuk memperagakan langsung.
     </div>
+  </section>
+
+  <section class="panel rv">
+    <h2 class="sec">Kode Pembuka Latihan Soal</h2>
+    <p class="sub">Latihan soal siswa terkunci sampai kode ini dimasukkan. Tuliskan di papan saat kelas siap mengerjakan.</p>
+    <div class="kodebox">
+      <small>KODE UNTUK BAB ${ch} — ${d.q.length} SOAL</small>
+      <div class="kd">${KODE_KUIS[ch]}</div>
+      <small>Siswa mengetiknya di halaman latihan soal</small>
+    </div>
+    <table style="margin-top:14px"><tr><th>Bab</th><th>Kode</th><th>Jumlah soal</th></tr>
+      ${[1,2,3].map(c=>`<tr><td>Bab ${c} — ${M[c].t}</td>
+        <td class="k" style="font-size:1.05rem;letter-spacing:.12em">${KODE_KUIS[c]}</td>
+        <td>${M[c].q.length} soal</td></tr>`).join('')}</table>
+    <div class="note">Untuk mengganti kode, cari baris <code>const KODE_KUIS</code> di dalam berkas ini lalu ubah isinya. Kode tersimpan di perangkat siswa, jadi cukup dimasukkan satu kali per bab.</div>
   </section>
   `+rekapHTML()+`
   <section class="panel rv"><h2 class="sec">Rencana Pembelajaran — ${d.t}</h2>
@@ -2929,5 +3390,5 @@ document.getElementById('rG').onclick=()=>{if(nis==='guru')setRole('guru')};
 document.querySelectorAll('#nav button').forEach(b=>b.onclick=()=>setCh(+b.dataset.c));
 window.addEventListener('beforeunload',saveSiswa);
 document.getElementById('roleBox').style.display='none';
-setTimeout(()=>document.getElementById('namaIn').focus(),350);
+if(!pulihkanSesi())setTimeout(()=>document.getElementById('namaIn').focus(),350);
 </script>
