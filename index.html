@@ -19,7 +19,7 @@ header.bar{background:var(--ink);color:#fff;position:sticky;top:0;z-index:60;bor
 .bar-in{display:flex;align-items:center;gap:14px;flex-wrap:wrap;padding:11px 0}
 .logo{font-family:var(--disp);font-weight:700;display:flex;align-items:center;gap:9px;font-size:1.02rem}
 .pulse{width:10px;height:10px;border-radius:50%;background:var(--signal);animation:pulse 2s infinite}
-@keyframes pulse{0%,100%{box-shadow:0 0 0 0 rgba(56,189,248,.7)}50%{box-shadow:0 0 0 8px rgba(56,189,248,0)}}
+@keyframes pulse{0%,100%{opacity:1;transform:scale(1)}50%{opacity:.55;transform:scale(.82)}}
 .roles{margin-left:auto;display:flex;border:1px solid #2f3b4a;border-radius:7px;overflow:hidden}
 .roles button{font:500 .82rem var(--body);background:none;color:#8fa3b8;border:0;padding:9px 17px;cursor:pointer;transition:.2s}
 .roles button[aria-pressed=true]{background:var(--signal);color:#06212e}
@@ -43,8 +43,9 @@ nav.ch{background:#fff;border-bottom:1px solid var(--line2);position:sticky;top:
 .stats span{font-size:.74rem;color:#8496a8}
 
 /* reveal on scroll */
-.rv{opacity:0;transform:translateY(22px);transition:opacity .6s ease,transform .6s cubic-bezier(.2,.7,.3,1)}
-.rv.in{opacity:1;transform:none}
+.rv{opacity:0;transform:translate3d(0,18px,0);
+  transition:opacity .45s ease,transform .45s cubic-bezier(.2,.7,.3,1)}
+.rv.in{opacity:1;transform:translate3d(0,0,0)}
 
 main{padding:28px 0 70px}
 .panel{background:#fff;border:1px solid var(--line2);border-radius:12px;padding:24px;margin-bottom:20px}
@@ -57,7 +58,7 @@ code{font-family:var(--mono);background:#e9edf2;padding:1px 5px;border-radius:3p
 .note{background:#fff9e8;border:1px solid #f2dfa8;border-radius:8px;padding:12px 14px;font-size:.88rem;margin:14px 0}
 .kv{display:grid;grid-template-columns:repeat(auto-fit,minmax(200px,1fr));gap:12px;margin:14px 0}
 .kv .c{border:1px solid var(--line2);border-left:3px solid var(--signal);border-radius:8px;padding:13px;background:#fbfcfe;transition:.25s}
-.kv .c:hover{transform:translateY(-3px);box-shadow:0 8px 20px rgba(13,17,23,.08);border-left-color:var(--amber)}
+.kv .c:hover{transform:translate3d(0,-3px,0);border-left-color:var(--amber)}
 .kv .c b{font-family:var(--disp);display:block;font-size:.9rem;margin-bottom:3px}
 .kv .c span{font-size:.83rem;color:#4c5a68}
 table{width:100%;border-collapse:collapse;font-size:.87rem;margin:12px 0}
@@ -103,7 +104,7 @@ td.k{font-family:var(--mono);color:#0a7a53;font-weight:600}
 .bit.on{background:#0e2a3a;border-color:var(--signal);box-shadow:0 0 18px rgba(56,189,248,.35)}
 .bit.on .d{color:var(--signal)}
 .bit.on .w{color:#8fd6f5}
-.bit:hover{transform:translateY(-3px)}
+.bit:hover{transform:translate3d(0,-3px,0)}
 .bigval{font-family:var(--disp);font-size:2.6rem;color:#fff;line-height:1;transition:.2s}
 .bigval.bump{animation:bump .3s}
 @keyframes bump{50%{transform:scale(1.16);color:var(--amber)}}
@@ -157,7 +158,7 @@ td.k{font-family:var(--mono);color:#0a7a53;font-weight:600}
 .qt{font-weight:600;margin:5px 0 12px;font-size:.95rem}
 .opt{display:block;border:1px solid var(--line2);border-radius:8px;padding:10px 13px;margin:7px 0;
   cursor:pointer;font-size:.9rem;background:#fff;transition:.2s;position:relative;overflow:hidden}
-.opt:hover:not(.lock){border-color:var(--signal);background:#f2fbff;transform:translateX(4px)}
+.opt:hover:not(.lock){border-color:var(--rbx-blue);background:#f2fbff}
 .opt input{margin-right:9px}
 .opt.ok{border-color:#0a7a53;background:#eafaf3;animation:okpop .45s}
 .opt.bad{border-color:#c2352f;background:#fdf1f0;animation:shake .38s}
@@ -246,7 +247,7 @@ details p{font-size:.88rem;color:#41505e;animation:slide .3s}
   display:grid;grid-template-columns:repeat(auto-fit,minmax(112px,1fr));gap:9px;margin-top:6px;position:relative}
 .bpart{background:#0d564c;border:2px solid #14806f;border-radius:8px;padding:11px 9px;cursor:pointer;
   text-align:center;transition:.25s;color:#c9f0e6}
-.bpart:hover{transform:translateY(-3px);border-color:var(--amber);background:#0f665a}
+.bpart:hover{transform:translate3d(0,-3px,0);border-color:var(--amber);background:#0f665a}
 .bpart.on{border-color:var(--amber);background:#127364;box-shadow:0 0 20px rgba(251,191,36,.35)}
 .bpart b{font-family:var(--disp);font-size:.8rem;display:block;color:#fff}
 .bpart span{font-family:var(--mono);font-size:.63rem;color:#8fd6c5}
@@ -264,7 +265,7 @@ details p{font-size:.88rem;color:#41505e;animation:slide .3s}
 .cmp{display:grid;grid-template-columns:repeat(auto-fit,minmax(132px,1fr));gap:9px;margin-top:10px}
 .cmp .it{background:#111922;border:2px solid #2c3947;border-radius:9px;padding:11px 9px;cursor:pointer;
   text-align:center;transition:.25s}
-.cmp .it:hover{transform:translateY(-3px);border-color:var(--signal)}
+.cmp .it:hover{transform:translate3d(0,-3px,0);border-color:var(--signal)}
 .cmp .it.on{border-color:var(--signal);background:#0e2a3a;box-shadow:0 0 18px rgba(56,189,248,.28)}
 .cmp .it b{font-family:var(--disp);font-size:.79rem;display:block;color:#dbe4ee}
 .cmp .it .io{font-family:var(--mono);font-size:.6rem;padding:1px 6px;border-radius:4px;display:inline-block;margin-top:5px}
@@ -298,7 +299,7 @@ details p{font-size:.88rem;color:#41505e;animation:slide .3s}
 .tl{display:grid;grid-template-columns:repeat(auto-fit,minmax(112px,1fr));gap:8px;margin-top:6px}
 .tli{background:#111922;border:2px solid #2c3947;border-radius:9px;padding:11px 9px;cursor:pointer;
   text-align:center;transition:.25s}
-.tli:hover{transform:translateY(-3px);border-color:var(--signal)}
+.tli:hover{transform:translate3d(0,-3px,0);border-color:var(--signal)}
 .tli.on{border-color:var(--signal);background:#0e2a3a;box-shadow:0 0 18px rgba(56,189,248,.28)}
 .tli b{font-family:var(--mono);font-size:.86rem;display:block;color:var(--amber)}
 .tli span{font-size:.73rem;color:#9db0c4;display:block;margin-top:3px;line-height:1.35}
@@ -333,22 +334,22 @@ details p{font-size:.88rem;color:#41505e;animation:slide .3s}
 
 /* balok melayang bergaya Roblox */
 .blok{position:absolute;border-radius:9px;animation:apung linear infinite;
-  will-change:transform;opacity:.5}
-.blok .atas{position:absolute;inset:0;border-radius:9px}
+  opacity:.5;transform:translateZ(0)}
 .blok .stud{position:absolute;width:26%;height:26%;border-radius:50%;
-  background:rgba(255,255,255,.5);box-shadow:inset 0 -2px 3px rgba(0,0,0,.16)}
+  background:rgba(255,255,255,.5)}
 @keyframes apung{
-  0%{transform:translateY(0) rotate(0deg)}
-  100%{transform:translateY(-240px) rotate(var(--spin,180deg))}}
+  0%{transform:translate3d(0,0,0) rotate(0deg)}
+  100%{transform:translate3d(0,-240px,0) rotate(var(--spin,180deg))}}
 
 /* digit biner melayang */
 .bitfall{position:absolute;font-family:var(--mono);font-weight:700;color:#0a7cd0;
-  opacity:0;animation:drift linear infinite;user-select:none;letter-spacing:.1em}
+  opacity:0;animation:drift linear infinite;user-select:none;letter-spacing:.1em;
+  transform:translateZ(0)}
 @keyframes drift{
-  0%{opacity:0;transform:translateY(0)}
+  0%{opacity:0;transform:translate3d(0,0,0)}
   14%{opacity:.34}
   86%{opacity:.34}
-  100%{opacity:0;transform:translateY(-190px)}}
+  100%{opacity:0;transform:translate3d(0,-190px,0)}}
 
 /* latar gelap untuk hero & login */
 .hero{background:var(--slate);position:relative;overflow:hidden}
@@ -394,9 +395,9 @@ details p{font-size:.88rem;color:#41505e;animation:slide .3s}
     var(--rbx-blue),var(--rbx-purple))}
 #gate .gcard{position:relative;z-index:2}
 
-.panel{background:rgba(255,255,255,.90);backdrop-filter:blur(14px);-webkit-backdrop-filter:blur(14px);box-shadow:0 4px 26px rgba(17,34,58,.09)}
-nav.ch{background:rgba(255,255,255,.93);backdrop-filter:blur(11px);-webkit-backdrop-filter:blur(11px)}
-header.bar{background:rgba(13,17,23,.93);backdrop-filter:blur(11px);-webkit-backdrop-filter:blur(11px)}
+.panel{background:#fff;box-shadow:0 4px 20px rgba(17,34,58,.07);contain:content}
+nav.ch{background:#fff}
+header.bar{background:var(--ink)}
 
 @media (prefers-reduced-motion:reduce){
   .blok,.bitfall{animation:none!important}
@@ -420,7 +421,7 @@ header.bar{background:rgba(13,17,23,.93);backdrop-filter:blur(11px);-webkit-back
   -webkit-mask-image:radial-gradient(ellipse 85% 80% at 50% 40%,#000 20%,transparent 95%)}
 
 .dk-top{position:relative;z-index:5;display:flex;align-items:center;gap:14px;
-  padding:14px 26px;background:rgba(0,0,0,.24);backdrop-filter:blur(9px);flex-wrap:wrap}
+  padding:14px 26px;background:rgba(0,0,0,.30);flex-wrap:wrap}
 .dk-top .bab{font-family:var(--mono);font-size:.7rem;letter-spacing:.14em;
   background:rgba(255,255,255,.18);padding:5px 11px;border-radius:5px}
 .dk-top .jd{font-family:var(--disp);font-weight:600;font-size:.95rem}
@@ -616,7 +617,7 @@ header.bar{background:rgba(13,17,23,.93);backdrop-filter:blur(11px);-webkit-back
 /* gerbang kunci kuis */
 .kunci{background:linear-gradient(135deg,#1b2735,#243447);border-radius:16px;
   padding:30px 24px;text-align:center;color:#fff;box-shadow:0 6px 0 rgba(0,0,0,.22)}
-.kunci .gb{font-size:2.8rem;display:inline-block;animation:sway 2.6s ease-in-out infinite}
+.kunci .gb{font-size:2.8rem;display:inline-block;animation:sway 3.4s ease-in-out infinite}
 .kunci h3{font-family:var(--disp);font-size:1.3rem;margin:8px 0 6px;color:#fff}
 .kunci p{color:#9fb2c6;font-size:.9rem;max-width:44ch;margin:0 auto 16px}
 .kunci input{font-family:var(--mono);font-size:1.5rem;text-align:center;letter-spacing:.28em;
@@ -640,11 +641,12 @@ header.bar{background:rgba(13,17,23,.93);backdrop-filter:blur(11px);-webkit-back
   .panel{padding:16px 13px;border-radius:13px;margin-bottom:14px}
   /* latar diringankan agar gulir mulus */
   #bgfx::before{background-size:92px 92px,92px 92px,28px 28px,28px 28px}
-  .blok{opacity:.4}
-  .panel,nav.ch,header.bar{backdrop-filter:none;-webkit-backdrop-filter:none}
-  .panel{background:#fff}
-  nav.ch{background:#fff}
-  header.bar{background:var(--ink)}
+  #bgfx::after{display:none}
+  .blok{opacity:.34}
+  .panel{contain:content;box-shadow:0 2px 10px rgba(17,34,58,.06)}
+  .rv{transition-duration:.3s}
+  /* efek sentuh tanpa transform agar tidak memicu gambar ulang */
+  .kv .c:hover,.bpart:hover,.cmp .it:hover,.tli:hover,.bit:hover{transform:none}
 
   /* sasaran sentuh diperbesar */
   .opt{padding:14px 14px;font-size:.95rem;margin:9px 0}
@@ -708,6 +710,41 @@ header.bar{background:rgba(13,17,23,.93);backdrop-filter:blur(11px);-webkit-back
   padding:3px 9px;border-radius:6px;display:inline-block;letter-spacing:.06em}
 .btn2.fk{padding:8px 14px;font-size:.8rem;box-shadow:0 3px 0 rgba(17,34,58,.12)}
 .btn2.fk.on{background:var(--rbx-blue);color:#fff;border-color:var(--rbx-blue)}
+
+/* mode hemat: latar dimatikan sepenuhnya */
+body.hemat #bgfx .blok,
+body.hemat #bgfx .bitfall{display:none}
+body.hemat #bgfx{background:linear-gradient(165deg,#e9f2fb,#eef1f5)}
+body.hemat #bgfx::before{opacity:.5}
+body.hemat .rv{opacity:1!important;transform:none!important;transition:none}
+body.hemat .dk-slide,body.hemat .dk-list li,
+body.hemat .dk-card,body.hemat .dk-tbl tr{animation:none!important}
+body.hemat .pulse{animation:none}
+body.hemat .kunci .gb{animation:none}
+body.hemat .fly{animation-duration:.5s}
+
+.hemat-btn{background:none;border:0;color:#7d8fa3;cursor:pointer;font-size:.74rem;
+  padding:4px 8px;border-radius:6px;font-family:var(--body);white-space:nowrap}
+.hemat-btn:hover{color:#fff;background:rgba(255,255,255,.10)}
+.hemat-btn.on{color:var(--rbx-yellow)}
+
+/* bilah mode fokus */
+.fokusbar{background:linear-gradient(135deg,rgba(255,201,0,.16),rgba(255,138,0,.13));
+  border-color:rgba(255,201,0,.55);position:sticky;top:96px;z-index:30;
+  padding:14px 16px;margin-bottom:16px}
+.fb-in{display:flex;align-items:center;gap:14px;flex-wrap:wrap}
+.fb-kiri{display:flex;align-items:center;gap:12px;flex:1;min-width:200px}
+.fb-ic{font-size:1.6rem;flex-shrink:0}
+.fb-kiri b{font-family:var(--disp);font-size:1rem;display:block}
+.fb-kiri span{font-size:.84rem;color:#5d6b7a;display:block;margin-top:2px;line-height:1.4}
+.fokusbar .btn2{flex-shrink:0}
+@media(max-width:760px){
+  .fokusbar{top:88px;padding:12px 13px}
+  .fb-ic{font-size:1.3rem}
+  .fb-kiri b{font-size:.92rem}
+  .fb-kiri span{font-size:.78rem}
+  .fokusbar .btn2{width:100%;margin-top:4px}
+}
 
 *:focus-visible{outline:3px solid var(--rbx-yellow);outline-offset:2px}
 @media(max-width:640px){.panel{padding:17px 14px}.cpu{grid-template-columns:repeat(2,1fr)}.roles{margin-left:0;width:100%}.roles button{flex:1}nav.ch{top:47px}}
@@ -775,6 +812,7 @@ header.bar{background:rgba(13,17,23,.93);backdrop-filter:blur(11px);-webkit-back
 <header class="bar"><div class="wrap bar-in">
   <div class="logo"><span class="pulse"></span>Ruang Informatika</div>
   <div class="who" id="who"></div>
+  <button class="hemat-btn" id="hematBtn" title="Matikan animasi latar bila terasa berat">⚡ Mode hemat</button>
   <div class="roles" role="group" aria-label="Tampilan" id="roleBox">
     <button id="rS" aria-pressed="true">Siswa</button>
     <button id="rG" aria-pressed="false">Guru</button>
@@ -1645,63 +1683,73 @@ const M = {
   const host=document.getElementById('bgfx');
   if(!host)return;
   const R=(a,b)=>a+Math.random()*(b-a);
-  const kecil=window.matchMedia&&window.matchMedia('(max-width:760px)').matches;
+  const mm=q=>window.matchMedia&&window.matchMedia(q).matches;
 
-  /* warna khas balok Roblox */
+  /* deteksi perangkat lemah: inti CPU sedikit, layar kecil, atau hemat data */
+  const inti = navigator.hardwareConcurrency || 4;
+  const hematData = navigator.connection && navigator.connection.saveData;
+  const kurangGerak = mm('(prefers-reduced-motion: reduce)');
+  const ponsel = mm('(max-width:760px)');
+  const lemah = inti <= 4 || hematData || ponsel;
+
+  if(kurangGerak){host.dataset.mode='diam';return}   // tanpa animasi sama sekali
+
+  const jumlahBlok = lemah ? 6 : 12;
+  const jumlahBit  = lemah ? 5 : 12;
+  host.dataset.mode = lemah ? 'ringan' : 'penuh';
+
   const WARNA=[
-    ['#00a2ff','#0077bd'],  // biru
-    ['#00b06f','#008152'],  // hijau
-    ['#ffc900','#c99e00'],  // kuning
-    ['#ff3b30','#c22a22'],  // merah
-    ['#8b5cf6','#6a3fd1'],  // ungu
-    ['#ff8a00','#c96b00'],  // jingga
-    ['#ff2d92','#c41f6f']   // merah muda
+    ['#00a2ff','#0077bd'],['#00b06f','#008152'],['#ffc900','#c99e00'],
+    ['#ff3b30','#c22a22'],['#8b5cf6','#6a3fd1'],['#ff8a00','#c96b00'],['#ff2d92','#c41f6f']
   ];
 
-  /* balok melayang */
-  const jumlahBlok = kecil ? 9 : 20;
+  const frag=document.createDocumentFragment();
+
   for(let i=0;i<jumlahBlok;i++){
-    const [muka,sisi]=WARNA[Math.floor(Math.random()*WARNA.length)];
-    const w=R(30,74), h=w*R(.55,.85);
+    const [muka,sisi]=WARNA[i%WARNA.length];
+    const w=R(34,72), h=w*R(.6,.82);
     const b=document.createElement('div');
     b.className='blok';
-    b.style.width=w.toFixed(0)+'px';
-    b.style.height=h.toFixed(0)+'px';
-    b.style.left=R(-2,98).toFixed(1)+'%';
-    b.style.top=R(4,102).toFixed(1)+'%';
-    b.style.background=muka;
-    b.style.boxShadow=`0 ${(h*0.16).toFixed(0)}px 0 ${sisi}, 0 ${(h*0.16+7).toFixed(0)}px 16px rgba(13,26,45,.18)`;
-    b.style.animationDuration=R(16,34).toFixed(1)+'s';
-    b.style.animationDelay=(-R(0,30)).toFixed(1)+'s';
-    b.style.setProperty('--spin',(R(-200,200)).toFixed(0)+'deg');
-    b.style.opacity=R(.34,.6).toFixed(2);
-
-    /* tombol bulat di atas balok */
+    b.style.cssText=
+      `width:${w.toFixed(0)}px;height:${h.toFixed(0)}px;`+
+      `left:${R(-2,96).toFixed(1)}%;top:${R(4,102).toFixed(1)}%;`+
+      `background:${muka};`+
+      `box-shadow:0 ${(h*.16).toFixed(0)}px 0 ${sisi};`+
+      `animation-duration:${R(22,42).toFixed(0)}s;`+
+      `animation-delay:-${R(0,36).toFixed(0)}s;`+
+      `opacity:${R(.34,.55).toFixed(2)};`+
+      `--spin:${R(-160,160).toFixed(0)}deg`;
     const kolom=w>52?2:1;
     for(let k=0;k<kolom;k++){
-      const s=document.createElement('span');
-      s.className='stud';
-      s.style.left=(kolom===1?37:18+k*40)+'%';
-      s.style.top='16%';
-      b.appendChild(s);
+      const st=document.createElement('span');
+      st.className='stud';
+      st.style.cssText=`left:${kolom===1?37:18+k*40}%;top:16%`;
+      b.appendChild(st);
     }
-    host.appendChild(b);
+    frag.appendChild(b);
   }
 
-  /* digit biner melayang naik */
-  const kata=['0','1','01','10','1101','0110','10110','1010','011','1','0','1001'];
-  const jumlahBit = kecil ? 8 : 26;
+  const kata=['0','1','01','10','1101','0110','10110','1010'];
   for(let i=0;i<jumlahBit;i++){
     const t=document.createElement('div');
     t.className='bitfall';
-    t.textContent=kata[Math.floor(Math.random()*kata.length)];
-    t.style.left=R(1,97).toFixed(1)+'%';
-    t.style.top=R(6,100).toFixed(1)+'%';
-    t.style.animationDuration=R(15,32).toFixed(1)+'s';
-    t.style.animationDelay=(-R(0,28)).toFixed(1)+'s';
-    t.style.fontSize=R(.66,1.1).toFixed(2)+'rem';
-    host.appendChild(t);
+    t.textContent=kata[i%kata.length];
+    t.style.cssText=
+      `left:${R(2,96).toFixed(1)}%;top:${R(6,100).toFixed(1)}%;`+
+      `animation-duration:${R(24,40).toFixed(0)}s;`+
+      `animation-delay:-${R(0,34).toFixed(0)}s;`+
+      `font-size:${R(.7,1.05).toFixed(2)}rem`;
+    frag.appendChild(t);
   }
+  host.appendChild(frag);
+
+  /* hentikan animasi saat tab tidak terlihat agar hemat daya */
+  document.addEventListener('visibilitychange',()=>{
+    host.style.animationPlayState=document.hidden?'paused':'running';
+    host.querySelectorAll('.blok,.bitfall').forEach(e=>{
+      e.style.animationPlayState=document.hidden?'paused':'running';
+    });
+  });
 })();
 
 /* ============ MODE PRESENTASI ============ */
@@ -2039,7 +2087,7 @@ function setCh(c){
     toast(`Bab ${c} masih terkunci. Selesaikan dulu ${total(p)-jml(p)} soal Bab ${p} yang tersisa.`);
     // tetap tampilkan halaman terkunci agar siswa paham syaratnya
   }
-  ch=c;paintNav();render();
+  ch=c;bacaMateri=false;paintNav();render();
   if(nis)simpanSesi();
 }
 
@@ -2070,9 +2118,52 @@ function render(){
 
   if(!terbuka(ch)){app.innerHTML=lockedHTML(ch);observe();animReq(ch);window.scrollTo(0,0);return;}
 
-  app.innerHTML = progHTML() + d.html + quizHTML(d);
+  /* mode fokus: begitu kuis terbuka, materi disembunyikan agar tak mengganggu */
+  const fokus = kuisTerbuka(ch) && kelas && !bacaMateri;
+  if(fokus){
+    app.innerHTML = fokusBarHTML(d) + quizHTML(d);
+    wireQuiz(d);paintXP();observe();window.scrollTo(0,0);return;
+  }
+
+  app.innerHTML = (bacaMateri ? materiBarHTML() : progHTML()) + d.html + quizHTML(d);
   wireQuiz(d);wireLabs();animProg();paintXP();
   observe();window.scrollTo(0,0);
+}
+
+/* penanda mode: true = siswa sedang membaca materi lagi */
+let bacaMateri=false;
+function bukaMateri(){bacaMateri=true;render()}
+function tutupMateri(){bacaMateri=false;render()}
+
+function fokusBarHTML(d){
+  const n=jml(ch),t=total(ch);
+  return `<section class="panel rv fokusbar">
+    <div class="fb-in">
+      <div class="fb-kiri">
+        <span class="fb-ic">🎯</span>
+        <div>
+          <b>Mode fokus — Latihan Bab ${ch}</b>
+          <span>Materi disembunyikan agar kamu berkonsentrasi. ${n} dari ${t} soal terjawab.</span>
+        </div>
+      </div>
+      <button class="btn2 g" onclick="bukaMateri()">📖 Buka materi</button>
+    </div>
+  </section>`;
+}
+
+function materiBarHTML(){
+  return `<section class="panel rv fokusbar" style="background:linear-gradient(135deg,rgba(0,162,255,.12),rgba(139,92,246,.12));border-color:rgba(0,162,255,.4)">
+    <div class="fb-in">
+      <div class="fb-kiri">
+        <span class="fb-ic">📖</span>
+        <div>
+          <b>Sedang membaca materi</b>
+          <span>Cari yang kamu butuhkan, lalu kembali mengerjakan soal.</span>
+        </div>
+      </div>
+      <button class="btn2" onclick="tutupMateri()">🎯 Kembali ke soal</button>
+    </div>
+  </section>`;
 }
 
 /* halaman bab terkunci */
@@ -3344,6 +3435,19 @@ function cekBuka(c){
 }
 
 /* ============ EVENT ============ */
+/* mode hemat animasi */
+const HEMAT='ruang_informatika_hemat';
+function setHemat(on){
+  document.body.classList.toggle('hemat',on);
+  const b=document.getElementById('hematBtn');
+  b.classList.toggle('on',on);
+  b.textContent = on ? '⚡ Hemat aktif' : '⚡ Mode hemat';
+  try{on?localStorage.setItem(HEMAT,'1'):localStorage.removeItem(HEMAT)}catch(e){}
+}
+document.getElementById('hematBtn').onclick=()=>
+  setHemat(!document.body.classList.contains('hemat'));
+try{if(localStorage.getItem(HEMAT))setHemat(true)}catch(e){}
+
 /* tab login */
 const tabS=document.getElementById('tabS'),tabG=document.getElementById('tabG');
 tabS.onclick=()=>{tabS.classList.add('on');tabG.classList.remove('on');
