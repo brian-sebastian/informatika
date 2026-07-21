@@ -313,85 +313,85 @@ details p{font-size:.88rem;color:#41505e;animation:slide .3s}
 /* ===== LATAR TEKNOLOGI ===== */
 #bgfx{position:fixed;inset:0;z-index:-2;pointer-events:none;overflow:hidden;
   background:
-    radial-gradient(1000px 580px at 88% -6%,rgba(56,189,248,.30),transparent 64%),
-    radial-gradient(840px 520px at 3% 14%,rgba(167,139,250,.24),transparent 62%),
-    radial-gradient(760px 470px at 52% 110%,rgba(52,211,153,.22),transparent 62%),
-    radial-gradient(620px 400px at 96% 76%,rgba(251,191,36,.14),transparent 62%),
-    linear-gradient(160deg,#e7edf4 0%,var(--paper) 45%,#e4ebf3 100%);}
-/* kisi papan sirkuit */
+    radial-gradient(900px 560px at 84% -8%,rgba(0,162,255,.34),transparent 62%),
+    radial-gradient(780px 500px at 6% 16%,rgba(139,92,246,.28),transparent 62%),
+    radial-gradient(720px 460px at 52% 108%,rgba(0,176,111,.24),transparent 62%),
+    radial-gradient(600px 400px at 96% 74%,rgba(255,201,0,.20),transparent 62%),
+    linear-gradient(165deg,#e9f2fb 0%,#eef1f5 45%,#e6eef8 100%);}
+/* kisi papan bata */
 #bgfx::before{content:"";position:absolute;inset:-2px;
   background-image:
-    linear-gradient(rgba(28,52,84,.16) 1px,transparent 1px),
-    linear-gradient(90deg,rgba(28,52,84,.16) 1px,transparent 1px),
-    linear-gradient(rgba(28,52,84,.07) 1px,transparent 1px),
-    linear-gradient(90deg,rgba(28,52,84,.07) 1px,transparent 1px);
-  background-size:120px 120px,120px 120px,24px 24px,24px 24px;}
-/* butiran halus */
+    linear-gradient(rgba(20,60,110,.15) 2px,transparent 2px),
+    linear-gradient(90deg,rgba(20,60,110,.15) 2px,transparent 2px),
+    linear-gradient(rgba(20,60,110,.06) 1px,transparent 1px),
+    linear-gradient(90deg,rgba(20,60,110,.06) 1px,transparent 1px);
+  background-size:128px 128px,128px 128px,32px 32px,32px 32px;}
 #bgfx::after{content:"";position:absolute;inset:0;opacity:.05;
   background-image:radial-gradient(circle at 1px 1px,#0d1117 1px,transparent 0);
   background-size:5px 5px;}
 #bgfx svg{position:absolute;inset:0;width:100%;height:100%}
 
-.trace{fill:none;stroke:#1f6fd0;stroke-width:1.9;opacity:.42;stroke-linecap:round}
-.trace.t2{stroke:#7c5cd6;opacity:.36}
-.trace.t3{stroke:#12876a;opacity:.34}
-.pad{fill:none;stroke:#1f6fd0;stroke-width:2;opacity:.5}
-.padc{fill:#1f6fd0;opacity:.5}
-.chipbox{fill:rgba(31,111,208,.09);stroke:#1f6fd0;stroke-width:1.8;opacity:.5}
-.chippin{stroke:#1f6fd0;stroke-width:1.8;opacity:.45}
-.spark{fill:none;stroke:var(--signal);stroke-width:3.6;stroke-linecap:round;
-  filter:drop-shadow(0 0 9px rgba(56,189,248,1));
-  stroke-dasharray:52 1200;animation:flow 9s linear infinite}
-.spark.b{stroke:#a78bfa;filter:drop-shadow(0 0 9px rgba(167,139,250,1))}
-.spark.c{stroke:#34d399;filter:drop-shadow(0 0 9px rgba(52,211,153,1))}
-@keyframes flow{from{stroke-dashoffset:1252}to{stroke-dashoffset:0}}
-
-.node{fill:#38bdf8;opacity:.55;animation:blip 3.4s ease-in-out infinite}
-@keyframes blip{0%,100%{opacity:.2;r:3}50%{opacity:.85;r:5.5}}
+/* balok melayang bergaya Roblox */
+.blok{position:absolute;border-radius:9px;animation:apung linear infinite;
+  will-change:transform;opacity:.5}
+.blok .atas{position:absolute;inset:0;border-radius:9px}
+.blok .stud{position:absolute;width:26%;height:26%;border-radius:50%;
+  background:rgba(255,255,255,.5);box-shadow:inset 0 -2px 3px rgba(0,0,0,.16)}
+@keyframes apung{
+  0%{transform:translateY(0) rotate(0deg)}
+  100%{transform:translateY(-240px) rotate(var(--spin,180deg))}}
 
 /* digit biner melayang */
-.bitfall{position:absolute;font-family:var(--mono);font-weight:600;color:#1f5cff;
+.bitfall{position:absolute;font-family:var(--mono);font-weight:700;color:#0a7cd0;
   opacity:0;animation:drift linear infinite;user-select:none;letter-spacing:.1em}
 @keyframes drift{
   0%{opacity:0;transform:translateY(0)}
-  14%{opacity:.42}
-  86%{opacity:.42}
+  14%{opacity:.34}
+  86%{opacity:.34}
   100%{opacity:0;transform:translateY(-190px)}}
 
 /* latar gelap untuk hero & login */
 .hero{background:var(--slate);position:relative;overflow:hidden}
+.hero{background:linear-gradient(150deg,#132a45 0%,#1c2f4d 50%,#241d47 100%)}
 .hero .grid{position:absolute;inset:0;
   background-image:
-    linear-gradient(rgba(56,189,248,.30) 1px,transparent 1px),
-    linear-gradient(90deg,rgba(56,189,248,.30) 1px,transparent 1px),
-    linear-gradient(rgba(56,189,248,.12) 1px,transparent 1px),
-    linear-gradient(90deg,rgba(56,189,248,.12) 1px,transparent 1px);
-  background-size:132px 132px,132px 132px,33px 33px,33px 33px;
+    linear-gradient(rgba(0,162,255,.34) 2px,transparent 2px),
+    linear-gradient(90deg,rgba(0,162,255,.34) 2px,transparent 2px),
+    linear-gradient(rgba(0,162,255,.13) 1px,transparent 1px),
+    linear-gradient(90deg,rgba(0,162,255,.13) 1px,transparent 1px);
+  background-size:124px 124px,124px 124px,31px 31px,31px 31px;
   mask-image:linear-gradient(180deg,#000,rgba(0,0,0,.35) 70%,transparent 96%);
   -webkit-mask-image:linear-gradient(180deg,#000,rgba(0,0,0,.35) 70%,transparent 96%);}
-.hero::after{content:"";position:absolute;left:0;right:0;bottom:0;height:2px;
-  background:linear-gradient(90deg,transparent,var(--signal),var(--violet),var(--moss),transparent);
-  opacity:.7;z-index:3}
+.hero::after{content:"";position:absolute;left:0;right:0;bottom:0;height:5px;z-index:3;
+  background:linear-gradient(90deg,var(--rbx-red),var(--rbx-yellow),var(--rbx-green),
+    var(--rbx-blue),var(--rbx-purple),var(--rbx-pink));}
+.hero .stats div{border-left:4px solid var(--rbx-yellow);border-radius:2px}
 .hero .wrap{position:relative;z-index:2}
 
 #gate{position:fixed;inset:0;z-index:200;display:flex;align-items:center;justify-content:center;
   padding:20px;animation:fade .4s;overflow:hidden;
   background:
-    radial-gradient(820px 520px at 78% 6%,rgba(56,189,248,.30),transparent 62%),
-    radial-gradient(700px 460px at 10% 92%,rgba(167,139,250,.26),transparent 62%),
-    radial-gradient(560px 380px at 96% 82%,rgba(52,211,153,.16),transparent 62%),
-    var(--slate);}
+    radial-gradient(820px 520px at 78% 4%,rgba(0,162,255,.40),transparent 62%),
+    radial-gradient(700px 460px at 8% 94%,rgba(139,92,246,.34),transparent 62%),
+    radial-gradient(560px 380px at 96% 80%,rgba(0,176,111,.22),transparent 62%),
+    radial-gradient(480px 340px at 20% 12%,rgba(255,201,0,.16),transparent 62%),
+    linear-gradient(150deg,#122740 0%,#1a2c48 55%,#221b42 100%);}
 #gate .gg{position:absolute;inset:0;
   background-image:
-    linear-gradient(rgba(56,189,248,.22) 1px,transparent 1px),
-    linear-gradient(90deg,rgba(56,189,248,.22) 1px,transparent 1px),
-    linear-gradient(rgba(56,189,248,.09) 1px,transparent 1px),
-    linear-gradient(90deg,rgba(56,189,248,.09) 1px,transparent 1px);
-  background-size:140px 140px,140px 140px,35px 35px,35px 35px;
-  mask-image:radial-gradient(ellipse 78% 78% at 50% 50%,#000 18%,transparent 96%);
-  -webkit-mask-image:radial-gradient(ellipse 78% 78% at 50% 50%,#000 18%,transparent 96%);}
-#gate .gcard{box-shadow:0 26px 70px rgba(0,0,0,.5),0 0 0 1px rgba(56,189,248,.16),
-  0 0 60px rgba(56,189,248,.10)}
+    linear-gradient(rgba(0,162,255,.26) 2px,transparent 2px),
+    linear-gradient(90deg,rgba(0,162,255,.26) 2px,transparent 2px),
+    linear-gradient(rgba(0,162,255,.10) 1px,transparent 1px),
+    linear-gradient(90deg,rgba(0,162,255,.10) 1px,transparent 1px);
+  background-size:132px 132px,132px 132px,33px 33px,33px 33px;
+  mask-image:radial-gradient(ellipse 82% 82% at 50% 50%,#000 14%,transparent 96%);
+  -webkit-mask-image:radial-gradient(ellipse 82% 82% at 50% 50%,#000 14%,transparent 96%);}
+#gate .gcard{border-radius:18px;
+  box-shadow:0 10px 0 rgba(0,0,0,.34),0 26px 70px rgba(0,0,0,.5),
+    0 0 0 2px rgba(0,162,255,.28)}
+#gate .gcard::before{content:"";position:absolute;top:0;left:0;right:0;height:6px;
+  border-radius:18px 18px 0 0;
+  background:linear-gradient(90deg,var(--rbx-red),var(--rbx-yellow),var(--rbx-green),
+    var(--rbx-blue),var(--rbx-purple))}
 #gate .gcard{position:relative;z-index:2}
 
 .panel{background:rgba(255,255,255,.90);backdrop-filter:blur(14px);-webkit-backdrop-filter:blur(14px);box-shadow:0 4px 26px rgba(17,34,58,.09)}
@@ -399,10 +399,9 @@ nav.ch{background:rgba(255,255,255,.93);backdrop-filter:blur(11px);-webkit-backd
 header.bar{background:rgba(13,17,23,.93);backdrop-filter:blur(11px);-webkit-backdrop-filter:blur(11px)}
 
 @media (prefers-reduced-motion:reduce){
-  .spark,.bitfall{animation:none!important}
-  .spark{stroke-dasharray:none;opacity:.35}
-  .node{animation:none}
-  .bitfall{opacity:.12}
+  .blok,.bitfall{animation:none!important}
+  .bitfall{opacity:.2}
+  .blok{opacity:.35}
 }
 
 /* ===== MODE PRESENTASI ===== */
@@ -640,9 +639,8 @@ header.bar{background:rgba(13,17,23,.93);backdrop-filter:blur(11px);-webkit-back
   .wrap{padding:0 14px}
   .panel{padding:16px 13px;border-radius:13px;margin-bottom:14px}
   /* latar diringankan agar gulir mulus */
-  #bgfx svg{display:none}
-  #bgfx .bitfall:nth-child(n+9){display:none}
-  #bgfx::before{background-size:90px 90px,90px 90px,30px 30px,30px 30px}
+  #bgfx::before{background-size:92px 92px,92px 92px,28px 28px,28px 28px}
+  .blok{opacity:.4}
   .panel,nav.ch,header.bar{backdrop-filter:none;-webkit-backdrop-filter:none}
   .panel{background:#fff}
   nav.ch{background:#fff}
@@ -693,17 +691,17 @@ header.bar{background:rgba(13,17,23,.93);backdrop-filter:blur(11px);-webkit-back
 }
 
 /* pilih kelas */
-.kelas-pilih{display:grid;grid-template-columns:repeat(3,1fr);gap:9px;
-  max-width:290px;margin:6px auto 0}
-.kls{font-family:var(--disp);font-weight:700;font-size:1.05rem;
+.kelas-pilih{display:grid;grid-template-columns:repeat(2,1fr);gap:10px;
+  max-width:300px;margin:6px auto 0}
+.kls{font-family:var(--disp);font-weight:700;font-size:1.15rem;
   background:#0f151d;border:2px solid #33404f;color:#cfe0f0;
-  padding:13px 6px;border-radius:11px;cursor:pointer;
-  box-shadow:0 3px 0 rgba(0,0,0,.3);transition:transform .1s,box-shadow .1s,border-color .2s,background .2s}
+  padding:15px 6px;border-radius:12px;cursor:pointer;letter-spacing:.02em;
+  box-shadow:0 4px 0 rgba(0,0,0,.34);transition:transform .1s,box-shadow .1s,border-color .2s,background .2s}
 .kls:hover{border-color:var(--rbx-blue);background:#12283a;transform:translateY(-2px);
-  box-shadow:0 5px 0 rgba(0,0,0,.32)}
-.kls:active{transform:translateY(2px);box-shadow:0 1px 0 rgba(0,0,0,.3)}
-.kunci input#kelasIn{font-size:1.2rem;letter-spacing:.16em;width:180px}
-@media(max-width:400px){.kelas-pilih{max-width:100%}.kls{font-size:.95rem;padding:12px 4px}}
+  box-shadow:0 6px 0 rgba(0,0,0,.36)}
+.kls:active{transform:translateY(3px);box-shadow:0 1px 0 rgba(0,0,0,.34)}
+.kunci input#kelasIn{font-size:1.15rem;letter-spacing:.12em;width:190px}
+@media(max-width:400px){.kelas-pilih{max-width:100%;gap:8px}.kls{font-size:1rem;padding:13px 4px}}
 
 .klsTag{font-family:var(--mono);font-size:.72rem;font-weight:600;
   background:linear-gradient(135deg,var(--rbx-blue),var(--rbx-purple));color:#fff;
@@ -1646,85 +1644,63 @@ const M = {
 (function bgfx(){
   const host=document.getElementById('bgfx');
   if(!host)return;
-  const W=1440,H=900,NS='http://www.w3.org/2000/svg';
-  const svg=document.createElementNS(NS,'svg');
-  svg.setAttribute('viewBox',`0 0 ${W} ${H}`);
-  svg.setAttribute('preserveAspectRatio','xMidYMid slice');
-  const el=(t,a)=>{const n=document.createElementNS(NS,t);
-    for(const k in a)n.setAttribute(k,a[k]);return n};
   const R=(a,b)=>a+Math.random()*(b-a);
-  const snap=v=>Math.round(v/20)*20;
+  const kecil=window.matchMedia&&window.matchMedia('(max-width:760px)').matches;
 
-  /* jalur bergaya PCB: hanya belok 90° dan 45° */
-  function jalur(x,y,langkah){
-    let d=`M ${x} ${y}`, dir=Math.random()<.5?1:-1, titik=[[x,y]];
-    for(let i=0;i<langkah;i++){
-      const p=Math.random(), n=snap(R(60,150));
-      if(p<.40){x+=n}
-      else if(p<.66){y+=n*dir}
-      else{x+=n;y+=n*dir}          // diagonal 45°
-      if(y<40||y>H-40){dir*=-1;y=Math.max(40,Math.min(H-40,y))}
-      d+=` L ${x} ${y}`;titik.push([x,y]);
-      if(Math.random()<.3)dir*=-1;
-      if(x>W+200)break;
+  /* warna khas balok Roblox */
+  const WARNA=[
+    ['#00a2ff','#0077bd'],  // biru
+    ['#00b06f','#008152'],  // hijau
+    ['#ffc900','#c99e00'],  // kuning
+    ['#ff3b30','#c22a22'],  // merah
+    ['#8b5cf6','#6a3fd1'],  // ungu
+    ['#ff8a00','#c96b00'],  // jingga
+    ['#ff2d92','#c41f6f']   // merah muda
+  ];
+
+  /* balok melayang */
+  const jumlahBlok = kecil ? 9 : 20;
+  for(let i=0;i<jumlahBlok;i++){
+    const [muka,sisi]=WARNA[Math.floor(Math.random()*WARNA.length)];
+    const w=R(30,74), h=w*R(.55,.85);
+    const b=document.createElement('div');
+    b.className='blok';
+    b.style.width=w.toFixed(0)+'px';
+    b.style.height=h.toFixed(0)+'px';
+    b.style.left=R(-2,98).toFixed(1)+'%';
+    b.style.top=R(4,102).toFixed(1)+'%';
+    b.style.background=muka;
+    b.style.boxShadow=`0 ${(h*0.16).toFixed(0)}px 0 ${sisi}, 0 ${(h*0.16+7).toFixed(0)}px 16px rgba(13,26,45,.18)`;
+    b.style.animationDuration=R(16,34).toFixed(1)+'s';
+    b.style.animationDelay=(-R(0,30)).toFixed(1)+'s';
+    b.style.setProperty('--spin',(R(-200,200)).toFixed(0)+'deg');
+    b.style.opacity=R(.34,.6).toFixed(2);
+
+    /* tombol bulat di atas balok */
+    const kolom=w>52?2:1;
+    for(let k=0;k<kolom;k++){
+      const s=document.createElement('span');
+      s.className='stud';
+      s.style.left=(kolom===1?37:18+k*40)+'%';
+      s.style.top='16%';
+      b.appendChild(s);
     }
-    return {d,titik};
+    host.appendChild(b);
   }
-
-  const warna=['','t2','t3'], kilat=['','b','c'];
-  for(let i=0;i<16;i++){
-    const y0=snap(R(40,H-40)), x0=snap(R(-200,W*0.35));
-    const {d,titik}=jalur(x0,y0,Math.round(R(8,15)));
-    svg.appendChild(el('path',{d,class:'trace '+warna[i%3]}));
-
-    const s=el('path',{d,class:'spark '+kilat[i%3]});
-    s.style.animationDuration=R(6,14).toFixed(1)+'s';
-    s.style.animationDelay=(-R(0,13)).toFixed(1)+'s';
-    svg.appendChild(s);
-
-    /* bantalan di ujung dan beberapa belokan */
-    titik.filter((_,k)=>k===0||k===titik.length-1||Math.random()<.28)
-         .forEach(([px,py])=>{
-      svg.appendChild(el('circle',{cx:px,cy:py,r:R(4,6.5).toFixed(1),class:'pad'}));
-      svg.appendChild(el('circle',{cx:px,cy:py,r:1.9,class:'padc'}));
-    });
-  }
-
-  /* cip / IC dengan kaki-kakinya */
-  for(let i=0;i<5;i++){
-    const w=R(80,140),h=R(52,88),x=snap(R(60,W-220)),y=snap(R(60,H-160));
-    const g=el('g',{});
-    g.appendChild(el('rect',{x,y,width:w.toFixed(0),height:h.toFixed(0),rx:6,class:'chipbox'}));
-    const n=Math.max(3,Math.round(w/26));
-    for(let k=0;k<n;k++){
-      const px=x+((k+.5)*w/n);
-      g.appendChild(el('line',{x1:px,y1:y,x2:px,y2:y-11,class:'chippin'}));
-      g.appendChild(el('line',{x1:px,y1:y+h,x2:px,y2:y+h+11,class:'chippin'}));
-    }
-    svg.appendChild(g);
-  }
-
-  /* simpul berdenyut */
-  for(let i=0;i<20;i++){
-    const c=el('circle',{cx:snap(R(30,W-30)),cy:snap(R(30,H-30)),r:3.5,class:'node'});
-    c.style.animationDelay=(-R(0,3.4)).toFixed(2)+'s';
-    c.style.animationDuration=R(2.6,4.6).toFixed(1)+'s';
-    svg.appendChild(c);
-  }
-  host.appendChild(svg);
 
   /* digit biner melayang naik */
   const kata=['0','1','01','10','1101','0110','10110','1010','011','1','0','1001'];
-  for(let i=0;i<34;i++){
-    const b=document.createElement('div');
-    b.className='bitfall';
-    b.textContent=kata[Math.floor(Math.random()*kata.length)];
-    b.style.left=R(1,97).toFixed(1)+'%';
-    b.style.top=R(6,100).toFixed(1)+'%';
-    b.style.animationDuration=R(14,30).toFixed(1)+'s';
-    b.style.animationDelay=(-R(0,28)).toFixed(1)+'s';
-    b.style.fontSize=R(.68,1.15).toFixed(2)+'rem';
-    host.appendChild(b);
+  const jumlahBit = kecil ? 8 : 26;
+  for(let i=0;i<jumlahBit;i++){
+    const t=document.createElement('div');
+    t.className='bitfall';
+    t.textContent=kata[Math.floor(Math.random()*kata.length)];
+    t.style.left=R(1,97).toFixed(1)+'%';
+    t.style.top=R(6,100).toFixed(1)+'%';
+    t.style.animationDuration=R(15,32).toFixed(1)+'s';
+    t.style.animationDelay=(-R(0,28)).toFixed(1)+'s';
+    t.style.fontSize=R(.66,1.1).toFixed(2)+'rem';
+    host.appendChild(t);
   }
 })();
 
@@ -3047,11 +3023,11 @@ function quizHTML(d){
       <h3>Isi kelasmu dulu</h3>
       <p>Sebelum mengerjakan latihan soal, tuliskan kelasmu agar hasilnya tercatat dengan benar di daftar nilai guru.</p>
       <div class="kelas-pilih" id="kelasCepat">
-        ${['7A','7B','7C','8A','8B','8C','9A','9B','9C'].map(k=>
+        ${['XII B','XII C','XII D','XII E'].map(k=>
           `<button class="kls" data-k="${k}">${k}</button>`).join('')}
       </div>
       <div style="font-family:var(--mono);font-size:.68rem;color:#7d8fa3;margin:14px 0 8px">ATAU KETIK SENDIRI</div>
-      <input id="kelasIn" maxlength="12" placeholder="contoh: 8D" autocomplete="off">
+      <input id="kelasIn" maxlength="12" placeholder="contoh: XII F" autocomplete="off">
       <div class="er" id="kelasEr"></div>
       <button class="btn" id="kelasBtn" style="margin-top:6px">Simpan kelas</button>
     </div></section>`;
@@ -3109,10 +3085,10 @@ function wireKelas(){
   const b=document.getElementById('kelasBtn');if(!b)return;
   const inp=document.getElementById('kelasIn'),er=document.getElementById('kelasEr');
   const simpan=v=>{
-    const t=(v||'').trim().toUpperCase().replace(/\s+/g,'');
+    const t=(v||'').trim().toUpperCase().replace(/\s+/g,' ');
     if(t.length<1){er.textContent='Pilih salah satu kelas atau ketik kelasmu.';
       inp.classList.remove('err');void inp.offsetWidth;inp.classList.add('err');return}
-    if(!/^[0-9A-Z.\-]{1,12}$/.test(t)){er.textContent='Kelas hanya boleh berisi huruf, angka, titik, atau strip.';
+    if(!/^[0-9A-Z.\- ]{1,12}$/.test(t)){er.textContent='Kelas hanya boleh berisi huruf, angka, spasi, titik, atau strip.';
       inp.classList.remove('err');void inp.offsetWidth;inp.classList.add('err');return}
     kelas=t;saveSiswa();simpanSesi();
     toast(`Kelas ${t} tersimpan. Sekarang masukkan kode dari guru.`);
