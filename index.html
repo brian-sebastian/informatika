@@ -2078,24 +2078,15 @@ function mulaiHitung(){
     const v=bacaSesi();
     if(!v||!v.mulai){hentikanHitung();return}
     const sisa=BATAS_SESI-(Date.now()-v.mulai);
-    paintSisa(sisa);
     if(sisa<=PERINGATAN && !sudahDiingatkan){
       sudahDiingatkan=true;
       toast(`⏳ Sesi tinggal ${Math.ceil(sisa/60000)} menit lagi. Kerjakan segera — jawabanmu tersimpan otomatis.`);
     }
     if(sisa<=0){hentikanHitung();keluarOtomatis()}
-  },1000);
+  },15000);
 }
 function hentikanHitung(){if(jamSesi){clearInterval(jamSesi);jamSesi=null}}
 
-function paintSisa(ms){
-  const e=document.getElementById('sisaSesi');
-  if(!e)return;
-  if(ms<0)ms=0;
-  const m=Math.floor(ms/60000), d2=Math.floor((ms%60000)/1000);
-  e.textContent=`${m}:${String(d2).padStart(2,'0')}`;
-  e.classList.toggle('kritis', ms<=PERINGATAN);
-}
 
 function keluarOtomatis(){
   saveSiswa();
@@ -2112,9 +2103,10 @@ function keluarOtomatis(){
 
 function loadAll(){try{return JSON.parse(localStorage.getItem(KEY))||{}}catch(e){return{}}}
 function saveAll(o){try{localStorage.setItem(KEY,JSON.stringify(o))}catch(e){}}
-function loadSiswa(id){const a=loadAll();return a[id]||{ans:{},nama:'',kelas:''}}
+function loadSiswa(id){const a=loadAll();return a[id]||{ans:{},nama:'',kelas:'',buka:[]}}
 function saveSiswa(){if(!nis||nis==='guru')return;const a=loadAll();
-  a[nis]={nama:nama,kelas:kelas,ans:ans,last:Date.now()};saveAll(a);}
+  const lama=a[nis]||{};
+  a[nis]={nama:nama,kelas:kelas,ans:ans,buka:lama.buka||[],last:Date.now()};saveAll(a);}
 
 /* --- sesi bertahan meski halaman dimuat ulang --- */
 const SESI='ruang_informatika_sesi';
@@ -2227,11 +2219,8 @@ function paintWho(){
   w.innerHTML = (nis==='guru'
     ? `<span>${nama} · <b>Guru</b></span>`
     : `<span>${nama} · NIS <b>${nis}</b></span>`)
-    + `<span class="sesi" title="Sisa waktu sesi">⏱ <b id="sisaSesi">40:00</b></span>`
     + `<button id="out">Keluar</button>`;
   document.getElementById('out').onclick=keluar;
-  const v=bacaSesi();
-  if(v&&v.mulai)paintSisa(BATAS_SESI-(Date.now()-v.mulai));
 }
 
 /* ============ NAVIGASI ============ */
@@ -3266,14 +3255,22 @@ function traceLab(){
 /* ============ QUIZ ============ */
 /* ====== KODE BUKA KUIS (guru menuliskannya di papan) ====== */
 const KODE_KUIS={1:'MULAI1',2:'SISTEM2',3:'ALGO3'};
-const BUKA='ruang_informatika_kuis_terbuka';
+/* Kunci kuis dicatat PER SISWA, bukan per perangkat.
+   Dengan begitu setiap siswa tetap wajib memasukkan kodenya sendiri. */
 function kuisTerbuka(c){
   if(role==='guru')return true;
-  try{return (JSON.parse(localStorage.getItem(BUKA))||[]).includes(c)}catch(e){return false}
+  if(!nis||!kelas)return false;                 // wajib login + isi kelas dulu
+  const r=loadSiswa(nis);
+  return Array.isArray(r.buka) && r.buka.includes(c);
 }
 function bukaKuis(c){
-  let a=[];try{a=JSON.parse(localStorage.getItem(BUKA))||[]}catch(e){}
-  if(!a.includes(c)){a.push(c);localStorage.setItem(BUKA,JSON.stringify(a))}
+  if(!nis||nis==='guru')return;
+  const a=loadAll();
+  const r=a[nis]||{ans:{},nama:nama,kelas:kelas};
+  r.buka=Array.isArray(r.buka)?r.buka:[];
+  if(!r.buka.includes(c))r.buka.push(c);
+  r.nama=nama;r.kelas=kelas;r.ans=ans;r.last=Date.now();
+  a[nis]=r;saveAll(a);
 }
 
 /* ====== XP & LEVEL ====== */
