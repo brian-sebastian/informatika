@@ -773,6 +773,102 @@ body.hemat .fly{animation-duration:.5s}
 @keyframes gelombang{0%,100%{transform:scale(1)}50%{transform:scale(1.22)}}
 body.hemat .suara-btn.main .ic{animation:none}
 
+/* ===== TANTANGAN PER MATERI ===== */
+.tantangan{background:linear-gradient(135deg,#12203a,#1b1740);border:2px solid rgba(139,92,246,.45);
+  border-radius:16px;padding:20px;margin:20px 0;color:#fff;box-shadow:0 6px 0 rgba(0,0,0,.22)}
+.tt-head{display:flex;align-items:center;gap:12px;flex-wrap:wrap;margin-bottom:6px}
+.tt-head .lencanaT{font-family:var(--mono);font-size:.62rem;letter-spacing:.1em;
+  background:linear-gradient(135deg,var(--rbx-purple),var(--rbx-pink));color:#fff;
+  padding:4px 10px;border-radius:6px;white-space:nowrap}
+.tt-head h4{font-family:var(--disp);margin:0;font-size:1.05rem;color:#fff;flex:1;min-width:150px}
+.tt-nyawa{font-size:.95rem;letter-spacing:2px;white-space:nowrap}
+.tt-cap{font-size:.85rem;color:#a9bccf;margin:0 0 14px}
+
+.tt-bar{height:7px;background:rgba(255,255,255,.14);border-radius:99px;overflow:hidden;margin-bottom:14px}
+.tt-bar i{display:block;height:100%;width:0;border-radius:99px;
+  background:linear-gradient(90deg,var(--rbx-purple),var(--rbx-pink));
+  transition:width .45s cubic-bezier(.2,.9,.3,1)}
+
+.tt-soal{font-size:1rem;line-height:1.5;margin-bottom:14px;font-weight:500}
+.tt-soal code{background:rgba(255,255,255,.16);color:#ffd479}
+.tt-opsi{display:grid;gap:9px}
+.tt-opsi.dua{grid-template-columns:1fr 1fr}
+.tt-o{background:rgba(255,255,255,.09);border:2px solid rgba(255,255,255,.18);color:#e8f0f8;
+  border-radius:11px;padding:12px 15px;cursor:pointer;font:500 .92rem var(--body);
+  text-align:left;transition:transform .1s,background .2s,border-color .2s;
+  box-shadow:0 3px 0 rgba(0,0,0,.24)}
+.tt-o:hover:not(:disabled){background:rgba(255,255,255,.16);border-color:var(--rbx-blue);
+  transform:translateY(-2px);box-shadow:0 5px 0 rgba(0,0,0,.26)}
+.tt-o:active:not(:disabled){transform:translateY(2px);box-shadow:0 1px 0 rgba(0,0,0,.24)}
+.tt-o:disabled{cursor:default}
+.tt-o.benar{background:rgba(0,176,111,.30);border-color:var(--rbx-green);color:#fff}
+.tt-o.salah{background:rgba(255,59,48,.28);border-color:var(--rbx-red);color:#fff;animation:shake .38s}
+
+.tt-fb{margin-top:13px;padding:12px 14px;border-radius:10px;font-size:.87rem;line-height:1.5;
+  display:none;animation:erpop .35s}
+.tt-fb.on{display:block}
+.tt-fb.y{background:rgba(0,176,111,.20);border-left:4px solid var(--rbx-green)}
+.tt-fb.n{background:rgba(255,59,48,.18);border-left:4px solid var(--rbx-red)}
+.tt-fb b{font-family:var(--disp)}
+
+.tt-hasil{text-align:center;padding:14px 8px;animation:erpop .45s}
+.tt-hasil .medali{font-size:3rem;line-height:1;display:block;margin-bottom:8px}
+.tt-hasil .angka{font-family:var(--disp);font-size:2.2rem;line-height:1}
+.tt-hasil .ket{color:#a9bccf;font-size:.88rem;margin:8px 0 16px;line-height:1.5}
+.tt-btn{font:700 .86rem var(--body);background:var(--rbx-blue);color:#fff;border:0;
+  padding:11px 22px;border-radius:10px;cursor:pointer;box-shadow:0 4px 0 rgba(0,0,0,.26);
+  transition:transform .1s,box-shadow .1s,filter .15s}
+.tt-btn:hover{filter:brightness(1.1);transform:translateY(-1px)}
+.tt-btn:active{transform:translateY(3px);box-shadow:0 1px 0 rgba(0,0,0,.26)}
+.tt-btn.u{background:rgba(255,255,255,.14)}
+
+.tt-xp{position:absolute;font-family:var(--disp);font-weight:700;font-size:1.1rem;
+  color:var(--rbx-green);pointer-events:none;animation:flyup .95s ease-out forwards;
+  text-shadow:0 2px 6px rgba(0,0,0,.4)}
+@media(max-width:640px){
+  .tantangan{padding:16px 13px}
+  .tt-opsi.dua{grid-template-columns:1fr}
+  .tt-o{padding:13px 14px}
+}
+body.hemat .tt-o.salah,body.hemat .tt-fb,body.hemat .tt-hasil{animation:none}
+
+/* ===== KODE SETORAN ===== */
+.setor{background:linear-gradient(135deg,#0d3b2e,#0d2a3f);border:2px solid rgba(0,176,111,.5);
+  border-radius:16px;padding:20px;margin-top:16px;color:#fff;box-shadow:0 6px 0 rgba(0,0,0,.22)}
+.setor h4{font-family:var(--disp);margin:0 0 5px;font-size:1.05rem}
+.setor p{color:#9fc7b8;font-size:.86rem;margin:0 0 14px;line-height:1.5}
+.setor .kode{font-family:var(--mono);font-size:clamp(1.05rem,3.6vw,1.5rem);font-weight:600;
+  background:#08181f;border:2px dashed rgba(0,176,111,.6);border-radius:11px;
+  padding:15px 12px;text-align:center;letter-spacing:.06em;word-break:break-all;
+  color:#7ef0c0;line-height:1.55;user-select:all}
+.setor .btn2{margin-top:12px}
+.setor .ok{color:var(--rbx-green);font-size:.85rem;margin-top:9px;font-weight:600;min-height:20px}
+
+/* ===== PANEL GURU: TEMPEL KODE ===== */
+.tempel{background:linear-gradient(135deg,rgba(0,176,111,.10),rgba(0,162,255,.10));
+  border-color:rgba(0,176,111,.4)}
+.tempel textarea{width:100%;min-height:96px;font-family:var(--mono);font-size:.85rem;
+  background:#0f151d;border:2px solid #33404f;color:#e8eff6;padding:12px 14px;
+  border-radius:11px;resize:vertical;line-height:1.6}
+.tempel textarea:focus{border-color:var(--rbx-green);outline:none}
+.tempel .hasil{font-size:.87rem;margin-top:11px;padding:11px 14px;border-radius:10px;display:none}
+.tempel .hasil.on{display:block;animation:erpop .35s}
+.tempel .hasil.y{background:#eafaf3;border-left:4px solid var(--rbx-green);color:#0a4d36}
+.tempel .hasil.n{background:#fdf1f0;border-left:4px solid var(--rbx-red);color:#7d1f19}
+
+/* ===== DAFTAR ONLINE ===== */
+.online{display:grid;grid-template-columns:repeat(auto-fit,minmax(190px,1fr));gap:11px;margin-top:12px}
+.on-kartu{background:#fff;border:2px solid var(--line2);border-radius:12px;padding:13px 15px;
+  display:flex;align-items:center;gap:11px}
+.on-kartu.aktif{border-color:var(--rbx-green);background:#f2fcf8}
+.on-titik{width:11px;height:11px;border-radius:50%;background:#c3ccd6;flex-shrink:0}
+.on-kartu.aktif .on-titik{background:var(--rbx-green);
+  box-shadow:0 0 0 4px rgba(0,176,111,.18);animation:pulse 2.4s infinite}
+.on-kartu b{font-family:var(--disp);font-size:.9rem;display:block;line-height:1.25}
+.on-kartu span{font-size:.76rem;color:#5d6b7a;display:block;margin-top:2px}
+.on-kosong{text-align:center;color:#5d6b7a;font-size:.88rem;padding:22px 12px;
+  border:2px dashed var(--line2);border-radius:12px;margin-top:12px}
+
 *:focus-visible{outline:3px solid var(--rbx-yellow);outline-offset:2px}
 @media(max-width:640px){.panel{padding:17px 14px}.cpu{grid-template-columns:repeat(2,1fr)}.roles{margin-left:0;width:100%}.roles button{flex:1}nav.ch{top:47px}}
 @media(prefers-reduced-motion:reduce){*{animation:none!important;transition:none!important}.rv{opacity:1;transform:none}}
@@ -1975,6 +2071,435 @@ document.addEventListener('keydown',e=>{
   },{passive:true});
 })();
 
+/* ============ KODE SETORAN NILAI ============
+   Siswa menyalin kode, mengirimkannya ke guru (WhatsApp/Classroom),
+   lalu guru menempelkannya di panelnya. Tidak butuh server. */
+
+const KAMUS='0123456789ABCDEFGHJKLMNPQRSTUVWXYZ';   // tanpa I dan O agar tak tertukar
+
+function angkaKeKode(n,panjang){
+  let t='';n=Math.max(0,Math.round(n));
+  for(let i=0;i<panjang;i++){t=KAMUS[n%34]+t;n=Math.floor(n/34)}
+  return t;
+}
+function kodeKeAngka(t){
+  let n=0;for(const c of t){const i=KAMUS.indexOf(c);if(i<0)return NaN;n=n*34+i}
+  return n;
+}
+/* sidik jari sederhana untuk mendeteksi kode yang diubah-ubah */
+function sidik(teks){
+  let h=7;
+  for(let i=0;i<teks.length;i++){h=(h*31+teks.charCodeAt(i))%1156}
+  return angkaKeKode(h,2);
+}
+
+function buatKodeSetor(){
+  if(!nis||nis==='guru')return null;
+  const bagian=[1,2,3].map(c=>{
+    const o=ans[c]||{};
+    const dijawab=Object.keys(o).length;
+    let b=0;for(const k in o)if(o[k]===M[c].q[k][2])b++;
+    return angkaKeKode(dijawab,2)+angkaKeKode(b,2);
+  }).join('');
+  const nm=(nama||'').toUpperCase().replace(/[^A-Z ]/g,'').split(' ')[0].slice(0,6)||'SISWA';
+  const kl=(kelas||'-').replace(/\s+/g,'');
+  const inti=`${nm}.${nis}.${kl}.${bagian}`;
+  return `${inti}.${sidik(inti)}`;
+}
+
+function bacaKodeSetor(kode){
+  const t=kode.trim().toUpperCase();
+  const p=t.split('.');
+  if(p.length!==5)return {ok:false,pesan:'Format kode tidak sesuai.'};
+  const [nm,ns,kl,data,cek]=p;
+  if(sidik(`${nm}.${ns}.${kl}.${data}`)!==cek)
+    return {ok:false,pesan:'Kode rusak atau sudah diubah. Minta siswa menyalin ulang.'};
+  if(data.length!==12)return {ok:false,pesan:'Bagian nilai pada kode tidak lengkap.'};
+  const bab={};
+  for(let c=1;c<=3;c++){
+    const s=data.slice((c-1)*4,c*4);
+    const dijawab=kodeKeAngka(s.slice(0,2));
+    const benar=kodeKeAngka(s.slice(2,4));
+    if(isNaN(dijawab)||isNaN(benar))return {ok:false,pesan:'Kode mengandung karakter yang tidak dikenal.'};
+    const tot=M[c].q.length;
+    if(dijawab>tot||benar>dijawab)return {ok:false,pesan:`Angka Bab ${c} tidak masuk akal.`};
+    bab[c]={dijawab,benar,total:tot};
+  }
+  return {ok:true,nama:nm,nis:ns,kelas:kl,bab};
+}
+
+/* --- simpanan setoran di sisi guru --- */
+const SETOR='ruang_informatika_setoran';
+function bacaSetoran(){try{return JSON.parse(localStorage.getItem(SETOR))||{}}catch(e){return{}}}
+function simpanSetoran(o){try{localStorage.setItem(SETOR,JSON.stringify(o))}catch(e){}}
+
+function salinKode(){
+  const t=document.getElementById('kodeSetor').textContent.trim();
+  const ok=document.getElementById('okSalin');
+  const beres=()=>{ok.textContent='✓ Kode tersalin. Kirimkan ke gurumu sekarang.';
+    setTimeout(()=>ok.textContent='',4000)};
+  try{
+    if(navigator.clipboard&&navigator.clipboard.writeText){
+      navigator.clipboard.writeText(t).then(beres).catch(()=>manual());
+    } else manual();
+  }catch(e){manual()}
+  function manual(){
+    const ta=document.createElement('textarea');ta.value=t;
+    ta.style.position='fixed';ta.style.opacity='0';document.body.appendChild(ta);
+    ta.select();try{document.execCommand('copy');beres()}
+    catch(e){ok.textContent='Salin manual: tekan lama pada kode lalu pilih Salin.'}
+    ta.remove();
+  }
+}
+
+function tempelKode(){
+  const ta=document.getElementById('kodeMasuk');
+  const out=document.getElementById('hasilTempel');
+  const baris=ta.value.split(/[\n,;]+/).map(x=>x.trim()).filter(Boolean);
+  if(!baris.length){
+    out.className='hasil on n';out.textContent='Tempelkan minimal satu kode terlebih dahulu.';return;
+  }
+  const semua=bacaSetoran();
+  let berhasil=0;const gagal=[];
+  baris.forEach(k=>{
+    const r=bacaKodeSetor(k);
+    if(!r.ok){gagal.push(`${k.slice(0,22)}… — ${r.pesan}`);return}
+    semua[r.nis]={nama:r.nama,kelas:r.kelas,bab:r.bab,waktu:Date.now()};
+    berhasil++;
+  });
+  simpanSetoran(semua);
+  const pesan=`<b>${berhasil} kode berhasil dimasukkan.</b>`+
+    (gagal.length?`<br>Gagal ${gagal.length}: ${gagal.join('<br>')}`:'');
+  const kelasPesan='hasil on '+(gagal.length?'n':'y');
+  if(berhasil){
+    ta.value='';
+    render();
+    /* render membuat elemen baru, jadi pesan dipasang ulang */
+    const baru=document.getElementById('hasilTempel');
+    if(baru){baru.className=kelasPesan;baru.innerHTML=pesan;
+      try{baru.scrollIntoView({behavior:'smooth',block:'nearest'})}catch(e){}}
+    if(gagal.length===0)toast(`✓ ${berhasil} nilai siswa masuk ke rekap.`);
+  }else{
+    out.className=kelasPesan;out.innerHTML=pesan;
+  }
+}
+
+function hapusSetoran(){
+  if(confirm('Hapus seluruh nilai hasil setoran? Data siswa di perangkat ini tidak ikut terhapus.')){
+    localStorage.removeItem(SETOR);render();toast('Data setoran dihapus.');
+  }
+}
+
+/* ============ SIAPA YANG SEDANG ONLINE ============
+   Dicatat di perangkat yang sama. Hilang begitu siswa menekan Keluar
+   atau sesinya berakhir. Nilainya tetap tersimpan. */
+const HADIR='ruang_informatika_hadir';
+function bacaHadir(){
+  try{
+    const a=JSON.parse(localStorage.getItem(HADIR))||{};
+    const batas=Date.now()-3*60*1000;      // dianggap pergi bila diam 3 menit
+    let ubah=false;
+    for(const k in a){if(a[k].detak<batas){delete a[k];ubah=true}}
+    if(ubah)localStorage.setItem(HADIR,JSON.stringify(a));
+    return a;
+  }catch(e){return{}}
+}
+function catatHadir(){
+  if(!nis||nis==='guru')return;
+  try{
+    const a=bacaHadir();
+    a[nis]={nama:nama,kelas:kelas,detak:Date.now(),bab:ch,
+            kerja:kuisTerbuka(ch)&&!bacaMateri};
+    localStorage.setItem(HADIR,JSON.stringify(a));
+  }catch(e){}
+}
+function hapusHadir(){
+  if(!nis)return;
+  try{const a=bacaHadir();delete a[nis];localStorage.setItem(HADIR,JSON.stringify(a))}catch(e){}
+}
+let detakJam=null;
+function mulaiDetak(){
+  hentikanDetak();catatHadir();
+  detakJam=setInterval(catatHadir,30000);
+}
+function hentikanDetak(){if(detakJam){clearInterval(detakJam);detakJam=null}}
+
+/* ============ TANTANGAN PER MATERI ============
+   Setiap bagian materi punya kuis kilat 4 soal dengan 3 nyawa.
+   Kuncinya cocok dengan judul <h2 class="sec"> pada materi. */
+const TANTANGAN={
+
+/* ---------- BAB 1 ---------- */
+'A. Apa itu informatika':{judul:'Alat atau Ilmu?',
+ cap:'Tentukan mana yang termasuk informatika dan mana yang sekadar keterampilan memakai alat.',
+ s:[
+  ['Menghafal letak menu di aplikasi pengolah kata.',['Keterampilan alat','Informatika'],0,'Menghafal menu adalah keterampilan memakai satu alat yang bisa berganti kapan saja.'],
+  ['Memahami bagaimana teks disimpan komputer sebagai angka.',['Keterampilan alat','Informatika'],1,'Ini prinsip pengolahan informasi — inti informatika, dan tetap berlaku di alat apa pun.'],
+  ['Menyusun langkah agar data ribuan siswa bisa dicari dalam sekejap.',['Keterampilan alat','Informatika'],1,'Merancang cara pencarian yang efisien adalah berpikir komputasional.'],
+  ['Menekan tombol cetak lalu memilih printer.',['Keterampilan alat','Informatika'],0,'Ini langkah pemakaian alat, bukan kajian prinsipnya.']
+ ]},
+
+'B. Lima bidang kajian informatika':{judul:'Tebak Bidangnya',
+ cap:'Empat kasus nyata. Tentukan bidang kajian yang paling berperan.',
+ s:[
+  ['Teknisi mengganti RAM komputer lab yang sering lambat.',['Sistem Komputer','Analisis Data','Jaringan','Dampak Sosial'],0,'Perangkat keras dan kinerjanya adalah kajian Sistem Komputer.'],
+  ['Guru mencari mata pelajaran tersulit dari nilai satu angkatan.',['Jaringan','Analisis Data','Sistem Komputer','Algoritma'],1,'Mengolah data hingga bermakna adalah Analisis Data.'],
+  ['Sekolah membahas boleh tidaknya memasang kamera pengawas di kantin.',['Sistem Komputer','Jaringan','Dampak Sosial','Analisis Data'],2,'Privasi dan etika termasuk kajian Dampak Sosial.'],
+  ['Siswa menyusun langkah agar robot bisa keluar dari labirin.',['Berpikir Komputasional','Jaringan','Dampak Sosial','Analisis Data'],0,'Memecah masalah menjadi langkah jelas adalah Berpikir Komputasional.']
+ ]},
+
+'C. Penerapan informatika di berbagai sektor':{judul:'Sektor Mana?',
+ cap:'Tebak sektor yang memakai teknologi berikut.',
+ s:[
+  ['Drone memotret lahan untuk mendeteksi tanaman yang sakit.',['Pertanian','Kesehatan','Keuangan','Hiburan'],0,'Pemantauan lahan dengan drone adalah penerapan di sektor pertanian.'],
+  ['Sistem mendeteksi transaksi mencurigakan dari pola belanja tak wajar.',['Pendidikan','Keuangan','Transportasi','Industri'],1,'Deteksi penipuan transaksi adalah penerapan di sektor keuangan.'],
+  ['Sensor memperkirakan kapan mesin perlu diservis sebelum rusak.',['Hiburan','Pemerintahan','Industri','Kesehatan'],2,'Perawatan prediktif mesin pabrik termasuk sektor industri.'],
+  ['AI membantu membaca citra rontgen untuk mendeteksi kanker dini.',['Kesehatan','Pertanian','Transportasi','Pendidikan'],0,'Pembacaan citra medis adalah penerapan di sektor kesehatan.']
+ ]},
+
+'D. Teknologi yang membentuk masa depan':{judul:'AI atau Bukan?',
+ cap:'Bedakan sistem yang belajar dari data dengan program beraturan tetap.',
+ s:[
+  ['Kalkulator selalu menghasilkan 4 untuk masukan 2+2, hari ini maupun tahun depan.',['Aturan tetap','Belajar dari data'],0,'Keluarannya selalu sama untuk masukan sama — ciri program beraturan tetap.'],
+  ['Rekomendasi video makin akurat setelah kamu sering menontonnya.',['Aturan tetap','Belajar dari data'],1,'Perilakunya berubah seiring bertambahnya data — ciri kecerdasan artifisial.'],
+  ['Kulkas mengirim notifikasi saat pintunya terbuka lebih dari 2 menit.',['Aturan tetap','Belajar dari data'],0,'Ini aturan tetap sederhana, meski memakai sensor dan internet (IoT).'],
+  ['Penerjemah bahasa yang hasilnya membaik setiap tahun tanpa aturan ditulis ulang.',['Aturan tetap','Belajar dari data'],1,'Kemampuannya meningkat dari data baru, bukan dari aturan yang ditambah manusia.']
+ ]},
+
+'E. Dampak sosial dan etika':{judul:'Aman atau Bahaya?',
+ cap:'Uji kepekaanmu terhadap keamanan digital.',
+ s:[
+  ['Pesan: "Akunmu diblokir 1 jam lagi! Klik tautan ini dan masukkan sandi."',['Aman','Phishing'],1,'Desakan waktu disertai permintaan data pribadi adalah ciri khas phishing.'],
+  ['Sandi <code>kucing-hitam-makan-rendang</code> untuk akun sekolah.',['Kuat','Lemah'],0,'Panjang jauh lebih berpengaruh daripada kerumitan simbol.'],
+  ['Aplikasi senter meminta izin mengakses daftar kontak.',['Wajar','Mencurigakan'],1,'Izin tidak berkaitan dengan fungsinya — kemungkinan data dikumpulkan untuk tujuan lain.'],
+  ['Foto sudah dihapus dari media sosial, jadi pasti hilang selamanya.',['Benar','Salah'],1,'Jejak digital bersifat permanen — salinan bisa tersimpan di tempat lain.']
+ ]},
+
+'F. Profesi di bidang informatika':{judul:'Siapa Mengerjakan Apa?',
+ cap:'Cocokkan pekerjaan dengan profesinya.',
+ s:[
+  ['Merancang solusi dan alur kerja sebelum program ditulis.',['Analis sistem','Teknisi perangkat keras','Operator data','Perancang UI/UX'],0,'Analis sistem merancang, programmer yang mewujudkannya menjadi kode.'],
+  ['Membuat aplikasi terasa mudah dan nyaman dipakai.',['Administrator jaringan','Perancang UI/UX','Analis data','Ahli robotika'],1,'UI/UX menyangkut pengalaman manusia memakai teknologi.'],
+  ['Melindungi sistem sekolah dari upaya peretasan.',['Ahli keamanan siber','Analis data','Teknisi','Programmer'],0,'Ahli keamanan siber menjaga sistem dari serangan.'],
+  ['Mengubah data mentah menjadi dasar pengambilan keputusan.',['Teknisi','Analis data','Administrator','Perancang UI/UX'],1,'Analis data mengolah dan menafsirkan data agar bermakna.']
+ ]},
+
+/* ---------- BAB 2 ---------- */
+'A. Tiga komponen sistem komputer':{judul:'Masuk, Keluar, atau Olah?',
+ cap:'Tentukan peran tiap perangkat dalam alur data.',
+ s:[
+  ['Proyektor',['Masukan','Keluaran','Penyimpanan','Pemroses'],1,'Proyektor menampilkan hasil kepada manusia — perangkat keluaran.'],
+  ['Pemindai (scanner)',['Masukan','Keluaran','Penyimpanan','Pemroses'],0,'Pemindai mengubah dokumen fisik menjadi data — perangkat masukan.'],
+  ['Flashdisk',['Masukan','Keluaran','Penyimpanan','Pemroses'],2,'Flashdisk menyimpan data agar tetap ada meski komputer dimatikan.'],
+  ['Layar sentuh',['Hanya masukan','Hanya keluaran','Masukan dan keluaran','Bukan keduanya'],2,'Layar sentuh menampilkan hasil sekaligus menerima sentuhan.']
+ ]},
+
+'B. Siklus kerja komputer':{judul:'Urutkan Siklus CPU',
+ cap:'Tiap instruksi selalu melewati empat tahap. Kenali urutannya.',
+ s:[
+  ['Tahap PERTAMA dalam siklus instruksi adalah…',['Execute','Fetch','Decode','Write back'],1,'Fetch — instruksi diambil lebih dulu dari memori ke register.'],
+  ['Bagian yang menerjemahkan instruksi lalu mengarahkan data adalah…',['ALU','Control Unit','Register','Cache'],1,'Control Unit mengatur lalu lintas; ia tidak menghitung apa pun.'],
+  ['Bagian yang benar-benar melakukan penjumlahan adalah…',['Control Unit','Register','ALU','Cache'],2,'ALU mengerjakan operasi aritmetika dan logika.'],
+  ['Prosesor 3 GHz menjalankan sekitar…',['3 juta siklus/detik','3 miliar siklus/detik','3 ribu siklus/detik','3 siklus/detik'],1,'Giga berarti miliar — tiga miliar siklus tiap detik.']
+ ]},
+
+'C. Memori bertingkat':{judul:'Hilang atau Bertahan?',
+ cap:'Listrik padam mendadak. Tebak nasib data di tiap memori.',
+ s:[
+  ['Dokumen yang sedang diketik tapi belum disimpan (ada di RAM).',['Bertahan','Hilang'],1,'RAM bersifat volatil — isinya lenyap begitu aliran listrik terputus.'],
+  ['Foto yang sudah tersimpan di SSD.',['Bertahan','Hilang'],0,'SSD bersifat non-volatil, isinya bertahan tanpa listrik.'],
+  ['Angka yang sedang dihitung CPU di dalam register.',['Bertahan','Hilang'],1,'Register bersifat volatil dan paling cepat hilang.'],
+  ['Urutan memori dari TERCEPAT ke terlambat:',['RAM → Register → Cache → SSD','Register → Cache → RAM → SSD','SSD → RAM → Cache → Register','Cache → Register → RAM → SSD'],1,'Makin dekat ke CPU makin cepat, tetapi kapasitasnya makin kecil.']
+ ]},
+
+'D. Sistem operasi':{judul:'Tugas Siapa Ini?',
+ cap:'Sistem operasi punya empat tugas utama. Kenali mana yang termasuk.',
+ s:[
+  ['Membagi waktu CPU agar banyak program berjalan bergantian.',['Tugas sistem operasi','Bukan tugasnya'],0,'Manajemen prosesor adalah tugas inti sistem operasi.'],
+  ['Mengetik isi dokumen laporan.',['Tugas sistem operasi','Bukan tugasnya'],1,'Itu tugas aplikasi dan penggunanya, bukan sistem operasi.'],
+  ['Komputer melambat saat RAM penuh karena data dipindah ke SSD. Ini disebut…',['Caching','Swapping','Booting','Encoding'],1,'Swapping menyelamatkan sistem dari kehabisan memori, tetapi menurunkan kecepatan.'],
+  ['Perangkat lunak penghubung sistem operasi dengan printer disebut…',['Driver','Compiler','Firewall','Browser'],0,'Driver menerjemahkan perintah umum menjadi perintah khusus perangkat.']
+ ]},
+
+'E. Bilangan biner':{judul:'Adu Cepat Biner',
+ cap:'Empat soal konversi. Ingat nilai tempat: 128, 64, 32, 16, 8, 4, 2, 1.',
+ s:[
+  ['Desimal <b>13</b> dalam biner adalah…',['1011','1101','1110','1001'],1,'13 = 8 + 4 + 1 → bit 8, 4, dan 1 menyala: 1101.'],
+  ['Biner <b>10110</b> bernilai desimal…',['20','22','26','18'],1,'16 + 0 + 4 + 2 + 0 = 22.'],
+  ['Nilai desimal TERBESAR yang muat dalam 8 bit adalah…',['128','255','256','512'],1,'Delapan bit memberi 256 kombinasi, yaitu angka 0 sampai 255.'],
+  ['Menambah SATU bit membuat jumlah nilai yang bisa diwakili…',['Bertambah satu','Jadi dua kali lipat','Jadi setengahnya','Tidak berubah'],1,'Setiap penambahan bit menggandakan kombinasi karena basisnya dua.']
+ ]},
+
+'F. Arduino — sistem komputer yang bisa kamu pegang':{judul:'Rakit dengan Aman',
+ cap:'Uji pemahamanmu sebelum menyentuh komponen sungguhan.',
+ s:[
+  ['LED dipasang langsung ke pin 13 dan GND tanpa resistor. Apa yang terjadi?',['Menyala normal','LED cepat rusak','Arduino lebih cepat','Tidak terjadi apa-apa'],1,'Tanpa pembatas arus, arus berlebih membakar LED dalam hitungan detik. Pakai resistor 220Ω.'],
+  ['Program tetap ada meski papan dicabut dari daya karena tersimpan di…',['SRAM','Flash','Register','Cache'],1,'Flash bersifat non-volatil; SRAM yang menampung variabel bersifat volatil.'],
+  ['Pin analog A0 membaca tegangan 2,5 V dari maksimum 5 V. Nilainya sekitar…',['128','512','255','1023'],1,'ADC 10-bit memetakan 0–5 V ke 0–1023, jadi setengahnya sekitar 512.'],
+  ['Berikut AKTUATOR, bukan sensor:',['LDR','DHT11','Motor servo','HC-SR04'],2,'Servo menghasilkan gerakan sehingga tergolong keluaran (aktuator).']
+ ]},
+
+/* ---------- BAB 3 ---------- */
+'A. Empat fondasi berpikir komputasional':{judul:'Fondasi Mana?',
+ cap:'Empat situasi nyata. Tentukan fondasi berpikir komputasional yang dipakai.',
+ s:[
+  ['Membagi proyek film menjadi naskah, pemeran, rekaman, dan penyuntingan.',['Dekomposisi','Abstraksi','Pengenalan pola','Algoritma'],0,'Memecah pekerjaan besar menjadi bagian kecil adalah dekomposisi.'],
+  ['Menyadari keenam adegan direkam dengan langkah yang sama persis.',['Dekomposisi','Pengenalan pola','Abstraksi','Algoritma'],1,'Menemukan kesamaan antar-bagian adalah pengenalan pola.'],
+  ['Peta jalur bus hanya menampilkan urutan halte, tanpa bentuk jalan sebenarnya.',['Algoritma','Dekomposisi','Abstraksi','Pola'],2,'Membuang detail yang tidak relevan bagi tujuan adalah abstraksi.'],
+  ['Menulis prosedur baku: cek suhu, catat, bandingkan batas, bunyikan alarm.',['Abstraksi','Pola','Dekomposisi','Algoritma'],3,'Menyusun langkah berurutan yang jelas adalah algoritma.']
+ ]},
+
+'B. Ciri algoritma yang baik':{judul:'Layak Disebut Algoritma?',
+ cap:'Lima syarat wajib. Temukan mana yang dilanggar.',
+ s:[
+  ['"Tambahkan garam secukupnya." Ciri yang dilanggar adalah…',['Berhingga','Tidak ambigu','Punya keluaran','Punya masukan'],1,'"Secukupnya" bisa ditafsirkan berbeda tiap orang — langkahnya ambigu.'],
+  ['Program berputar terus tanpa pernah berhenti. Ciri yang dilanggar…',['Keterbatasan','Kejelasan','Masukan','Keluaran'],0,'Algoritma wajib berhenti setelah sejumlah langkah terbatas.'],
+  ['Manakah yang BUKAN ciri algoritma yang baik?',['Langkah tidak ambigu','Boleh ditafsirkan berbeda','Punya titik berhenti','Menghasilkan keluaran'],1,'Ambiguitas justru membuat algoritma gagal dijalankan.'],
+  ['Cara terbaik menguji kejelasan algoritmamu adalah…',['Membacanya sendiri','Memberikannya ke teman yang belum tahu masalahnya','Menghitung jumlah barisnya','Menyalinnya ke komputer'],1,'Kalau ia bisa mengikutinya tanpa bertanya, algoritmamu sudah cukup jelas.']
+ ]},
+
+'C. Menuliskan algoritma':{judul:'Kenali Simbolnya',
+ cap:'Flowchart punya simbol baku. Uji ingatanmu.',
+ s:[
+  ['Belah ketupat pada flowchart dipakai untuk…',['Menandai selesai','Memasukkan data','Keputusan Ya/Tidak','Perhitungan'],2,'Belah ketupat selalu punya minimal dua jalur keluar: Ya dan Tidak.'],
+  ['Simbol untuk MULAI dan SELESAI berbentuk…',['Oval','Jajar genjang','Persegi panjang','Belah ketupat'],0,'Terminator berbentuk oval menandai awal dan akhir alur.'],
+  ['Jajar genjang dipakai untuk…',['Perhitungan','Memasukkan atau menampilkan data','Percabangan','Menandai mulai'],1,'Jajar genjang adalah simbol Input/Output.'],
+  ['Cara penulisan algoritma yang paling cocok untuk melihat percabangan sekilas…',['Bahasa alami','Pseudokode','Flowchart','Tabel'],2,'Flowchart menampilkan alur dan cabangnya secara visual.']
+ ]},
+
+'D. Tiga struktur dasar':{judul:'Tebak Keluarannya',
+ cap:'Jalankan perulangan dan percabangan di kepalamu.',
+ s:[
+  ['<code>UNTUK i DARI 1 SAMPAI 4, TAMPILKAN i×2</code>. Keluarannya…',['1 2 3 4','2 4 6 8','2 4 6 8 10','1 4 9 16'],1,'i bernilai 1,2,3,4 lalu dikalikan 2 menjadi 2, 4, 6, 8.'],
+  ['<code>for (int i = 0; i < 5; i++)</code> mengulang sebanyak…',['4 kali','5 kali','6 kali','Tak terhingga'],1,'i bernilai 0,1,2,3,4 — lima putaran, berhenti saat i mencapai 5.'],
+  ['<code>UNTUK i DARI 2 SAMPAI 10 langkah 2</code>. Keluarannya…',['2 4 6 8 10','2 3 4 5 6','2 4 6 8','1 2 3 4 5'],0,'Dimulai 2, bertambah 2 tiap putaran, berhenti setelah 10.'],
+  ['Struktur untuk memberi pesan berbeda bagi nilai di atas dan bawah 75 adalah…',['Sekuensial','Percabangan','Perulangan','Dekomposisi'],1,'Percabangan memilih jalur berdasarkan pemenuhan kondisi.']
+ ]},
+
+'E. Menelusuri algoritma':{judul:'Telusuri Nilainya',
+ cap:'Ingat: variabel di sisi kanan selalu memakai nilai TERBARU.',
+ s:[
+  ['<code>x ← 10 ; x ← x − 3 ; x ← x × 2</code>. Nilai akhir x…',['14','17','20','7'],0,'10 − 3 = 7, lalu 7 × 2 = 14.'],
+  ['<code>a ← 3 ; b ← 5 ; a ← a + b ; b ← a − b</code>. Nilai akhir…',['a=8, b=3','a=3, b=5','a=8, b=5','a=5, b=3'],0,'a menjadi 8, lalu b = 8 − 5 = 3. Nilai a yang dipakai adalah nilai BARUNYA.'],
+  ['<code>x ← 12 ; x ← x − 5 ; x ← x × 3 ; x ← x + 1</code>. Hasilnya…',['22','36','21','28'],0,'12−5=7; 7×3=21; 21+1=22.'],
+  ['Kesalahan tersering siswa saat menukar nilai adalah…',['Lupa mengalikan','Memakai nilai lama variabel yang sudah berubah','Salah membaca soal','Menulis terlalu cepat'],1,'Inilah sebabnya tabel penelusuran wajib dibuat baris demi baris.']
+ ]},
+
+'F. Menyusun algoritma sendiri':{judul:'Mana Duluan?',
+ cap:'Urutan langkah menentukan benar tidaknya sebuah algoritma.',
+ s:[
+  ['Dalam menghitung rata-rata, langkah SETELAH "MASUKKAN nilai" adalah…',['TAMPILKAN rata','jumlah ← n1+n2+n3','SELESAI','MULAI'],1,'Data harus dijumlahkan dulu sebelum dibagi dan ditampilkan.'],
+  ['Menampilkan hasil sebelum menghitungnya akan menyebabkan…',['Hasil tetap benar','Hasil kosong atau salah','Program lebih cepat','Tidak berpengaruh'],1,'Variabel hasil belum berisi nilai apa pun saat ditampilkan.'],
+  ['Urutan tahap pemecahan masalah yang paling logis adalah…',['Algoritma → dekomposisi → abstraksi','Dekomposisi → pola → abstraksi → algoritma','Abstraksi → algoritma → dekomposisi','Pola → algoritma → dekomposisi'],1,'Pahami dan sederhanakan masalah dulu, baru susun langkahnya.'],
+  ['Setiap algoritma yang baik selalu diakhiri dengan…',['Perulangan','Titik berhenti yang pasti','Percabangan','Masukan baru'],1,'Ciri keterbatasan mewajibkan algoritma berhenti setelah langkah terbatas.']
+ ]},
+
+'G. Pemrograman Arduino dengan C/C++':{judul:'Buru Kesalahan Kode',
+ cap:'Empat potongan kode. Temukan letak kekeliruannya.',
+ s:[
+  ['<code>pinMode(13, OUTPUT)</code> — apa yang salah?',['Titik koma hilang','Huruf besar salah','Pin 13 tidak valid','OUTPUT salah tulis'],0,'Setiap perintah C++ wajib diakhiri titik koma. Ini galat nomor satu pemula.'],
+  ['<code>DigitalWrite(13, HIGH);</code> — apa yang salah?',['Titik koma hilang','Huruf besar salah, seharusnya digitalWrite','Pin salah','HIGH harus angka'],1,'C++ membedakan huruf besar dan kecil.'],
+  ['<code>int cahaya = analogRead(9);</code> — apa yang salah?',['Tipe harus float','analogRead hanya untuk pin A0–A5','Nama variabel terlarang','Kurang argumen'],1,'Pin 9 adalah pin digital; pembacaan analog memakai A0 sampai A5.'],
+  ['Fungsi <code>setup()</code> dijalankan…',['Berulang selamanya','Satu kali saat papan menyala','Setiap satu detik','Saat tombol ditekan'],1,'setup() menyiapkan pin sekali saja; loop() yang berulang tanpa henti.']
+ ]}
+};
+
+/* --- mesin tantangan --- */
+const skorTantangan={};
+
+function pasangTantangan(){
+  document.querySelectorAll('#app section.panel').forEach(sec=>{
+    const jd=sec.querySelector('h2.sec');
+    if(!jd)return;
+    const kunci=jd.textContent.trim();
+    const data=TANTANGAN[kunci];
+    if(!data||sec.querySelector('.tantangan'))return;
+
+    const box=document.createElement('div');
+    box.className='tantangan';
+    sec.appendChild(box);
+    mainTantangan(box,kunci,data);
+  });
+}
+
+function mainTantangan(box,kunci,data){
+  const total=data.s.length;
+  let idx=0, benarN=0, nyawa=3;
+
+  const gambar=()=>{
+    if(nyawa<=0||idx>=total)return hasil();
+    const [soal,opsi,kunciJwb,jelas]=data.s[idx];
+    box.innerHTML=`
+      <div class="tt-head">
+        <span class="lencanaT">TANTANGAN</span>
+        <h4>${data.judul}</h4>
+        <span class="tt-nyawa">${'❤️'.repeat(nyawa)}${'🖤'.repeat(3-nyawa)}</span>
+      </div>
+      <p class="tt-cap">${data.cap}</p>
+      <div class="tt-bar"><i style="width:${idx/total*100}%"></i></div>
+      <div class="tt-soal">${idx+1}. ${soal}</div>
+      <div class="tt-opsi ${opsi.length===2?'dua':''}">
+        ${opsi.map((o,j)=>`<button class="tt-o" data-j="${j}">${o}</button>`).join('')}
+      </div>
+      <div class="tt-fb"></div>`;
+
+    box.querySelectorAll('.tt-o').forEach(b=>b.onclick=()=>{
+      const j=+b.dataset.j, ok=j===kunciJwb;
+      box.querySelectorAll('.tt-o').forEach(x=>{
+        x.disabled=true;
+        if(+x.dataset.j===kunciJwb)x.classList.add('benar');
+        else if(+x.dataset.j===j)x.classList.add('salah');
+      });
+      if(ok){benarN++;terbangXP(b,'+5 XP')}else nyawa--;
+      const fb=box.querySelector('.tt-fb');
+      fb.className='tt-fb on '+(ok?'y':'n');
+      fb.innerHTML=`<b>${ok?'Tepat!':'Belum tepat.'}</b> ${jelas}`;
+      box.querySelector('.tt-bar i').style.width=((idx+1)/total*100)+'%';
+      box.querySelector('.tt-nyawa').innerHTML='❤️'.repeat(Math.max(0,nyawa))+'🖤'.repeat(3-Math.max(0,nyawa));
+      setTimeout(()=>{idx++;gambar()},ok?1500:2600);
+    });
+  };
+
+  const hasil=()=>{
+    const habis=nyawa<=0;
+    const p=Math.round(benarN/total*100);
+    const medali=habis?'💥':p>=100?'🏆':p>=75?'🥇':p>=50?'🥈':'🥉';
+    const ket=habis
+      ? `Nyawa habis di soal ke-${idx+1}. Baca ulang bagian ini, lalu coba lagi.`
+      : p>=100?'Sempurna! Kamu menguasai bagian ini sepenuhnya.'
+      : p>=75?'Bagus sekali. Tinjau satu bagian yang masih keliru.'
+      : p>=50?'Lumayan. Baca ulang bagian yang belum kamu pahami.'
+      : 'Baca ulang materi di atas, lalu ulangi tantangan ini.';
+    const lama=skorTantangan[kunci]||0;
+    if(benarN>lama)skorTantangan[kunci]=benarN;
+    box.innerHTML=`
+      <div class="tt-head"><span class="lencanaT">HASIL</span><h4>${data.judul}</h4></div>
+      <div class="tt-hasil">
+        <span class="medali">${medali}</span>
+        <div class="angka">${benarN} <span style="font-size:1rem;color:#a9bccf">/ ${total}</span></div>
+        <p class="ket">${ket}${skorTantangan[kunci]>benarN?`<br>Rekor terbaikmu: ${skorTantangan[kunci]}/${total}`:''}</p>
+        <button class="tt-btn" data-ulang="1">🔄 Coba lagi</button>
+      </div>`;
+    box.querySelector('[data-ulang]').onclick=()=>{
+      idx=0;benarN=0;nyawa=3;gambar();
+    };
+  };
+
+  gambar();
+}
+
+function terbangXP(el,teks){
+  try{
+    const r=el.getBoundingClientRect();
+    const s=document.createElement('div');
+    s.className='tt-xp';s.textContent=teks;
+    s.style.left=(r.right-58)+'px';s.style.top=(r.top-4)+'px';
+    s.style.position='fixed';s.style.zIndex='180';
+    document.body.appendChild(s);
+    setTimeout(()=>s.remove(),1000);
+  }catch(e){}
+}
+
 /* ============ PEMBACA SUARA MATERI ============ */
 const Suara = (()=>{
   const ada = typeof speechSynthesis!=='undefined' && typeof SpeechSynthesisUtterance!=='undefined';
@@ -2089,7 +2614,7 @@ function hentikanHitung(){if(jamSesi){clearInterval(jamSesi);jamSesi=null}}
 
 
 function keluarOtomatis(){
-  saveSiswa();
+  saveSiswa();hapusHadir();hentikanDetak();
   const siapa=nama?nama.split(' ')[0]:'';
   hapusSesi();nis=null;nama=null;kelas=null;ans={};role='siswa';modeIntip=false;bacaMateri=false;
   document.getElementById('gate').classList.remove('off');
@@ -2141,7 +2666,7 @@ function pulihkanSesi(){
   if(role==='guru')setRole('guru');
   const c=[1,2,3].includes(+v.ch)?+v.ch:1;
   setCh(terbuka(c)?c:1);
-  mulaiHitung();
+  mulaiHitung();mulaiDetak();
   return true;
 }
 
@@ -2182,7 +2707,7 @@ function masuk(){
   document.getElementById('roleBox').style.display='none';
   paintWho();saveSiswa();
   const lanjut=tuntas(2)?3:(tuntas(1)?2:1);
-  setCh(lanjut);simpanSesi(true);mulaiHitung();
+  setCh(lanjut);simpanSesi(true);mulaiHitung();mulaiDetak();
   toast(lanjut>1
     ? `Selamat datang kembali, ${nama.split(' ')[0]}. Kamu melanjutkan di Bab ${lanjut}.`
     : `Selamat belajar, ${nama.split(' ')[0]}.`);
@@ -2205,7 +2730,7 @@ function masukGuru(){
 }
 
 function keluar(){
-  saveSiswa();hapusSesi();hentikanHitung();nis=null;nama=null;kelas=null;ans={};role='siswa';
+  saveSiswa();hapusHadir();hentikanDetak();hapusSesi();hentikanHitung();nis=null;nama=null;kelas=null;ans={};role='siswa';
   document.getElementById('gate').classList.remove('off');
   ['nisIn','namaIn','gnamaIn','pinIn'].forEach(i=>document.getElementById(i).value='');
   document.getElementById('gerr').textContent='';
@@ -2244,7 +2769,7 @@ function setCh(c){
     toast(`Bab ${c} masih terkunci. Selesaikan dulu ${total(p)-jml(p)} soal Bab ${p} yang tersisa.`);
     // tetap tampilkan halaman terkunci agar siswa paham syaratnya
   }
-  ch=c;bacaMateri=false;if(window.Suara)Suara.stop();paintNav();render();
+  ch=c;bacaMateri=false;if(window.Suara)Suara.stop();paintNav();render();catatHadir();
   if(nis)simpanSesi();
 }
 
@@ -2270,7 +2795,7 @@ function render(){
         <div style="font-size:.86rem;color:#5d6b7a;margin-top:3px">Inilah yang dilihat siswa. Seluruh simulator dapat dijalankan untuk diperagakan di depan kelas.</div></div>
         <button class="btn2 g" onclick="kembaliGuru()">← Kembali ke panel guru</button>
       </div></section>`+d.html+quizHTML(d);
-    wireQuiz(d);wireLabs();Suara.pasang();observe();window.scrollTo(0,0);return;
+    wireQuiz(d);wireLabs();pasangTantangan();Suara.pasang();observe();window.scrollTo(0,0);return;
   }
 
   if(!terbuka(ch)){app.innerHTML=lockedHTML(ch);observe();animReq(ch);window.scrollTo(0,0);return;}
@@ -2283,7 +2808,7 @@ function render(){
   }
 
   app.innerHTML = (bacaMateri ? materiBarHTML() : progHTML()) + d.html + quizHTML(d);
-  wireQuiz(d);wireLabs();animProg();paintXP();Suara.pasang();
+  wireQuiz(d);wireLabs();animProg();paintXP();pasangTantangan();Suara.pasang();
   observe();window.scrollTo(0,0);
 }
 
@@ -3374,7 +3899,7 @@ function wireKelas(){
     if(t.length<1)return gagalKls('Kelas masih kosong. Pilih salah satu tombol di atas atau ketik kelasmu.');
     if(!/^[0-9A-Z.\- ]{1,12}$/.test(t))return gagalKls('Kelas hanya boleh berisi huruf, angka, spasi, titik, atau strip.');
     er.className='er';er.textContent='';
-    kelas=t;saveSiswa();simpanSesi();
+    kelas=t;saveSiswa();simpanSesi();catatHadir();
     toast(`Kelas ${t} tersimpan. Sekarang masukkan kode dari guru.`);
     render();
   };
@@ -3399,7 +3924,7 @@ function wireKode(d){
     if(!v)return tampilkan('Kode masih kosong. Ketik kode yang ditulis guru di papan.');
     if(v===KODE_KUIS[ch]){
       er.className='er';er.textContent='';
-      bukaKuis(ch);toast('🔓 Latihan Bab '+ch+' terbuka. Selamat mengerjakan!');render();return;
+      bukaKuis(ch);toast('🔓 Latihan Bab '+ch+' terbuka. Selamat mengerjakan!');render();catatHadir();return;
     }
     gagal++;
     let pesan=`Kode <b>${v}</b> tidak dikenali. Periksa lagi tulisan di papan.`;
@@ -3513,7 +4038,15 @@ function wireQuiz(d){
       <div style="margin-top:9px;font-size:.9rem;color:#41505e">${msg}</div>
       <div style="font-family:var(--mono);font-size:.68rem;color:#6c7a88;margin-top:16px;letter-spacing:.08em">LENCANA</div>
       <div class="lencana">${LC.map(x=>`<div class="lc ${x[3]?'on':''}">
-        <span class="em">${x[0]}</span><b>${x[1]}</b><span>${x[2]}</span></div>`).join('')}</div>`;
+        <span class="em">${x[0]}</span><b>${x[1]}</b><span>${x[2]}</span></div>`).join('')}</div>
+      <div class="setor">
+        <h4>📤 Kirim hasil ke guru</h4>
+        <p>Salin kode di bawah, lalu kirimkan ke gurumu lewat WhatsApp atau Google Classroom.
+           Kode ini berisi nilai seluruh bab yang sudah kamu kerjakan.</p>
+        <div class="kode" id="kodeSetor">${buatKodeSetor()||'—'}</div>
+        <button class="btn2" onclick="salinKode()">📋 Salin kode</button>
+        <div class="ok" id="okSalin"></div>
+      </div>`;
     sc.scrollIntoView({behavior:'smooth',block:'nearest'});
   };
   document.getElementById('bReset').onclick=()=>{ans[ch]={};saveSiswa();render()};
@@ -3521,27 +4054,92 @@ function wireQuiz(d){
 
 
 /* ============ GURU ============ */
-function rekapHTML(){
-  const all=loadAll();
-  const ids=Object.keys(all).sort();
-  if(!ids.length)return `<section class="panel rv"><h2 class="sec">Rekap Hasil Siswa</h2>
-    <p class="sub">Belum ada siswa yang mengerjakan di perangkat ini.</p>
-    <div class="note">Data tersimpan per perangkat. Untuk merekap satu kelas, jalankan halaman ini di komputer yang sama, atau minta siswa memotret layar hasil akhir mereka.</div></section>`;
-  const row=id=>{
-    const a=all[id].ans||{};
-    const nm=all[id].nama||'—';
-    const kl=all[id].kelas||'—';
-    const sel=c=>{const o=a[c]||{};const n=Object.keys(o).length,t=M[c].q.length;
-      if(!n)return '<td style="color:#98a5b2">—</td>';
+function onlineHTML(){
+  const h=bacaHadir();
+  const ids=Object.keys(h).sort((a,b)=>(h[b].detak||0)-(h[a].detak||0));
+  const isi = ids.length
+    ? `<div class="online">${ids.map(id=>{
+        const x=h[id];
+        const menit=Math.round((Date.now()-x.detak)/60000);
+        return `<div class="on-kartu aktif"><span class="on-titik"></span>
+          <div><b>${x.nama||id}</b>
+          <span>NIS ${id} · ${x.kelas||'—'} · Bab ${x.bab||'-'}${x.kerja?' · sedang mengerjakan soal':' · membaca materi'}</span>
+          <span style="color:#8b98a6">${menit<1?'aktif barusan':menit+' menit lalu'}</span></div></div>`;
+      }).join('')}</div>`
+    : `<div class="on-kosong">Belum ada siswa yang sedang masuk di perangkat ini.<br>
+       Daftar ini kosong sendiri begitu siswa menekan Keluar atau menutup halaman.</div>`;
+  return `<section class="panel rv">
+    <h2 class="sec">Siswa yang Sedang Masuk</h2>
+    <p class="sub">${ids.length} siswa aktif di perangkat ini. Daftar hilang otomatis saat mereka keluar — nilainya tetap tersimpan.</p>
+    ${isi}
+    <div class="row" style="margin-top:12px">
+      <button class="btn2 g" onclick="render()">🔄 Segarkan daftar</button>
+    </div>
+  </section>`;
+}
+
+function tempelHTML(){
+  const n=Object.keys(bacaSetoran()).length;
+  return `<section class="panel rv tempel">
+    <h2 class="sec">Terima Kode dari Siswa</h2>
+    <p class="sub">Untuk siswa yang mengerjakan di perangkat lain: minta mereka menyalin kode hasil, lalu tempelkan di sini. Bisa banyak kode sekaligus, satu per baris.</p>
+    <textarea id="kodeMasuk" placeholder="AULIA.24071.XIIB.0U0F0000.7K&#10;BUDI.24072.XIIB.0U0M0000.3P"></textarea>
+    <div class="row" style="margin-top:11px">
+      <button class="btn2" onclick="tempelKode()">✓ Masukkan nilai</button>
+      ${n?`<button class="btn2 g" onclick="hapusSetoran()">Hapus ${n} data setoran</button>`:''}
+    </div>
+    <div class="hasil" id="hasilTempel"></div>
+  </section>`;
+}
+
+function gabungRekap(){
+  /* gabungkan data lokal (perangkat ini) dengan kode setoran (perangkat lain) */
+  const lokal=loadAll(), setor=bacaSetoran(), hasil={};
+  for(const id in lokal){
+    const a=lokal[id].ans||{}, bab={};
+    [1,2,3].forEach(c=>{
+      const o=a[c]||{},t=M[c].q.length,n=Object.keys(o).length;
       let b=0;for(const k in o)if(o[k]===M[c].q[k][2])b++;
-      const p=Math.round(b/t*100);
-      return `<td><b style="font-family:var(--mono)">${n>=t?p:'·'}</b> <span style="color:#7c8a98;font-size:.8rem">${n}/${t}</span></td>`};
-    return `<tr data-kelas="${kl}"><td>${nm}</td><td class="k">${id}</td>
-      <td><span class="klsTag">${kl}</span></td>${sel(1)}${sel(2)}${sel(3)}</tr>`;
+      bab[c]={dijawab:n,benar:b,total:t};
+    });
+    hasil[id]={nama:lokal[id].nama||'—',kelas:lokal[id].kelas||'—',bab,asal:'perangkat ini'};
+  }
+  for(const id in setor){
+    const x=setor[id];
+    const adaLokal=hasil[id];
+    /* setoran hanya menimpa bila datanya lebih lengkap */
+    const totalSetor=[1,2,3].reduce((n,c)=>n+(x.bab[c]?.dijawab||0),0);
+    const totalLokal=adaLokal?[1,2,3].reduce((n,c)=>n+(adaLokal.bab[c]?.dijawab||0),0):-1;
+    if(totalSetor>=totalLokal)
+      hasil[id]={nama:x.nama||'—',kelas:x.kelas||'—',bab:x.bab,asal:'kode setoran'};
+  }
+  return hasil;
+}
+
+function rekapHTML(){
+  const all=gabungRekap();
+  const ids=Object.keys(all).sort((a,b)=>(all[a].kelas+all[a].nama).localeCompare(all[b].kelas+all[b].nama));
+  if(!ids.length)return `<section class="panel rv"><h2 class="sec">Rekap Hasil Siswa</h2>
+    <p class="sub">Belum ada data nilai.</p>
+    <div class="note">Nilai muncul di sini dari dua sumber: siswa yang mengerjakan langsung di perangkat ini, dan kode setoran yang Bapak/Ibu tempelkan di kotak atas.</div></section>`;
+  const row=id=>{
+    const x=all[id];
+    const sel=c=>{
+      const b=x.bab[c];
+      if(!b||!b.dijawab)return '<td style="color:#98a5b2">—</td>';
+      const p=Math.round(b.benar/b.total*100);
+      return `<td><b style="font-family:var(--mono)">${b.dijawab>=b.total?p:'·'}</b> <span style="color:#7c8a98;font-size:.8rem">${b.dijawab}/${b.total}</span></td>`;
+    };
+    const tandaAsal = x.asal==='kode setoran'
+      ? '<span title="Dari kode setoran" style="font-size:.85rem">📤</span>'
+      : '<span title="Dikerjakan di perangkat ini" style="font-size:.85rem">💻</span>';
+    return `<tr data-kelas="${x.kelas}"><td>${tandaAsal} ${x.nama}</td><td class="k">${id}</td>
+      <td><span class="klsTag">${x.kelas}</span></td>${sel(1)}${sel(2)}${sel(3)}</tr>`;
   };
-  const daftarKelas=[...new Set(ids.map(i=>all[i].kelas||'—'))].sort();
+  const daftarKelas=[...new Set(ids.map(i=>all[i].kelas))].sort();
+  const dariSetor=ids.filter(i=>all[i].asal==='kode setoran').length;
   return `<section class="panel rv"><h2 class="sec">Rekap Hasil Siswa</h2>
-    <p class="sub">${ids.length} siswa tercatat di perangkat ini. Angka besar adalah nilai; angka kecil adalah jumlah soal terjawab.</p>
+    <p class="sub">${ids.length} siswa tercatat — ${ids.length-dariSetor} dari perangkat ini 💻, ${dariSetor} dari kode setoran 📤. Angka besar adalah nilai; angka kecil jumlah soal terjawab.</p>
     <div class="row" style="margin-bottom:10px">
       <button class="btn2 g fk on" data-k="all" onclick="filterKelas('all',this)">Semua kelas</button>
       ${daftarKelas.map(k=>`<button class="btn2 g fk" data-k="${k}" onclick="filterKelas('${k}',this)">${k}</button>`).join('')}
@@ -3549,7 +4147,7 @@ function rekapHTML(){
     <table id="tbRekap"><tr><th>Nama</th><th>NIS</th><th>Kelas</th><th>Bab 1</th><th>Bab 2</th><th>Bab 3</th></tr>
     ${ids.map(row).join('')}</table>
     <div class="row"><button class="btn2 g" onclick="unduhCSV()">Unduh CSV</button>
-    <button class="btn2 g" onclick="hapusData()">Hapus semua data</button></div></section>`;
+    <button class="btn2 g" onclick="hapusData()">Hapus data perangkat ini</button></div></section>`;
 }
 function filterKelas(k,btn){
   document.querySelectorAll('.fk').forEach(b=>b.classList.remove('on'));
@@ -3559,12 +4157,17 @@ function filterKelas(k,btn){
   });
 }
 function unduhCSV(){
-  const all=loadAll();let csv='Nama,NIS,Kelas,Bab1_Nilai,Bab1_Terjawab,Bab2_Nilai,Bab2_Terjawab,Bab3_Nilai,Bab3_Terjawab\n';
-  for(const id in all){const a=all[id].ans||{};const cols=['"'+(all[id].nama||'')+'"',id,'"'+(all[id].kelas||'')+'"'];
-    [1,2,3].forEach(c=>{const o=a[c]||{},t=M[c].q.length,n=Object.keys(o).length;
-      let b=0;for(const k in o)if(o[k]===M[c].q[k][2])b++;
-      cols.push(n>=t?Math.round(b/t*100):'',n);});
-    csv+=cols.join(',')+'\n';}
+  const all=gabungRekap();
+  let csv='Nama,NIS,Kelas,Sumber,Bab1_Nilai,Bab1_Terjawab,Bab2_Nilai,Bab2_Terjawab,Bab3_Nilai,Bab3_Terjawab\n';
+  Object.keys(all).sort().forEach(id=>{
+    const x=all[id];
+    const cols=['"'+x.nama+'"',id,'"'+x.kelas+'"','"'+x.asal+'"'];
+    [1,2,3].forEach(c=>{
+      const b=x.bab[c]||{dijawab:0,benar:0,total:M[c].q.length};
+      cols.push(b.dijawab>=b.total?Math.round(b.benar/b.total*100):'', b.dijawab);
+    });
+    csv+=cols.join(',')+'\n';
+  });
   const u=URL.createObjectURL(new Blob([csv],{type:'text/csv'}));
   const a=document.createElement('a');a.href=u;a.download='rekap-informatika.csv';a.click();URL.revokeObjectURL(u);
 }
@@ -3606,7 +4209,7 @@ function guruHTML(d){
         <td>${M[c].q.length} soal</td></tr>`).join('')}</table>
     <div class="note">Untuk mengganti kode, cari baris <code>const KODE_KUIS</code> di dalam berkas ini lalu ubah isinya. Kode tersimpan di perangkat siswa, jadi cukup dimasukkan satu kali per bab.</div>
   </section>
-  `+rekapHTML()+`
+  `+onlineHTML()+tempelHTML()+rekapHTML()+`
   <section class="panel rv"><h2 class="sec">Rencana Pembelajaran — ${d.t}</h2>
   <p class="sub">Alokasi waktu: ${g.al}</p>
   <h3>Tujuan pembelajaran</h3><ul class="cl">${g.tj.map(t=>`<li>${t}</li>`).join('')}</ul>
@@ -3679,7 +4282,7 @@ document.getElementById('pinIn').addEventListener('keydown',e=>{if(e.key==='Ente
 document.getElementById('rS').onclick=()=>{if(nis==='guru')setRole('siswa')};
 document.getElementById('rG').onclick=()=>{if(nis==='guru')setRole('guru')};
 document.querySelectorAll('#nav button').forEach(b=>b.onclick=()=>setCh(+b.dataset.c));
-window.addEventListener('beforeunload',saveSiswa);
+window.addEventListener('beforeunload',()=>{saveSiswa();hapusHadir()});
 document.getElementById('roleBox').style.display='none';
 if(!pulihkanSesi())setTimeout(()=>document.getElementById('namaIn').focus(),350);
 </script>
