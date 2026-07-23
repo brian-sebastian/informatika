@@ -736,6 +736,15 @@ body.hemat .pulse{animation:none}
 body.hemat .kunci .gb{animation:none}
 body.hemat .fly{animation-duration:.5s}
 
+.diag{margin-top:14px}
+.diag:empty{display:none}
+.dg{border-left:4px solid #c3ccd6;background:#f5f8fb;border-radius:0 10px 10px 0;
+  padding:12px 15px;margin-bottom:9px;font-size:.87rem;line-height:1.55}
+.dg.y{border-left-color:var(--rbx-green);background:#eefaf4}
+.dg.n{border-left-color:var(--rbx-red);background:#fdf1f0}
+.dg b{font-family:var(--disp);display:block;margin-bottom:3px}
+.dg span{color:#41505e;display:block}
+.dg code{background:rgba(17,34,58,.09);font-size:.86em;word-break:break-all}
 .awan-tanda{font-family:var(--mono);font-size:.7rem;color:#8fa3b8;
   background:rgba(255,255,255,.08);padding:4px 9px;border-radius:7px;white-space:nowrap}
 .awan-tanda:empty{display:none}
@@ -2077,12 +2086,25 @@ function dataSiswaKini(status){
 function kirimAwan(status){
   if(!awanAktif()||!nis||nis==='guru')return Promise.resolve();
   const isi=JSON.stringify(dataSiswaKini(status));
+  tandaAwan('kirim');
+  /* Apps Script menolak preflight CORS, jadi dikirim sebagai teks biasa.
+     Jawaban tetap dibaca agar kegagalan bisa terdeteksi. */
   return fetch(URL_SERVER,{
-    method:'POST', mode:'no-cors',
+    method:'POST',
     headers:{'Content-Type':'text/plain;charset=utf-8'},
     body:isi
-  }).then(()=>{kirimTerakhir=Date.now();tandaAwan('tersambung')})
-    .catch(()=>tandaAwan('gagal'));
+  }).then(r=>r.text())
+    .then(t=>{
+      kirimTerakhir=Date.now();
+      tandaAwan(t.indexOf('"ok":true')>=0?'tersambung':'gagal');
+    })
+    .catch(()=>{
+      /* bila terhalang CORS, coba sekali lagi tanpa membaca jawaban */
+      return fetch(URL_SERVER,{method:'POST',mode:'no-cors',
+        headers:{'Content-Type':'text/plain;charset=utf-8'},body:isi})
+        .then(()=>{kirimTerakhir=Date.now();tandaAwan('tersambung')})
+        .catch(()=>tandaAwan('gagal'));
+    });
 }
 
 /* kirim tertunda agar tidak membanjiri server saat siswa menjawab cepat */
@@ -2110,6 +2132,82 @@ function tandaAwan(keadaan){
               gagal:['○','Luring','#8b98a6']};
   const [ic,tx,wr]=peta[keadaan]||peta.gagal;
   e.innerHTML=`<span style="color:${wr}">${ic}</span> ${tx}`;
+}
+
+/* ---------- alat diagnosa ---------- */
+let diagTerakhir='';
+function diagnosa(){
+  const baris=[];
+  const tulis=(ok,judul,ket)=>{
+    baris.push(`<div class="dg ${ok===null?'':(ok?'y':'n')}">
+      <b>${ok===null?'⋯':(ok?'✓':'✕')} ${judul}</b>
+      <span>${ket}</span></div>`);
+    const k=document.getElementById('diagHasil');
+    if(k)k.innerHTML=baris.join('');
+    diagTerakhir=baris.join('');       /* disimpan agar tidak hilang saat render ulang */
+  };
+
+  const k0=document.getElementById('diagHasil');
+  if(k0)k0.innerHTML='<div class="dg">⋯ Memeriksa…</div>';
+
+  /* 1. URL terisi? */
+  if(!URL_SERVER || URL_SERVER.indexOf('http')!==0){
+    tulis(false,'URL server belum diisi',
+      'Buka berkas HTML ini dengan Notepad, cari baris <code>const URL_SERVER</code>, lalu tempel URL Web App di antara tanda kutipnya. Jangan lupa unggah ulang berkasnya ke GitHub.');
+    return;
+  }
+  tulis(true,'URL server terisi',URL_SERVER.slice(0,58)+'…');
+
+  /* 2. Akhiran /exec? */
+  if(!/\/exec\/?$/.test(URL_SERVER)){
+    tulis(false,'URL salah bagian akhir',
+      'URL harus berakhir dengan <code>/exec</code>. Bila berakhir <code>/dev</code>, ambil ulang dari menu Deploy → Manage deployments.');
+  } else tulis(true,'Akhiran URL benar','Berakhir dengan /exec');
+
+  /* 3. Server menjawab? */
+  tulis(null,'Menghubungi server','Menunggu jawaban…');
+  fetch(URL_SERVER+'?t='+Date.now())
+    .then(r=>{
+      if(!r.ok)throw new Error('HTTP '+r.status);
+      return r.text();
+    })
+    .then(teks=>{
+      baris.pop();
+      if(teks.indexOf('<!DOCTYPE')===0 || teks.indexOf('<html')>=0){
+        tulis(false,'Server meminta login',
+          'Buka Apps Script → Deploy → Manage deployments → ikon pensil ✏️ → ubah <b>Who has access</b> menjadi <b>Anyone</b> → Deploy. Ini penyebab tersering.');
+        return;
+      }
+      let j;
+      try{j=JSON.parse(teks)}catch(e){
+        tulis(false,'Jawaban server tidak dikenali',
+          'Isi jawaban: <code>'+teks.slice(0,90).replace(/</g,'&lt;')+'…</code>');
+        return;
+      }
+      if(!j.ok){
+        tulis(false,'Server menolak',j.pesan||'Tanpa keterangan');
+        return;
+      }
+      tulis(true,'Server menjawab dengan benar','Sambungan berhasil.');
+      const n=(j.siswa||[]).length;
+      if(n===0){
+        tulis(false,'Spreadsheet masih kosong',
+          'Sambungan sudah benar, tetapi belum ada data siswa. Coba minta satu siswa login, lalu periksa apakah muncul sheet <b>DataSiswa</b> pada Spreadsheet. Bila tetap kosong, berkas HTML di HP siswa mungkin masih versi lama yang belum berisi URL.');
+      } else {
+        tulis(true,`Ditemukan ${n} siswa`,
+          (j.siswa||[]).slice(0,5).map(x=>`${x.nama} (${x.kelas||'—'})`).join(', '));
+        dataAwan=j.siswa;
+        setTimeout(()=>render(),900);
+      }
+    })
+    .catch(err=>{
+      baris.pop();
+      tulis(false,'Gagal menghubungi server',
+        'Pesan: <code>'+String(err.message||err)+'</code><br><br>Kemungkinan penyebab:<br>'+
+        '• Perangkat sedang tanpa internet<br>'+
+        '• <b>Who has access</b> belum diatur <b>Anyone</b><br>'+
+        '• URL salah ketik atau tertinggal sebagian');
+    });
 }
 
 /* ---------- guru mengambil data dari server ---------- */
@@ -4001,7 +4099,18 @@ function onlineHTML(){
   </section>`;
 }
 
-function tempelHTML(){return ''}
+function tempelHTML(){
+  return `<section class="panel rv">
+    <h2 class="sec">Periksa Sambungan Server</h2>
+    <p class="sub">Bila data siswa tidak muncul, tekan tombol ini untuk mengetahui penyebabnya.</p>
+    <div class="row">
+      <button class="btn2" onclick="diagnosa()">🔍 Periksa sekarang</button>
+      ${awanAktif()?`<a class="btn2 g" href="${URL_SERVER}" target="_blank" rel="noopener"
+        style="text-decoration:none;display:inline-flex;align-items:center">↗ Buka URL server</a>`:''}
+    </div>
+    <div id="diagHasil" class="diag">${diagTerakhir}</div>
+  </section>`;
+}
 
 function gabungRekap(){
   /* Sumber utama: data awan (semua perangkat).
