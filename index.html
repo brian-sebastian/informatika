@@ -736,6 +736,9 @@ body.hemat .pulse{animation:none}
 body.hemat .kunci .gb{animation:none}
 body.hemat .fly{animation-duration:.5s}
 
+.awan-tanda{font-family:var(--mono);font-size:.7rem;color:#8fa3b8;
+  background:rgba(255,255,255,.08);padding:4px 9px;border-radius:7px;white-space:nowrap}
+.awan-tanda:empty{display:none}
 .hemat-btn{background:none;border:0;color:#7d8fa3;cursor:pointer;font-size:.74rem;
   padding:4px 8px;border-radius:6px;font-family:var(--body);white-space:nowrap}
 .hemat-btn:hover{color:#fff;background:rgba(255,255,255,.10)}
@@ -832,30 +835,6 @@ body.hemat .suara-btn.main .ic{animation:none}
 }
 body.hemat .tt-o.salah,body.hemat .tt-fb,body.hemat .tt-hasil{animation:none}
 
-/* ===== KODE SETORAN ===== */
-.setor{background:linear-gradient(135deg,#0d3b2e,#0d2a3f);border:2px solid rgba(0,176,111,.5);
-  border-radius:16px;padding:20px;margin-top:16px;color:#fff;box-shadow:0 6px 0 rgba(0,0,0,.22)}
-.setor h4{font-family:var(--disp);margin:0 0 5px;font-size:1.05rem}
-.setor p{color:#9fc7b8;font-size:.86rem;margin:0 0 14px;line-height:1.5}
-.setor .kode{font-family:var(--mono);font-size:clamp(1.05rem,3.6vw,1.5rem);font-weight:600;
-  background:#08181f;border:2px dashed rgba(0,176,111,.6);border-radius:11px;
-  padding:15px 12px;text-align:center;letter-spacing:.06em;word-break:break-all;
-  color:#7ef0c0;line-height:1.55;user-select:all}
-.setor .btn2{margin-top:12px}
-.setor .ok{color:var(--rbx-green);font-size:.85rem;margin-top:9px;font-weight:600;min-height:20px}
-
-/* ===== PANEL GURU: TEMPEL KODE ===== */
-.tempel{background:linear-gradient(135deg,rgba(0,176,111,.10),rgba(0,162,255,.10));
-  border-color:rgba(0,176,111,.4)}
-.tempel textarea{width:100%;min-height:96px;font-family:var(--mono);font-size:.85rem;
-  background:#0f151d;border:2px solid #33404f;color:#e8eff6;padding:12px 14px;
-  border-radius:11px;resize:vertical;line-height:1.6}
-.tempel textarea:focus{border-color:var(--rbx-green);outline:none}
-.tempel .hasil{font-size:.87rem;margin-top:11px;padding:11px 14px;border-radius:10px;display:none}
-.tempel .hasil.on{display:block;animation:erpop .35s}
-.tempel .hasil.y{background:#eafaf3;border-left:4px solid var(--rbx-green);color:#0a4d36}
-.tempel .hasil.n{background:#fdf1f0;border-left:4px solid var(--rbx-red);color:#7d1f19}
-
 /* ===== DAFTAR ONLINE ===== */
 .online{display:grid;grid-template-columns:repeat(auto-fit,minmax(190px,1fr));gap:11px;margin-top:12px}
 .on-kartu{background:#fff;border:2px solid var(--line2);border-radius:12px;padding:13px 15px;
@@ -935,6 +914,7 @@ body.hemat .tt-o.salah,body.hemat .tt-fb,body.hemat .tt-hasil{animation:none}
 <header class="bar"><div class="wrap bar-in">
   <div class="logo"><span class="pulse"></span>Ruang Informatika</div>
   <div class="who" id="who"></div>
+  <span class="awan-tanda" id="tandaAwan" title="Status sinkronisasi ke server"></span>
   <button class="hemat-btn" id="hematBtn" title="Matikan animasi latar bila terasa berat">⚡ Mode hemat</button>
   <div class="roles" role="group" aria-label="Tampilan" id="roleBox">
     <button id="rS" aria-pressed="true">Siswa</button>
@@ -2071,158 +2051,99 @@ document.addEventListener('keydown',e=>{
   },{passive:true});
 })();
 
-/* ============ KODE SETORAN NILAI ============
-   Siswa menyalin kode, mengirimkannya ke guru (WhatsApp/Classroom),
-   lalu guru menempelkannya di panelnya. Tidak butuh server. */
+/* ============ SINKRONISASI AWAN (GOOGLE SHEET) ============
+   Isi URL_SERVER dengan alamat Web App dari Google Apps Script.
+   Panduan pemasangan ada di berkas PANDUAN-SETUP.md
+   Bila dikosongkan, aplikasi tetap berjalan normal secara luring. */
 
-const KAMUS='0123456789ABCDEFGHJKLMNPQRSTUVWXYZ';   // tanpa I dan O agar tak tertukar
+const URL_SERVER = 'https://script.google.com/macros/s/AKfycbz_8H47loa7hZJjvMwgWPNe1W8Hd76B85YDLysydgOvwFzL4zk2y6Z6ms9igAHZypZY-A/exec';   // <-- TEMPEL URL WEB APP DI SINI
 
-function angkaKeKode(n,panjang){
-  let t='';n=Math.max(0,Math.round(n));
-  for(let i=0;i<panjang;i++){t=KAMUS[n%34]+t;n=Math.floor(n/34)}
-  return t;
-}
-function kodeKeAngka(t){
-  let n=0;for(const c of t){const i=KAMUS.indexOf(c);if(i<0)return NaN;n=n*34+i}
-  return n;
-}
-/* sidik jari sederhana untuk mendeteksi kode yang diubah-ubah */
-function sidik(teks){
-  let h=7;
-  for(let i=0;i<teks.length;i++){h=(h*31+teks.charCodeAt(i))%1156}
-  return angkaKeKode(h,2);
-}
+const awanAktif = () => typeof URL_SERVER === 'string' && URL_SERVER.indexOf('http') === 0;
 
-function buatKodeSetor(){
-  if(!nis||nis==='guru')return null;
-  const bagian=[1,2,3].map(c=>{
-    const o=ans[c]||{};
-    const dijawab=Object.keys(o).length;
-    let b=0;for(const k in o)if(o[k]===M[c].q[k][2])b++;
-    return angkaKeKode(dijawab,2)+angkaKeKode(b,2);
-  }).join('');
-  const nm=(nama||'').toUpperCase().replace(/[^A-Z ]/g,'').split(' ')[0].slice(0,6)||'SISWA';
-  const kl=(kelas||'-').replace(/\s+/g,'');
-  const inti=`${nm}.${nis}.${kl}.${bagian}`;
-  return `${inti}.${sidik(inti)}`;
-}
+/* ---------- kirim data siswa ke server ---------- */
+let antreKirim=null, kirimTerakhir=0;
 
-function bacaKodeSetor(kode){
-  const t=kode.trim().toUpperCase();
-  const p=t.split('.');
-  if(p.length!==5)return {ok:false,pesan:'Format kode tidak sesuai.'};
-  const [nm,ns,kl,data,cek]=p;
-  if(sidik(`${nm}.${ns}.${kl}.${data}`)!==cek)
-    return {ok:false,pesan:'Kode rusak atau sudah diubah. Minta siswa menyalin ulang.'};
-  if(data.length!==12)return {ok:false,pesan:'Bagian nilai pada kode tidak lengkap.'};
+function dataSiswaKini(status){
   const bab={};
-  for(let c=1;c<=3;c++){
-    const s=data.slice((c-1)*4,c*4);
-    const dijawab=kodeKeAngka(s.slice(0,2));
-    const benar=kodeKeAngka(s.slice(2,4));
-    if(isNaN(dijawab)||isNaN(benar))return {ok:false,pesan:'Kode mengandung karakter yang tidak dikenal.'};
-    const tot=M[c].q.length;
-    if(dijawab>tot||benar>dijawab)return {ok:false,pesan:`Angka Bab ${c} tidak masuk akal.`};
-    bab[c]={dijawab,benar,total:tot};
-  }
-  return {ok:true,nama:nm,nis:ns,kelas:kl,bab};
-}
-
-/* --- simpanan setoran di sisi guru --- */
-const SETOR='ruang_informatika_setoran';
-function bacaSetoran(){try{return JSON.parse(localStorage.getItem(SETOR))||{}}catch(e){return{}}}
-function simpanSetoran(o){try{localStorage.setItem(SETOR,JSON.stringify(o))}catch(e){}}
-
-function salinKode(){
-  const t=document.getElementById('kodeSetor').textContent.trim();
-  const ok=document.getElementById('okSalin');
-  const beres=()=>{ok.textContent='✓ Kode tersalin. Kirimkan ke gurumu sekarang.';
-    setTimeout(()=>ok.textContent='',4000)};
-  try{
-    if(navigator.clipboard&&navigator.clipboard.writeText){
-      navigator.clipboard.writeText(t).then(beres).catch(()=>manual());
-    } else manual();
-  }catch(e){manual()}
-  function manual(){
-    const ta=document.createElement('textarea');ta.value=t;
-    ta.style.position='fixed';ta.style.opacity='0';document.body.appendChild(ta);
-    ta.select();try{document.execCommand('copy');beres()}
-    catch(e){ok.textContent='Salin manual: tekan lama pada kode lalu pilih Salin.'}
-    ta.remove();
-  }
-}
-
-function tempelKode(){
-  const ta=document.getElementById('kodeMasuk');
-  const out=document.getElementById('hasilTempel');
-  const baris=ta.value.split(/[\n,;]+/).map(x=>x.trim()).filter(Boolean);
-  if(!baris.length){
-    out.className='hasil on n';out.textContent='Tempelkan minimal satu kode terlebih dahulu.';return;
-  }
-  const semua=bacaSetoran();
-  let berhasil=0;const gagal=[];
-  baris.forEach(k=>{
-    const r=bacaKodeSetor(k);
-    if(!r.ok){gagal.push(`${k.slice(0,22)}… — ${r.pesan}`);return}
-    semua[r.nis]={nama:r.nama,kelas:r.kelas,bab:r.bab,waktu:Date.now()};
-    berhasil++;
+  [1,2,3].forEach(c=>{
+    const o=ans[c]||{}, t=M[c].q.length, n=Object.keys(o).length;
+    let b=0;for(const k in o)if(o[k]===M[c].q[k][2])b++;
+    bab[c]={dijawab:n,benar:b,total:t};
   });
-  simpanSetoran(semua);
-  const pesan=`<b>${berhasil} kode berhasil dimasukkan.</b>`+
-    (gagal.length?`<br>Gagal ${gagal.length}: ${gagal.join('<br>')}`:'');
-  const kelasPesan='hasil on '+(gagal.length?'n':'y');
-  if(berhasil){
-    ta.value='';
-    render();
-    /* render membuat elemen baru, jadi pesan dipasang ulang */
-    const baru=document.getElementById('hasilTempel');
-    if(baru){baru.className=kelasPesan;baru.innerHTML=pesan;
-      try{baru.scrollIntoView({behavior:'smooth',block:'nearest'})}catch(e){}}
-    if(gagal.length===0)toast(`✓ ${berhasil} nilai siswa masuk ke rekap.`);
-  }else{
-    out.className=kelasPesan;out.innerHTML=pesan;
-  }
+  return {nis:nis,nama:nama,kelas:kelas||'',bab:bab,
+          status:status||'aktif', babDibuka:'Bab '+ch};
 }
 
-function hapusSetoran(){
-  if(confirm('Hapus seluruh nilai hasil setoran? Data siswa di perangkat ini tidak ikut terhapus.')){
-    localStorage.removeItem(SETOR);render();toast('Data setoran dihapus.');
-  }
+function kirimAwan(status){
+  if(!awanAktif()||!nis||nis==='guru')return Promise.resolve();
+  const isi=JSON.stringify(dataSiswaKini(status));
+  return fetch(URL_SERVER,{
+    method:'POST', mode:'no-cors',
+    headers:{'Content-Type':'text/plain;charset=utf-8'},
+    body:isi
+  }).then(()=>{kirimTerakhir=Date.now();tandaAwan('tersambung')})
+    .catch(()=>tandaAwan('gagal'));
 }
 
-/* ============ SIAPA YANG SEDANG ONLINE ============
-   Dicatat di perangkat yang sama. Hilang begitu siswa menekan Keluar
-   atau sesinya berakhir. Nilainya tetap tersimpan. */
-const HADIR='ruang_informatika_hadir';
-function bacaHadir(){
-  try{
-    const a=JSON.parse(localStorage.getItem(HADIR))||{};
-    const batas=Date.now()-3*60*1000;      // dianggap pergi bila diam 3 menit
-    let ubah=false;
-    for(const k in a){if(a[k].detak<batas){delete a[k];ubah=true}}
-    if(ubah)localStorage.setItem(HADIR,JSON.stringify(a));
-    return a;
-  }catch(e){return{}}
+/* kirim tertunda agar tidak membanjiri server saat siswa menjawab cepat */
+function kirimNanti(status){
+  if(!awanAktif())return;
+  clearTimeout(antreKirim);
+  antreKirim=setTimeout(()=>kirimAwan(status),1200);
 }
-function catatHadir(){
-  if(!nis||nis==='guru')return;
-  try{
-    const a=bacaHadir();
-    a[nis]={nama:nama,kelas:kelas,detak:Date.now(),bab:ch,
-            kerja:kuisTerbuka(ch)&&!bacaMateri};
-    localStorage.setItem(HADIR,JSON.stringify(a));
-  }catch(e){}
+
+/* detak berkala menandakan siswa masih online */
+let detakAwan=null;
+function mulaiDetakAwan(){
+  if(!awanAktif())return;
+  hentikanDetakAwan();
+  kirimAwan('aktif');
+  detakAwan=setInterval(()=>kirimAwan('aktif'),60000);   // tiap 1 menit
 }
-function hapusHadir(){
-  if(!nis)return;
-  try{const a=bacaHadir();delete a[nis];localStorage.setItem(HADIR,JSON.stringify(a))}catch(e){}
+function hentikanDetakAwan(){if(detakAwan){clearInterval(detakAwan);detakAwan=null}}
+
+function tandaAwan(keadaan){
+  const e=document.getElementById('tandaAwan');
+  if(!e)return;
+  const peta={tersambung:['●','Tersinkron','var(--rbx-green)'],
+              kirim:['◌','Mengirim…','var(--rbx-yellow)'],
+              gagal:['○','Luring','#8b98a6']};
+  const [ic,tx,wr]=peta[keadaan]||peta.gagal;
+  e.innerHTML=`<span style="color:${wr}">${ic}</span> ${tx}`;
 }
-let detakJam=null;
-function mulaiDetak(){
-  hentikanDetak();catatHadir();
-  detakJam=setInterval(catatHadir,30000);
+
+/* ---------- guru mengambil data dari server ---------- */
+let dataAwan=null, ambilJam=null;
+
+function ambilAwan(){
+  if(!awanAktif())return Promise.resolve(null);
+  return fetch(URL_SERVER+'?t='+Date.now())
+    .then(r=>r.json())
+    .then(j=>{
+      if(j&&j.ok){dataAwan=j.siswa||[];return dataAwan}
+      return null;
+    })
+    .catch(()=>null);
 }
-function hentikanDetak(){if(detakJam){clearInterval(detakJam);detakJam=null}}
+
+function segarkanGuru(){
+  const s=document.getElementById('statusAmbil');
+  if(s)s.textContent='Mengambil data…';
+  ambilAwan().then(d=>{
+    if(role==='guru'&&!modeIntip)render();
+    if(d===null&&s)s.textContent='Gagal terhubung. Periksa koneksi atau URL server.';
+  });
+}
+
+function mulaiPantau(){
+  hentikanPantau();
+  if(!awanAktif()||role!=='guru')return;
+  segarkanGuru();
+  ambilJam=setInterval(()=>{
+    if(role==='guru'&&!modeIntip)segarkanGuru();
+  },20000);   // segarkan tiap 20 detik
+}
+function hentikanPantau(){if(ambilJam){clearInterval(ambilJam);ambilJam=null}}
 
 /* ============ TANTANGAN PER MATERI ============
    Setiap bagian materi punya kuis kilat 4 soal dengan 3 nyawa.
@@ -2614,7 +2535,7 @@ function hentikanHitung(){if(jamSesi){clearInterval(jamSesi);jamSesi=null}}
 
 
 function keluarOtomatis(){
-  saveSiswa();hapusHadir();hentikanDetak();
+  saveSiswa();kirimAwan('keluar');hentikanDetakAwan();hentikanPantau();
   const siapa=nama?nama.split(' ')[0]:'';
   hapusSesi();nis=null;nama=null;kelas=null;ans={};role='siswa';modeIntip=false;bacaMateri=false;
   document.getElementById('gate').classList.remove('off');
@@ -2666,7 +2587,7 @@ function pulihkanSesi(){
   if(role==='guru')setRole('guru');
   const c=[1,2,3].includes(+v.ch)?+v.ch:1;
   setCh(terbuka(c)?c:1);
-  mulaiHitung();mulaiDetak();
+  mulaiHitung();mulaiDetakAwan();mulaiPantau();
   return true;
 }
 
@@ -2707,7 +2628,7 @@ function masuk(){
   document.getElementById('roleBox').style.display='none';
   paintWho();saveSiswa();
   const lanjut=tuntas(2)?3:(tuntas(1)?2:1);
-  setCh(lanjut);simpanSesi(true);mulaiHitung();mulaiDetak();
+  setCh(lanjut);simpanSesi(true);mulaiHitung();mulaiDetakAwan();
   toast(lanjut>1
     ? `Selamat datang kembali, ${nama.split(' ')[0]}. Kamu melanjutkan di Bab ${lanjut}.`
     : `Selamat belajar, ${nama.split(' ')[0]}.`);
@@ -2725,12 +2646,12 @@ function masukGuru(){
   nis='guru';nama=vn;role='guru';
   document.getElementById('gate').classList.add('off');
   document.getElementById('roleBox').style.display='flex';
-  setRole('guru');paintWho();setCh(1);simpanSesi(true);mulaiHitung();
+  setRole('guru');paintWho();setCh(1);simpanSesi(true);mulaiHitung();mulaiPantau();
   toast(`Selamat datang, ${vn}. Seluruh bab terbuka dalam mode guru.`);
 }
 
 function keluar(){
-  saveSiswa();hapusHadir();hentikanDetak();hapusSesi();hentikanHitung();nis=null;nama=null;kelas=null;ans={};role='siswa';
+  saveSiswa();kirimAwan('keluar');hentikanDetakAwan();hentikanPantau();hapusSesi();hentikanHitung();nis=null;nama=null;kelas=null;ans={};role='siswa';
   document.getElementById('gate').classList.remove('off');
   ['nisIn','namaIn','gnamaIn','pinIn'].forEach(i=>document.getElementById(i).value='');
   document.getElementById('gerr').textContent='';
@@ -2769,7 +2690,7 @@ function setCh(c){
     toast(`Bab ${c} masih terkunci. Selesaikan dulu ${total(p)-jml(p)} soal Bab ${p} yang tersisa.`);
     // tetap tampilkan halaman terkunci agar siswa paham syaratnya
   }
-  ch=c;bacaMateri=false;if(window.Suara)Suara.stop();paintNav();render();catatHadir();
+  ch=c;bacaMateri=false;if(window.Suara)Suara.stop();paintNav();render();kirimNanti();
   if(nis)simpanSesi();
 }
 
@@ -3899,7 +3820,7 @@ function wireKelas(){
     if(t.length<1)return gagalKls('Kelas masih kosong. Pilih salah satu tombol di atas atau ketik kelasmu.');
     if(!/^[0-9A-Z.\- ]{1,12}$/.test(t))return gagalKls('Kelas hanya boleh berisi huruf, angka, spasi, titik, atau strip.');
     er.className='er';er.textContent='';
-    kelas=t;saveSiswa();simpanSesi();catatHadir();
+    kelas=t;saveSiswa();simpanSesi();kirimAwan('aktif');
     toast(`Kelas ${t} tersimpan. Sekarang masukkan kode dari guru.`);
     render();
   };
@@ -3924,7 +3845,7 @@ function wireKode(d){
     if(!v)return tampilkan('Kode masih kosong. Ketik kode yang ditulis guru di papan.');
     if(v===KODE_KUIS[ch]){
       er.className='er';er.textContent='';
-      bukaKuis(ch);toast('🔓 Latihan Bab '+ch+' terbuka. Selamat mengerjakan!');render();catatHadir();return;
+      bukaKuis(ch);toast('🔓 Latihan Bab '+ch+' terbuka. Selamat mengerjakan!');render();kirimAwan('aktif');return;
     }
     gagal++;
     let pesan=`Kode <b>${v}</b> tidak dikenali. Periksa lagi tulisan di papan.`;
@@ -4013,6 +3934,7 @@ function wireQuiz(d){
       saveSiswa();
       const ok=kunci(j,true);
       beruntun = ok ? beruntun+1 : 0;
+      kirimNanti('aktif');
       if(ok)angkaTerbang(l,'+10 XP','#00b06f');
       segar();cekBuka(cur);
     });
@@ -4039,14 +3961,7 @@ function wireQuiz(d){
       <div style="font-family:var(--mono);font-size:.68rem;color:#6c7a88;margin-top:16px;letter-spacing:.08em">LENCANA</div>
       <div class="lencana">${LC.map(x=>`<div class="lc ${x[3]?'on':''}">
         <span class="em">${x[0]}</span><b>${x[1]}</b><span>${x[2]}</span></div>`).join('')}</div>
-      <div class="setor">
-        <h4>📤 Kirim hasil ke guru</h4>
-        <p>Salin kode di bawah, lalu kirimkan ke gurumu lewat WhatsApp atau Google Classroom.
-           Kode ini berisi nilai seluruh bab yang sudah kamu kerjakan.</p>
-        <div class="kode" id="kodeSetor">${buatKodeSetor()||'—'}</div>
-        <button class="btn2" onclick="salinKode()">📋 Salin kode</button>
-        <div class="ok" id="okSalin"></div>
-      </div>`;
+`;
     sc.scrollIntoView({behavior:'smooth',block:'nearest'});
   };
   document.getElementById('bReset').onclick=()=>{ans[ch]={};saveSiswa();render()};
@@ -4055,46 +3970,44 @@ function wireQuiz(d){
 
 /* ============ GURU ============ */
 function onlineHTML(){
-  const h=bacaHadir();
-  const ids=Object.keys(h).sort((a,b)=>(h[b].detak||0)-(h[a].detak||0));
-  const isi = ids.length
-    ? `<div class="online">${ids.map(id=>{
-        const x=h[id];
-        const menit=Math.round((Date.now()-x.detak)/60000);
-        return `<div class="on-kartu aktif"><span class="on-titik"></span>
-          <div><b>${x.nama||id}</b>
-          <span>NIS ${id} · ${x.kelas||'—'} · Bab ${x.bab||'-'}${x.kerja?' · sedang mengerjakan soal':' · membaca materi'}</span>
-          <span style="color:#8b98a6">${menit<1?'aktif barusan':menit+' menit lalu'}</span></div></div>`;
-      }).join('')}</div>`
-    : `<div class="on-kosong">Belum ada siswa yang sedang masuk di perangkat ini.<br>
-       Daftar ini kosong sendiri begitu siswa menekan Keluar atau menutup halaman.</div>`;
+  if(!awanAktif())return `<section class="panel rv">
+    <h2 class="sec">Pemantauan Kelas</h2>
+    <p class="sub">Fitur ini belum aktif.</p>
+    <div class="note"><b>Cara mengaktifkan:</b> ikuti berkas <code>PANDUAN-SETUP.md</code> untuk membuat
+    Google Spreadsheet dan Apps Script, lalu tempel URL-nya pada baris
+    <code>const URL_SERVER = ''</code> di dalam berkas ini. Setelah itu semua siswa yang login
+    dari perangkat mana pun akan langsung terlihat di sini beserta nilainya.</div></section>`;
+
+  const d = dataAwan || [];
+  const online = d.filter(x=>x.online);
+  const isi = online.length
+    ? `<div class="online">${online.map(x=>`
+        <div class="on-kartu aktif"><span class="on-titik"></span>
+          <div><b>${x.nama}</b>
+          <span>NIS ${x.nis} · ${x.kelas||'—'} · ${x.babDibuka||'—'}</span>
+          <span style="color:#8b98a6">${x.menitLalu<1?'aktif barusan':x.menitLalu+' menit lalu'} · Lv ${x.level} · ${x.xp} XP</span>
+          </div></div>`).join('')}</div>`
+    : `<div class="on-kosong">Belum ada siswa yang sedang masuk.<br>
+       Daftar ini terisi sendiri begitu siswa login dari perangkat mana pun.</div>`;
+
   return `<section class="panel rv">
     <h2 class="sec">Siswa yang Sedang Masuk</h2>
-    <p class="sub">${ids.length} siswa aktif di perangkat ini. Daftar hilang otomatis saat mereka keluar — nilainya tetap tersimpan.</p>
+    <p class="sub">${online.length} siswa aktif dari total ${d.length} terdaftar. Daftar diperbarui otomatis tiap 20 detik dan kosong sendiri saat siswa keluar.</p>
     ${isi}
-    <div class="row" style="margin-top:12px">
-      <button class="btn2 g" onclick="render()">🔄 Segarkan daftar</button>
+    <div class="row" style="margin-top:12px;align-items:center">
+      <button class="btn2 g" onclick="segarkanGuru()">🔄 Segarkan sekarang</button>
+      <span id="statusAmbil" style="font-size:.82rem;color:#5d6b7a"></span>
     </div>
   </section>`;
 }
 
-function tempelHTML(){
-  const n=Object.keys(bacaSetoran()).length;
-  return `<section class="panel rv tempel">
-    <h2 class="sec">Terima Kode dari Siswa</h2>
-    <p class="sub">Untuk siswa yang mengerjakan di perangkat lain: minta mereka menyalin kode hasil, lalu tempelkan di sini. Bisa banyak kode sekaligus, satu per baris.</p>
-    <textarea id="kodeMasuk" placeholder="AULIA.24071.XIIB.0U0F0000.7K&#10;BUDI.24072.XIIB.0U0M0000.3P"></textarea>
-    <div class="row" style="margin-top:11px">
-      <button class="btn2" onclick="tempelKode()">✓ Masukkan nilai</button>
-      ${n?`<button class="btn2 g" onclick="hapusSetoran()">Hapus ${n} data setoran</button>`:''}
-    </div>
-    <div class="hasil" id="hasilTempel"></div>
-  </section>`;
-}
+function tempelHTML(){return ''}
 
 function gabungRekap(){
-  /* gabungkan data lokal (perangkat ini) dengan kode setoran (perangkat lain) */
-  const lokal=loadAll(), setor=bacaSetoran(), hasil={};
+  /* Sumber utama: data awan (semua perangkat).
+     Data lokal dipakai sebagai cadangan bila server belum aktif. */
+  const hasil={};
+  const lokal=loadAll();
   for(const id in lokal){
     const a=lokal[id].ans||{}, bab={};
     [1,2,3].forEach(c=>{
@@ -4102,52 +4015,64 @@ function gabungRekap(){
       let b=0;for(const k in o)if(o[k]===M[c].q[k][2])b++;
       bab[c]={dijawab:n,benar:b,total:t};
     });
-    hasil[id]={nama:lokal[id].nama||'—',kelas:lokal[id].kelas||'—',bab,asal:'perangkat ini'};
+    hasil[id]={nama:lokal[id].nama||'—',kelas:lokal[id].kelas||'—',bab,
+               asal:'perangkat ini',online:false,xp:0,level:1};
   }
-  for(const id in setor){
-    const x=setor[id];
-    const adaLokal=hasil[id];
-    /* setoran hanya menimpa bila datanya lebih lengkap */
-    const totalSetor=[1,2,3].reduce((n,c)=>n+(x.bab[c]?.dijawab||0),0);
-    const totalLokal=adaLokal?[1,2,3].reduce((n,c)=>n+(adaLokal.bab[c]?.dijawab||0),0):-1;
-    if(totalSetor>=totalLokal)
-      hasil[id]={nama:x.nama||'—',kelas:x.kelas||'—',bab:x.bab,asal:'kode setoran'};
-  }
+  (dataAwan||[]).forEach(x=>{
+    const bab={};
+    [1,2,3].forEach(c=>{
+      const b=x.bab[c]||{};
+      bab[c]={dijawab:Number(b.dijawab||0),benar:Number(b.benar||0),total:M[c].q.length};
+    });
+    hasil[x.nis]={nama:x.nama||'—',kelas:x.kelas||'—',bab,asal:'awan',
+                  online:!!x.online,xp:x.xp||0,level:x.level||1,menitLalu:x.menitLalu};
+  });
   return hasil;
 }
 
 function rekapHTML(){
   const all=gabungRekap();
-  const ids=Object.keys(all).sort((a,b)=>(all[a].kelas+all[a].nama).localeCompare(all[b].kelas+all[b].nama));
+  const ids=Object.keys(all).sort((a,b)=>
+    (all[a].kelas+all[a].nama).localeCompare(all[b].kelas+all[b].nama));
   if(!ids.length)return `<section class="panel rv"><h2 class="sec">Rekap Hasil Siswa</h2>
     <p class="sub">Belum ada data nilai.</p>
-    <div class="note">Nilai muncul di sini dari dua sumber: siswa yang mengerjakan langsung di perangkat ini, dan kode setoran yang Bapak/Ibu tempelkan di kotak atas.</div></section>`;
+    <div class="note">${awanAktif()
+      ? 'Nilai akan muncul di sini secara otomatis begitu siswa mulai mengerjakan, dari perangkat mana pun.'
+      : 'Server belum diaktifkan. Lihat panduan di berkas PANDUAN-SETUP.md agar nilai siswa dari perangkat lain bisa masuk otomatis.'}</div></section>`;
+
   const row=id=>{
     const x=all[id];
     const sel=c=>{
       const b=x.bab[c];
       if(!b||!b.dijawab)return '<td style="color:#98a5b2">—</td>';
       const p=Math.round(b.benar/b.total*100);
-      return `<td><b style="font-family:var(--mono)">${b.dijawab>=b.total?p:'·'}</b> <span style="color:#7c8a98;font-size:.8rem">${b.dijawab}/${b.total}</span></td>`;
+      const tuntas=b.dijawab>=b.total;
+      return `<td><b style="font-family:var(--mono);color:${tuntas?(p>=75?'#0a7a53':'#c2352f'):'#5d6b7a'}">${tuntas?p:'·'}</b>
+        <span style="color:#7c8a98;font-size:.8rem">${b.dijawab}/${b.total}</span></td>`;
     };
-    const tandaAsal = x.asal==='kode setoran'
-      ? '<span title="Dari kode setoran" style="font-size:.85rem">📤</span>'
-      : '<span title="Dikerjakan di perangkat ini" style="font-size:.85rem">💻</span>';
-    return `<tr data-kelas="${x.kelas}"><td>${tandaAsal} ${x.nama}</td><td class="k">${id}</td>
-      <td><span class="klsTag">${x.kelas}</span></td>${sel(1)}${sel(2)}${sel(3)}</tr>`;
+    const titik = x.online
+      ? '<span title="Sedang online" style="color:var(--rbx-green)">●</span>'
+      : '<span title="Tidak aktif" style="color:#c3ccd6">○</span>';
+    return `<tr data-kelas="${x.kelas}"><td>${titik} ${x.nama}</td><td class="k">${id}</td>
+      <td><span class="klsTag">${x.kelas}</span></td>${sel(1)}${sel(2)}${sel(3)}
+      <td style="font-family:var(--mono);font-size:.82rem">Lv${x.level}</td></tr>`;
   };
   const daftarKelas=[...new Set(ids.map(i=>all[i].kelas))].sort();
-  const dariSetor=ids.filter(i=>all[i].asal==='kode setoran').length;
+  const jmlOnline=ids.filter(i=>all[i].online).length;
   return `<section class="panel rv"><h2 class="sec">Rekap Hasil Siswa</h2>
-    <p class="sub">${ids.length} siswa tercatat — ${ids.length-dariSetor} dari perangkat ini 💻, ${dariSetor} dari kode setoran 📤. Angka besar adalah nilai; angka kecil jumlah soal terjawab.</p>
+    <p class="sub">${ids.length} siswa tercatat${awanAktif()?`, ${jmlOnline} sedang online`:''}.
+      Angka besar adalah nilai; angka kecil jumlah soal terjawab.</p>
     <div class="row" style="margin-bottom:10px">
       <button class="btn2 g fk on" data-k="all" onclick="filterKelas('all',this)">Semua kelas</button>
       ${daftarKelas.map(k=>`<button class="btn2 g fk" data-k="${k}" onclick="filterKelas('${k}',this)">${k}</button>`).join('')}
     </div>
-    <table id="tbRekap"><tr><th>Nama</th><th>NIS</th><th>Kelas</th><th>Bab 1</th><th>Bab 2</th><th>Bab 3</th></tr>
+    <table id="tbRekap"><tr><th>Nama</th><th>NIS</th><th>Kelas</th>
+      <th>Bab 1</th><th>Bab 2</th><th>Bab 3</th><th>Lv</th></tr>
     ${ids.map(row).join('')}</table>
     <div class="row"><button class="btn2 g" onclick="unduhCSV()">Unduh CSV</button>
-    <button class="btn2 g" onclick="hapusData()">Hapus data perangkat ini</button></div></section>`;
+    <button class="btn2 g" onclick="hapusData()">Hapus data perangkat ini</button></div>
+    ${awanAktif()?`<div class="note" style="margin-top:12px">Data ini langsung dari Google Spreadsheet. Untuk melihat riwayat lengkap atau mengolahnya lebih lanjut, buka Spreadsheet Bapak/Ibu.</div>`:''}
+    </section>`;
 }
 function filterKelas(k,btn){
   document.querySelectorAll('.fk').forEach(b=>b.classList.remove('on'));
@@ -4158,10 +4083,10 @@ function filterKelas(k,btn){
 }
 function unduhCSV(){
   const all=gabungRekap();
-  let csv='Nama,NIS,Kelas,Sumber,Bab1_Nilai,Bab1_Terjawab,Bab2_Nilai,Bab2_Terjawab,Bab3_Nilai,Bab3_Terjawab\n';
+  let csv='Nama,NIS,Kelas,Level,XP,Bab1_Nilai,Bab1_Terjawab,Bab2_Nilai,Bab2_Terjawab,Bab3_Nilai,Bab3_Terjawab\n';
   Object.keys(all).sort().forEach(id=>{
     const x=all[id];
-    const cols=['"'+x.nama+'"',id,'"'+x.kelas+'"','"'+x.asal+'"'];
+    const cols=['"'+x.nama+'"',id,'"'+x.kelas+'"',x.level||1,x.xp||0];
     [1,2,3].forEach(c=>{
       const b=x.bab[c]||{dijawab:0,benar:0,total:M[c].q.length};
       cols.push(b.dijawab>=b.total?Math.round(b.benar/b.total*100):'', b.dijawab);
@@ -4282,7 +4207,7 @@ document.getElementById('pinIn').addEventListener('keydown',e=>{if(e.key==='Ente
 document.getElementById('rS').onclick=()=>{if(nis==='guru')setRole('siswa')};
 document.getElementById('rG').onclick=()=>{if(nis==='guru')setRole('guru')};
 document.querySelectorAll('#nav button').forEach(b=>b.onclick=()=>setCh(+b.dataset.c));
-window.addEventListener('beforeunload',()=>{saveSiswa();hapusHadir()});
+window.addEventListener('beforeunload',()=>{saveSiswa();if(awanAktif()&&nis&&nis!=='guru'){try{navigator.sendBeacon(URL_SERVER,JSON.stringify(dataSiswaKini('keluar')))}catch(e){}}});
 document.getElementById('roleBox').style.display='none';
 if(!pulihkanSesi())setTimeout(()=>document.getElementById('namaIn').focus(),350);
 </script>
