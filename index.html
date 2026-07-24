@@ -1966,6 +1966,8 @@ function tutupDeck(){
   document.getElementById('deck').classList.remove('on');
   document.body.style.overflow='';
   if(document.fullscreenElement)document.exitFullscreen().catch(()=>{});
+  /* setelah presentasi ditutup, tampilkan data terbaru sekali */
+  if(role==='guru'&&!modeIntip)render();
 }
 function geser(n,mundur){
   const S=SLIDE[dkCh];
@@ -2065,7 +2067,7 @@ document.addEventListener('keydown',e=>{
    Panduan pemasangan ada di berkas PANDUAN-SETUP.md
    Bila dikosongkan, aplikasi tetap berjalan normal secara luring. */
 
-const URL_SERVER = 'https://script.google.com/macros/s/AKfycbwOa-ST-tyWz10V1KSvDyEA6wO93O_ty8SStGlqk61GTQdifjd79gs5l6ZQqjFuTcw2kQ/exec';   // <-- TEMPEL URL WEB APP DI SINI
+const URL_SERVER = 'https://script.google.com/macros/s/AKfycbz_8H47loa7hZJjvMwgWPNe1W8Hd76B85YDLysydgOvwFzL4zk2y6Z6ms9igAHZypZY-A/exec';   // <-- TEMPEL URL WEB APP DI SINI
 
 const awanAktif = () => typeof URL_SERVER === 'string' && URL_SERVER.indexOf('http') === 0;
 
@@ -2232,7 +2234,11 @@ function segarkanGuru(){
   const s=document.getElementById('statusAmbil');
   if(s)s.textContent='Mengambil data…';
   ambilAwan().then(d=>{
-    if(role==='guru'&&!modeIntip)render();
+    /* jangan menggambar ulang saat slide presentasi terbuka —
+       halaman di belakangnya akan ikut terganggu */
+    const deckTerbuka=document.getElementById('deck')
+      && document.getElementById('deck').classList.contains('on');
+    if(role==='guru'&&!modeIntip&&!deckTerbuka)render();
     if(d===null&&s)s.textContent='Gagal terhubung. Periksa koneksi atau URL server.';
   });
 }
@@ -2242,8 +2248,13 @@ function mulaiPantau(){
   if(!awanAktif()||role!=='guru')return;
   segarkanGuru();
   ambilJam=setInterval(()=>{
-    if(role==='guru'&&!modeIntip)segarkanGuru();
-  },20000);   // segarkan tiap 20 detik
+    const deckTerbuka=document.getElementById('deck')
+      && document.getElementById('deck').classList.contains('on');
+    /* saat presentasi berjalan, data tetap diambil diam-diam
+       tetapi tampilan tidak diganggu */
+    if(role==='guru'&&!modeIntip&&!deckTerbuka)segarkanGuru();
+    else if(role==='guru'&&deckTerbuka)ambilAwan();
+  },20000);
 }
 function hentikanPantau(){if(ambilJam){clearInterval(ambilJam);ambilJam=null}}
 
@@ -2621,6 +2632,8 @@ let jamSesi=null, sudahDiingatkan=false;
 
 function mulaiHitung(){
   hentikanHitung();
+  /* guru tidak dibatasi 40 menit — pelajaran bisa lebih lama */
+  if(role==='guru')return;
   sudahDiingatkan=false;
   jamSesi=setInterval(()=>{
     const v=bacaSesi();
