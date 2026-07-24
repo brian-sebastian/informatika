@@ -2065,7 +2065,7 @@ document.addEventListener('keydown',e=>{
    Panduan pemasangan ada di berkas PANDUAN-SETUP.md
    Bila dikosongkan, aplikasi tetap berjalan normal secara luring. */
 
-const URL_SERVER = 'https://script.google.com/macros/s/AKfycbz_8H47loa7hZJjvMwgWPNe1W8Hd76B85YDLysydgOvwFzL4zk2y6Z6ms9igAHZypZY-A/exec';   // <-- TEMPEL URL WEB APP DI SINI
+const URL_SERVER = 'https://script.google.com/macros/s/AKfycbwOa-ST-tyWz10V1KSvDyEA6wO93O_ty8SStGlqk61GTQdifjd79gs5l6ZQqjFuTcw2kQ/exec';   // <-- TEMPEL URL WEB APP DI SINI
 
 const awanAktif = () => typeof URL_SERVER === 'string' && URL_SERVER.indexOf('http') === 0;
 
@@ -2087,23 +2087,23 @@ function kirimAwan(status){
   if(!awanAktif()||!nis||nis==='guru')return Promise.resolve();
   const isi=JSON.stringify(dataSiswaKini(status));
   tandaAwan('kirim');
-  /* Apps Script menolak preflight CORS, jadi dikirim sebagai teks biasa.
-     Jawaban tetap dibaca agar kegagalan bisa terdeteksi. */
-  return fetch(URL_SERVER,{
-    method:'POST',
-    headers:{'Content-Type':'text/plain;charset=utf-8'},
-    body:isi
-  }).then(r=>r.text())
+  /* Apps Script mengalihkan (redirect) setiap POST ke googleusercontent.com,
+     dan pengalihan lintas-asal ditolak browser. Karena itu data dikirim
+     lewat GET dengan parameter, cara yang paling andal untuk Apps Script. */
+  const url=URL_SERVER+'?aksi=simpan&t='+Date.now()+'&data='+encodeURIComponent(isi);
+  return fetch(url)
+    .then(r=>r.text())
     .then(t=>{
       kirimTerakhir=Date.now();
       tandaAwan(t.indexOf('"ok":true')>=0?'tersambung':'gagal');
     })
     .catch(()=>{
-      /* bila terhalang CORS, coba sekali lagi tanpa membaca jawaban */
-      return fetch(URL_SERVER,{method:'POST',mode:'no-cors',
-        headers:{'Content-Type':'text/plain;charset=utf-8'},body:isi})
-        .then(()=>{kirimTerakhir=Date.now();tandaAwan('tersambung')})
-        .catch(()=>tandaAwan('gagal'));
+      /* cadangan: kirim lewat elemen gambar, kebal terhadap batasan CORS */
+      try{
+        const img=new Image();
+        img.onload=img.onerror=()=>{kirimTerakhir=Date.now();tandaAwan('tersambung')};
+        img.src=url;
+      }catch(e){tandaAwan('gagal')}
     });
 }
 
@@ -2216,8 +2216,12 @@ let dataAwan=null, ambilJam=null;
 function ambilAwan(){
   if(!awanAktif())return Promise.resolve(null);
   return fetch(URL_SERVER+'?t='+Date.now())
-    .then(r=>r.json())
-    .then(j=>{
+    .then(r=>r.text())
+    .then(t=>{
+      /* dibaca sebagai teks dulu agar jawaban tak terduga
+         (mis. halaman login Google) tidak menghentikan program */
+      let j;
+      try{j=JSON.parse(t)}catch(e){return null}
       if(j&&j.ok){dataAwan=j.siswa||[];return dataAwan}
       return null;
     })
@@ -4316,7 +4320,14 @@ document.getElementById('pinIn').addEventListener('keydown',e=>{if(e.key==='Ente
 document.getElementById('rS').onclick=()=>{if(nis==='guru')setRole('siswa')};
 document.getElementById('rG').onclick=()=>{if(nis==='guru')setRole('guru')};
 document.querySelectorAll('#nav button').forEach(b=>b.onclick=()=>setCh(+b.dataset.c));
-window.addEventListener('beforeunload',()=>{saveSiswa();if(awanAktif()&&nis&&nis!=='guru'){try{navigator.sendBeacon(URL_SERVER,JSON.stringify(dataSiswaKini('keluar')))}catch(e){}}});
+window.addEventListener('beforeunload',()=>{saveSiswa();
+  if(awanAktif()&&nis&&nis!=='guru'){
+    try{
+      const u=URL_SERVER+'?aksi=simpan&data='+encodeURIComponent(JSON.stringify(dataSiswaKini('keluar')));
+      if(navigator.sendBeacon)navigator.sendBeacon(u);
+      else{const i=new Image();i.src=u}
+    }catch(e){}
+  }});
 document.getElementById('roleBox').style.display='none';
 if(!pulihkanSesi())setTimeout(()=>document.getElementById('namaIn').focus(),350);
 </script>
