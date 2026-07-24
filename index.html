@@ -718,6 +718,17 @@ header.bar{background:var(--ink)}
 .kunci input#kelasIn{font-size:1.15rem;letter-spacing:.12em;width:190px}
 @media(max-width:400px){.kelas-pilih{max-width:100%;gap:8px}.kls{font-size:1rem;padding:13px 4px}}
 
+.nilaiSel{min-width:112px}
+.nilaiSel .belum{color:#a3aeb9;font-size:.82rem;font-style:italic}
+.nilaiSel .proses{color:#b45309;font-size:.78rem;font-weight:600;display:block}
+.nilaiSel .mini2{display:block;height:5px;background:#e3e9ef;border-radius:99px;
+  overflow:hidden;margin:5px 0 3px}
+.nilaiSel .mini2 i{display:block;height:100%;background:var(--rbx-yellow);transition:width .5s}
+.nilaiSel .jml2{color:#7c8a98;font-size:.76rem;display:block}
+.nilaiSel .nilaiAngka{font-family:var(--disp);font-size:1.35rem;line-height:1.1;display:block}
+.hapusBtn{background:none;border:1px solid var(--line2);color:#8b98a6;cursor:pointer;
+  border-radius:7px;padding:4px 8px;font-size:.85rem;transition:.18s}
+.hapusBtn:hover{border-color:var(--rbx-red);color:var(--rbx-red);background:#fff2f1}
 .klsTag{font-family:var(--mono);font-size:.72rem;font-weight:600;
   background:linear-gradient(135deg,var(--rbx-blue),var(--rbx-purple));color:#fff;
   padding:3px 9px;border-radius:6px;display:inline-block;letter-spacing:.06em}
@@ -2086,7 +2097,7 @@ function dataSiswaKini(status){
     let b=0;for(const k in o)if(o[k]===M[c].q[k][2])b++;
     bab[c]={dijawab:n,benar:b,total:t};
   });
-  return {nis:nis,nama:nama,kelas:kelas||'',bab:bab,
+  return {nis:nis,nama:nama,kelas:kelas||'',bab:bab,xpT:xpTantangan,
           status:status||'aktif', babDibuka:'Bab '+ch};
 }
 
@@ -2489,7 +2500,7 @@ function mainTantangan(box,kunci,data){
         if(+x.dataset.j===kunciJwb)x.classList.add('benar');
         else if(+x.dataset.j===j)x.classList.add('salah');
       });
-      if(ok){benarN++;terbangXP(b,'+5 XP')}else nyawa--;
+      if(ok){benarN++;tambahXP(5);terbangXP(b,'+5 XP')}else nyawa--;
       const fb=box.querySelector('.tt-fb');
       fb.className='tt-fb on '+(ok?'y':'n');
       fb.innerHTML=`<b>${ok?'Tepat!':'Belum tepat.'}</b> ${jelas}`;
@@ -2657,7 +2668,7 @@ function hentikanHitung(){if(jamSesi){clearInterval(jamSesi);jamSesi=null}}
 function keluarOtomatis(){
   saveSiswa();kirimAwan('keluar');hentikanDetakAwan();hentikanPantau();
   const siapa=nama?nama.split(' ')[0]:'';
-  hapusSesi();nis=null;nama=null;kelas=null;ans={};role='siswa';modeIntip=false;bacaMateri=false;
+  hapusSesi();nis=null;nama=null;kelas=null;ans={};xpTantangan=0;role='siswa';modeIntip=false;bacaMateri=false;
   document.getElementById('gate').classList.remove('off');
   ['nisIn','namaIn','gnamaIn','pinIn'].forEach(i=>{const x=document.getElementById(i);if(x)x.value=''});
   document.getElementById('roleBox').style.display='none';
@@ -2672,7 +2683,7 @@ function saveAll(o){try{localStorage.setItem(KEY,JSON.stringify(o))}catch(e){}}
 function loadSiswa(id){const a=loadAll();return a[id]||{ans:{},nama:'',kelas:'',buka:[]}}
 function saveSiswa(){if(!nis||nis==='guru')return;const a=loadAll();
   const lama=a[nis]||{};
-  a[nis]={nama:nama,kelas:kelas,ans:ans,buka:lama.buka||[],last:Date.now()};saveAll(a);}
+  a[nis]={nama:nama,kelas:kelas,ans:ans,buka:lama.buka||[],xpT:lama.xpT||xpTantangan||0,last:Date.now()};saveAll(a);}
 
 /* --- sesi bertahan meski halaman dimuat ulang --- */
 const SESI='ruang_informatika_sesi';
@@ -2701,6 +2712,7 @@ function pulihkanSesi(){
   const rec0 = role==='guru' ? {} : loadSiswa(nis);
   kelas = v.kelas || rec0.kelas || null;
   ans = role==='guru' ? {} : (rec0.ans||{});
+  xpTantangan = role==='guru' ? 0 : Number(rec0.xpT||0);
   document.getElementById('gate').classList.add('off');
   document.getElementById('roleBox').style.display = role==='guru'?'flex':'none';
   paintWho();
@@ -2743,7 +2755,7 @@ function masuk(){
   if(v.toLowerCase()==='guru')return gagal(inp,'Untuk masuk sebagai guru, gunakan tab Guru di atas.');
 
   nis=v;nama=vn;role='siswa';
-  const rec=loadSiswa(nis);ans=rec.ans||{};kelas=rec.kelas||null;
+  const rec=loadSiswa(nis);ans=rec.ans||{};kelas=rec.kelas||null;xpTantangan=Number(rec.xpT||0);
   document.getElementById('gate').classList.add('off');
   document.getElementById('roleBox').style.display='none';
   paintWho();saveSiswa();
@@ -2771,7 +2783,7 @@ function masukGuru(){
 }
 
 function keluar(){
-  saveSiswa();kirimAwan('keluar');hentikanDetakAwan();hentikanPantau();hapusSesi();hentikanHitung();nis=null;nama=null;kelas=null;ans={};role='siswa';
+  saveSiswa();kirimAwan('keluar');hentikanDetakAwan();hentikanPantau();hapusSesi();hentikanHitung();nis=null;nama=null;kelas=null;ans={};xpTantangan=0;role='siswa';
   document.getElementById('gate').classList.remove('off');
   ['nisIn','namaIn','gnamaIn','pinIn'].forEach(i=>document.getElementById(i).value='');
   document.getElementById('gerr').textContent='';
@@ -3840,11 +3852,28 @@ function bukaKuis(c){
 }
 
 /* ====== XP & LEVEL ====== */
+/* XP dari tantangan materi, disimpan terpisah dari XP soal latihan */
+let xpTantangan=0;
+function muatXPTantangan(){
+  if(!nis||nis==='guru'){xpTantangan=0;return}
+  xpTantangan=Number(loadSiswa(nis).xpT||0);
+}
+function tambahXP(n){
+  if(!nis||nis==='guru')return;
+  xpTantangan+=n;
+  const a=loadAll();
+  const r=a[nis]||{ans:{},nama:nama,kelas:kelas};
+  r.xpT=xpTantangan;r.nama=nama;r.kelas=kelas;r.ans=ans;r.last=Date.now();
+  a[nis]=r;saveAll(a);
+  paintXP();
+  kirimNanti('aktif');
+}
+
 function totalBenar(){let n=0;[1,2,3].forEach(c=>n+=benar(c));return n}
 function totalDijawab(){let n=0;[1,2,3].forEach(c=>n+=jml(c));return n}
 /* 10 XP tiap jawaban benar + 2 XP tiap soal dikerjakan,
    supaya usaha tetap terlihat meski jawabannya keliru */
-function xpKini(){return totalBenar()*10 + totalDijawab()*2}
+function xpKini(){return totalBenar()*10 + totalDijawab()*2 + xpTantangan}
 function levelKini(){return Math.floor(xpKini()/100)+1}
 function xpProgres(){return xpKini()%100}
 
@@ -4178,18 +4207,30 @@ function rekapHTML(){
     const x=all[id];
     const sel=c=>{
       const b=x.bab[c];
-      if(!b||!b.dijawab)return '<td style="color:#98a5b2">—</td>';
-      const p=Math.round(b.benar/b.total*100);
+      if(!b||!b.dijawab)return '<td class="nilaiSel"><span class="belum">belum mulai</span></td>';
       const tuntas=b.dijawab>=b.total;
-      return `<td><b style="font-family:var(--mono);color:${tuntas?(p>=75?'#0a7a53':'#c2352f'):'#5d6b7a'}">${tuntas?p:'·'}</b>
-        <span style="color:#7c8a98;font-size:.8rem">${b.dijawab}/${b.total}</span></td>`;
+      const persen=Math.round(b.dijawab/b.total*100);
+      if(!tuntas){
+        /* belum selesai — tampilkan kemajuan, BUKAN nilai,
+           karena nilai baru sah setelah seluruh soal dikerjakan */
+        return `<td class="nilaiSel">
+          <span class="proses">sedang mengerjakan</span>
+          <span class="mini2"><i style="width:${persen}%"></i></span>
+          <span class="jml2">${b.dijawab} dari ${b.total} soal</span></td>`;
+      }
+      const p=Math.round(b.benar/b.total*100);
+      return `<td class="nilaiSel">
+        <b class="nilaiAngka" style="color:${p>=75?'#0a7a53':p>=60?'#b45309':'#c2352f'}">${p}</b>
+        <span class="jml2">${b.benar} benar dari ${b.total}</span></td>`;
     };
     const titik = x.online
       ? '<span title="Sedang online" style="color:var(--rbx-green)">●</span>'
       : '<span title="Tidak aktif" style="color:#c3ccd6">○</span>';
     return `<tr data-kelas="${x.kelas}"><td>${titik} ${x.nama}</td><td class="k">${id}</td>
       <td><span class="klsTag">${x.kelas}</span></td>${sel(1)}${sel(2)}${sel(3)}
-      <td style="font-family:var(--mono);font-size:.82rem">Lv${x.level}</td></tr>`;
+      <td style="font-family:var(--mono);font-size:.82rem">Lv${x.level}</td>
+      <td><button class="hapusBtn" title="Hapus data siswa ini"
+        onclick="hapusSatu('${id}','${(x.nama||'').replace(/'/g,"")}')">🗑</button></td></tr>`;
   };
   const daftarKelas=[...new Set(ids.map(i=>all[i].kelas))].sort();
   const jmlOnline=ids.filter(i=>all[i].online).length;
@@ -4201,10 +4242,10 @@ function rekapHTML(){
       ${daftarKelas.map(k=>`<button class="btn2 g fk" data-k="${k}" onclick="filterKelas('${k}',this)">${k}</button>`).join('')}
     </div>
     <table id="tbRekap"><tr><th>Nama</th><th>NIS</th><th>Kelas</th>
-      <th>Bab 1</th><th>Bab 2</th><th>Bab 3</th><th>Lv</th></tr>
+      <th>Bab 1</th><th>Bab 2</th><th>Bab 3</th><th>Lv</th><th></th></tr>
     ${ids.map(row).join('')}</table>
     <div class="row"><button class="btn2 g" onclick="unduhCSV()">Unduh CSV</button>
-    <button class="btn2 g" onclick="hapusData()">Hapus data perangkat ini</button></div>
+    <button class="btn2 g" onclick="hapusData()">🗑 Hapus semua data</button></div>
     ${awanAktif()?`<div class="note" style="margin-top:12px">Data ini langsung dari Google Spreadsheet. Untuk melihat riwayat lengkap atau mengolahnya lebih lanjut, buka Spreadsheet Bapak/Ibu.</div>`:''}
     </section>`;
 }
@@ -4231,8 +4272,40 @@ function unduhCSV(){
   const a=document.createElement('a');a.href=u;a.download='rekap-informatika.csv';a.click();URL.revokeObjectURL(u);
 }
 function hapusData(){
-  if(confirm('Hapus seluruh data siswa di perangkat ini? Tindakan ini tidak bisa dibatalkan.')){
-    localStorage.removeItem(KEY);render();toast('Seluruh data siswa dihapus.');}
+  const jml=Object.keys(gabungRekap()).length;
+  if(!confirm(`Hapus seluruh data ${jml} siswa?\n\nData di perangkat ini DAN di Google Spreadsheet akan dihapus. Tindakan ini tidak bisa dibatalkan.`))return;
+  localStorage.removeItem(KEY);
+  if(!awanAktif()){dataAwan=[];render();toast('Data siswa dihapus.');return}
+  toast('Menghapus data di server…');
+  fetch(URL_SERVER+'?aksi=hapus&t='+Date.now())
+    .then(r=>r.text())
+    .then(t=>{
+      if(t.indexOf('"ok":true')>=0){
+        dataAwan=[];render();toast('Seluruh data siswa berhasil dihapus.');
+      }else{
+        toast('Gagal menghapus di server. Perbarui skrip Apps Script ke versi terbaru.');
+      }
+    })
+    .catch(()=>toast('Gagal terhubung ke server. Data lokal sudah dihapus.'));
+}
+
+function hapusSatu(nisT,namaT){
+  if(!confirm(`Hapus data ${namaT} (NIS ${nisT})?`))return;
+  try{
+    const a=loadAll();
+    if(a[nisT]){delete a[nisT];saveAll(a)}
+  }catch(e){}
+  if(!awanAktif()){dataAwan=(dataAwan||[]).filter(x=>x.nis!==nisT);render();
+    toast(`Data ${namaT} dihapus.`);return}
+  fetch(URL_SERVER+'?aksi=hapus&nis='+encodeURIComponent(nisT)+'&t='+Date.now())
+    .then(r=>r.text())
+    .then(t=>{
+      if(t.indexOf('"ok":true')>=0){
+        dataAwan=(dataAwan||[]).filter(x=>x.nis!==nisT);
+        render();toast(`Data ${namaT} dihapus.`);
+      }else toast('Gagal menghapus di server. Perbarui skrip Apps Script.');
+    })
+    .catch(()=>toast('Gagal terhubung ke server.'));
 }
 
 function guruHTML(d){
