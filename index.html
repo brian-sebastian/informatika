@@ -2067,7 +2067,12 @@ document.addEventListener('keydown',e=>{
    Panduan pemasangan ada di berkas PANDUAN-SETUP.md
    Bila dikosongkan, aplikasi tetap berjalan normal secara luring. */
 
-const URL_SERVER = 'https://script.google.com/macros/s/AKfycbwOa-ST-tyWz10V1KSvDyEA6wO93O_ty8SStGlqk61GTQdifjd79gs5l6ZQqjFuTcw2kQ/exec';   // <-- TEMPEL URL WEB APP DI SINI
+const URL_SERVER = 'https://script.google.com/macros/s/AKfycbwOa-ST-tyWz10V1KSvDyEA6wO93O_ty8SStGlqk61GTQdifjd79gs5l6ZQqjFuTcw2kQ/exec';   /* <-- TEMPEL URL WEB APP DI SINI
+
+   PENTING: URL berubah setiap kali deploy versi baru.
+   Ambil yang benar dari: Deploy > Kelola deployment > bagian "Aplikasi web".
+   Harus berakhiran /exec, BUKAN URL di bagian "Library".
+   Contoh: 'https://script.google.com/macros/s/AKfycb.../exec'  */
 
 const awanAktif = () => typeof URL_SERVER === 'string' && URL_SERVER.indexOf('http') === 0;
 
@@ -3836,7 +3841,10 @@ function bukaKuis(c){
 
 /* ====== XP & LEVEL ====== */
 function totalBenar(){let n=0;[1,2,3].forEach(c=>n+=benar(c));return n}
-function xpKini(){return totalBenar()*10}
+function totalDijawab(){let n=0;[1,2,3].forEach(c=>n+=jml(c));return n}
+/* 10 XP tiap jawaban benar + 2 XP tiap soal dikerjakan,
+   supaya usaha tetap terlihat meski jawabannya keliru */
+function xpKini(){return totalBenar()*10 + totalDijawab()*2}
 function levelKini(){return Math.floor(xpKini()/100)+1}
 function xpProgres(){return xpKini()%100}
 
@@ -4050,7 +4058,7 @@ function wireQuiz(d){
       const ok=kunci(j,true);
       beruntun = ok ? beruntun+1 : 0;
       kirimNanti('aktif');
-      if(ok)angkaTerbang(l,'+10 XP','#00b06f');
+      angkaTerbang(l, ok?'+12 XP':'+2 XP', ok?'#00b06f':'#ffc900');
       segar();cekBuka(cur);
     });
     /* pulihkan jawaban yang sudah tersimpan tanpa memicu animasi */
